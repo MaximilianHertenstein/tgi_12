@@ -10,14 +10,13 @@ public class ServerController {
 
 
     public void renderMain(Context ctx) {
-        String indexOfToDoToEditOrNull = ctx.queryParam("e");
-        var indexOfToDoToEditOrMinus1 = Utils.toIntNullToMinusOne(indexOfToDoToEditOrNull);
+
         String appliedFilterOrNull = ctx.queryParam("f");
         String appliedFilter = Utils.nullToAll(appliedFilterOrNull);
         var toDos= model.getItemsWithStatus(appliedFilter);
 
 
-        view.renderMain(ctx,toDos,indexOfToDoToEditOrMinus1, model.countActiveToDoItems(),appliedFilter);
+        view.renderMain(ctx,toDos, model.countActiveToDoItems(),appliedFilter);
     }
 
     public void addToDo(Context ctx){
@@ -38,12 +37,16 @@ public class ServerController {
         ctx.redirect("/todos", HttpStatus.forStatus(303));
     }
 
-
-
+    
     public void updateToDo(Context ctx) {
         var indexOfToDo =   Integer.parseInt(ctx.pathParam("i"));
         var text_of_new_todo =   ctx.formParam("updated_text_of_new_todo");
         model.set(indexOfToDo,text_of_new_todo);
-        ctx.redirect("/todos", HttpStatus.forStatus(303));
+        view.renderSingleItem(ctx,indexOfToDo, model.getToDoItems().get(indexOfToDo));
+    }
+
+    public void editToDo(Context ctx) {
+        var indexOfToDo =   Integer.parseInt(ctx.pathParam("i"));
+        view.renderEditForm(ctx,indexOfToDo, model.getToDoItems().get(indexOfToDo).text());
     }
 }
