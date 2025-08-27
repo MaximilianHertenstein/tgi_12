@@ -1,21 +1,20 @@
 import io.javalin.Javalin;
+import org.example.MobileView;
 import org.example.ServerController;
 import org.example.Utils;
+import org.example.WebView;
 
-void main(){
+void main() {
     var app = Javalin.create(Utils::configureJavalinApp);
-    var serverController = new ServerController();
-
-    app.get("/todos",serverController::renderMain);
-
-
+    var serverController = new ServerController(new MobileView());
+    app.get("/", serverController::index);
+    app.get("/todos", serverController::renderApp);
     app.post("/todos/new", serverController::addToDo);
-    app.post("/todos/{i}/toggleStatus",serverController::toggleStatus);
-    app.delete("/todos/{i}",serverController::deleteToDo);
-
-
-    app.get("/todos/{i}/edit",serverController::editToDo);
-    app.post("/todos/{i}/edit",serverController::updateToDo);
+    app.delete("/todos/{id}", serverController::deleteToDo);
+    app.delete("/todos/completed", serverController::deleteCompletedToDos);
+    app.post("/todos/{id}/toggleStatus", serverController::toggleStatus);
+    app.post("/todos/{filter}", serverController::setFilter);
+    app.get("/todos/{id}/edit", serverController::editToDo);
+    app.post("/todos/{id}/edit", serverController::updateToDo);
     app.start();
 }
-
