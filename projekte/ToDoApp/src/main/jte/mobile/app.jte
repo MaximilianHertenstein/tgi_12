@@ -8,26 +8,20 @@
 @param String appliedFilter
 
 
-<view style="todoapp" id="app">
+<view xmlns="https://hyperview.org/hyperview" style="todoapp" id="app">
     <header style="header">
-        <text>todos</text>
-        <form>
-            <text-field target="body"
-                        trigger="blur"
-                        style="new-todo"
-                        placeholder="What needs to be done?"
-                        name="text_of_new_todo"
-                        autofocus="${true}"/>
-
-                <text verb="post" href="/todos/new" action="replace-inner" target="body">
-                    Submit
-                </text>
-
-
+        <text style="heading">todos</text>
+        <form style="input-container">
+            <text-field
+                    style="new-todo"
+                    placeholder="What needs to be done?"
+                    name="text_of_new_todo"
+            />
+            <text verb="post" href="/todos/new?replace=true" action="replace-inner" target="body" style="ordinary-text">
+                Add
+            </text>
         </form>
-
     </header>
-
 
     <list style="todo-list">
         @for(var toDo: toDos)
@@ -35,20 +29,18 @@
         @endfor
     </list>
 
-    <view class="footer"><text style="todo-count"> ${countOfActiveToDosDisplay}</text>
+    <view style="footer">
+        <text style="ordinary-text">${countOfActiveToDosDisplay}</text>
 
-
-        <list style="filters">
+        <view style="filters">
             @for(var filter: List.of("All", "Active", "Completed"))
-                <item>
-                    <text verb="post" href="/todos/${filter}" target="body" action="replace-inner"
-                          class="${Utils.computeLinkClass(appliedFilter, filter)}">${filter}</text>
-                </item>
+                <text verb="post" href="/todos/setFilter/${filter}?replace=true" target="body"
+                      action="replace-inner"
+                      style="filter ordinary-text ${Utils.computeFilterClass(appliedFilter, filter)} ">${filter}</text>
             @endfor
-        </list>
+        </view>
 
-        <text style="clear-completed" verb="delete" href="/todos/completed" target="body" action="replace-inner">Clear
-            completed
-        </text>
+        <text style="ordinary-text" verb="post" href="/todos/clearCompleted?replace=true" target="body"
+              action="replace-inner">Clear completed</text>
     </view>
 </view>

@@ -12,18 +12,35 @@ import io.javalin.rendering.template.JavalinJte;
 import java.nio.file.Path;
 
 public class Utils {
-    public static void configureJavalinApp(JavalinConfig javalinConfig) {
-        javalinConfig.staticFiles.add("/public");
+    private static void configureJavalinBasic(JavalinConfig javalinConfig) {
+
         javalinConfig.bundledPlugins.enableCors(cors -> {
             //it.allowHost("http://localhost:19006");
             cors.addRule(CorsPluginConfig.CorsRule::anyHost);
         });
+        javalinConfig.staticFiles.enableWebjars();
+
+
+
+        //javalinConfig.fileRenderer(new JavalinJte());
+
+
+    }
+    public static void configureJavalinForWeb(JavalinConfig javalinConfig){
+        configureJavalinBasic(javalinConfig);
+        javalinConfig.fileRenderer(new JavalinJte());
+    }
+
+
+
+    public static void configureJavalinForMobile(JavalinConfig javalinConfig){
+        configureJavalinBasic(javalinConfig);
+        //javalinConfig.staticFiles.add("/public");
         CodeResolver codeResolver = new DirectoryCodeResolver(Path.of("src/main/jte")); // This is the directory where your .jte files are located.
         var templateEngine = TemplateEngine.create(codeResolver, ContentType.Plain);
         javalinConfig.fileRenderer(new JavalinJte(templateEngine));
-        javalinConfig.staticFiles.enableWebjars();
-
     }
+
 
     public static String statusToCompleted(boolean status) {
         if (status) {
@@ -32,19 +49,29 @@ public class Utils {
         return "";
     }
 
-    public static String computeLinkClass(String filter, String linkToFilter) {
+    public static String computeFilterClass(String filter, String linkToFilter) {
         if (filter.equals(linkToFilter)) {
             return "selected";
         }
         return "";
     }
 
-    public static String done(String newFilter, String oldFilter) {
-        if (newFilter == null) {
-            return oldFilter;
-        } else {
-            return newFilter;
+
+    public static String computeToggleClass(boolean completed){
+        if (completed) {
+            return "toggle-completed";
         }
+        return "toggle";
     }
+
+
+    public static String statusToSymbol(boolean status) {
+        if (status) {
+            return "✓";
+        }
+        return "◯";
+    }
+
+
 
 }

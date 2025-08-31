@@ -14,7 +14,12 @@ public class Model {
         this.toDos = new ArrayList<>(toDos);
     }
 
-    private List<ToDo> getToDoItems(boolean status) {
+
+
+
+
+
+    public List<ToDo> getToDosCompleted(boolean status) {
         var acc = new ArrayList<ToDo>();
         for (var item : toDos) {
             if (item.completed() == status) {
@@ -24,7 +29,18 @@ public class Model {
         return acc;
     }
 
-    private int nextId() {
+
+
+    public List<ToDo> getToDosWithFilter(String completed) {
+        return switch (completed) {
+            case "Completed" -> getToDosCompleted(true);
+            case "Active" -> getToDosCompleted(false);
+            case null, default -> toDos;
+        };
+    }
+
+
+    public int nextId() {
         if (toDos.size() == 0) {
             return 1;
         }
@@ -37,7 +53,11 @@ public class Model {
         return max + 1;
     }
 
-    private int idToIndex(int id) {
+    public void add(String text) {
+        toDos.add(new ToDo(nextId(), text));
+    }
+
+    public int idToIndex(int id) {
         for (int i = 0; i < toDos.size(); i++) {
             if (toDos.get(i).id() == id) {
                 return i;
@@ -50,32 +70,20 @@ public class Model {
         return toDos.get(idToIndex(id));
     }
 
-    private List<ToDo> getActiveToDoItems() {
-        return getToDoItems(false);
-    }
 
-    public void add(String text) {
-        toDos.add(new ToDo(nextId(), text));
-    }
 
     public void removeFinishedToDoItems() {
-        toDos = new ArrayList<>(getActiveToDoItems());
+        toDos = new ArrayList<>(getToDosCompleted(false));
     }
 
-    public List<ToDo> getItemsWithStatus(String status) {
-        return switch (status) {
-            case "Completed" -> getToDoItems(true);
-            case "Active" -> getToDoItems(false);
-            case null, default -> toDos;
-        };
-    }
+
 
     public void toggle(int id) {
         int index = idToIndex(id);
         toDos.set(index, toDos.get(index).toggleDone());
     }
 
-    public void set(int id, String text) {
+    public void updateText(int id, String text) {
         int index = idToIndex(id);
         toDos.set(index, toDos.get(index).updateText(text));
     }
@@ -86,7 +94,7 @@ public class Model {
     }
 
     public String showCountOfActiveToDoItems() {
-        int countOfActiveToDoItems = getActiveToDoItems().size();
+        int countOfActiveToDoItems = getToDosCompleted(false).size();
         var sOrEmpty = "s";
         if (countOfActiveToDoItems == 1) {
             sOrEmpty = "";

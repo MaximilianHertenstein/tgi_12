@@ -10,10 +10,17 @@ import static java.io.IO.readln;
 
 public record View() {
 
+    String numberToFilter(int number){
+        return switch (number){
+            case 1 -> "All";
+            case 2 -> "Active";
+            case 3 -> "Completed";
+            default -> throw new IllegalStateException("Unexpected value: " + number);
+        };
+    }
 
 
-
-    private String showToDo(ToDo toDo) {
+    public String showToDo(ToDo toDo) {
         var done = "❌";
         if (toDo.completed()) {
             done = "✓";
@@ -26,7 +33,6 @@ public record View() {
         for (var toDoItem : toDos) {
             println(showToDo(toDoItem));
         }
-        println("\n");
     }
 
     public List<Integer> getIDs(List<ToDo> toDos){
@@ -56,24 +62,17 @@ public record View() {
 
     public int askUntilInputIsId(List<ToDo> toDos) {
 
-        return askUntilElementInList(getIDs(toDos), "Gib die ID des ToDos ein");
+        return askUntilElementInList(getIDs(toDos), "Enter the ID of the ToDo");
     }
 
 
     public int askUntilInputIsSmallerOrEqual(int upperBound) {
-        return askUntilElementInList(numbersFromZeroTo(upperBound),"Gib eine Zahl zwischen 1 und " + upperBound + " ein");
+        return askUntilElementInList(numbersFromZeroTo(upperBound),"Enter a number between 1 and " + upperBound + " ein");
     }
 
 
 
-    String numberToFilter(int number){
-        return switch (number){
-            case 1 -> "All";
-            case 2 -> "Active";
-            case 3 -> "Completed";
-            default -> throw new IllegalStateException("Unexpected value: " + number);
-        };
-    }
+
 
 
 }

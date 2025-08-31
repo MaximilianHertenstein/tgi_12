@@ -10,7 +10,9 @@ target/
 .idea/libraries/
 *.iws
 *.iml
+*.class
 *.ipr
+/jte-classes/
 
 ### Eclipse ###
 .apt_generated
