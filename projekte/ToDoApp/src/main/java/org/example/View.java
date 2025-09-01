@@ -10,8 +10,8 @@ import static java.io.IO.readln;
 
 public record View() {
 
-    String numberToFilter(int number){
-        return switch (number){
+    private String numberToFilter(int number) {
+        return switch (number) {
             case 1 -> "All";
             case 2 -> "Active";
             case 3 -> "Completed";
@@ -20,7 +20,7 @@ public record View() {
     }
 
 
-    public String showToDo(ToDo toDo) {
+    private String showToDo(ToDo toDo) {
         var done = "❌";
         if (toDo.completed()) {
             done = "✓";
@@ -28,32 +28,43 @@ public record View() {
         return done + " " + toDo.text() + "\t\t\t\t ID: " + toDo.id();
     }
 
-    public void printToDos(List<ToDo> toDos) {
-        println("\t\ttodos");
+    private void printToDos(List<ToDo> toDos) {
+        println("\n\t\ttodos");
         for (var toDoItem : toDos) {
             println(showToDo(toDoItem));
         }
     }
 
-    public List<Integer> getIDs(List<ToDo> toDos){
+    private List<Integer> getIDs(List<ToDo> toDos) {
         var ids = new ArrayList<Integer>();
         for (var toDoItem : toDos) {
-                ids.add(toDoItem.id());
+            ids.add(toDoItem.id());
         }
         return ids;
     }
 
-    private List<Integer> numbersFromZeroTo(int number){
+    private List<Integer> numbersFromOneTo(int number) {
         var smallerNumbersAsStrings = new ArrayList<Integer>();
-        for (int i = 1; i <= number; i++){
+        for (int i = 1; i <= number; i++) {
             smallerNumbersAsStrings.add(i);
         }
         return smallerNumbersAsStrings;
     }
 
+    public String askForNewText() {
+        println("Enter the new text for the ToDo!");
+        return readln();
+    }
+
+    public String askForNewToDo() {
+        println("Enter the text for the new item!");
+        return readln();
+    }
+
+
     public int askUntilElementInList(List<Integer> elems, String prompt) {
         var input = "";
-        while (!NumberUtils.isCreatable(input) ||  !elems.contains(Integer.parseInt(input))) {
+        while (!NumberUtils.isCreatable(input) || !elems.contains(Integer.parseInt(input))) {
             println(prompt);
             input = readln();
         }
@@ -67,12 +78,26 @@ public record View() {
 
 
     public int askUntilInputIsSmallerOrEqual(int upperBound) {
-        return askUntilElementInList(numbersFromZeroTo(upperBound),"Enter a number between 1 and " + upperBound + " ein");
+        return askUntilElementInList(numbersFromOneTo(upperBound), "Enter a number between 1 and " + upperBound);
     }
 
 
+    public int showMainMenuAskForOption(List<ToDo> selectedToDos, String displayOfActiveToDos) {
+        printToDos(selectedToDos);
+        println(displayOfActiveToDos);
+        println("\nWhat do you want to do?  \n 1 Add ToDo \n 2 Edit ToDo \n 3 Delete all completed ToDos \n 4 Change ToDo filter \n 5 Quit the app");
+        return askUntilInputIsSmallerOrEqual(5);
+    }
 
+    public String askForFilter() {
+        println("Which ToDos do you want to display? \n 1 All \n 2 Only active \n 3 Only completed");
+        return numberToFilter(askUntilInputIsSmallerOrEqual(3));
+    }
 
+    public int askForUpdateOperation() {
+        println("What do you want to change? \n 1 Update text \n 2 Change status \n 3 Delete item");
+        return askUntilInputIsSmallerOrEqual(3);
+    }
 
 
 }

@@ -40,22 +40,7 @@ public class Model {
     }
 
 
-    public int nextId() {
-        if (toDos.size() == 0) {
-            return 1;
-        }
-        int max = toDos.get(0).id();
-        for (int i = 1; i < toDos.size(); i++) {
-            if (toDos.get(i).id() > max) {
-                max = toDos.get(i).id();
-            }
-        }
-        return max + 1;
-    }
 
-    public void add(String text) {
-        toDos.add(new ToDo(nextId(), text));
-    }
 
     public int idToIndex(int id) {
         for (int i = 0; i < toDos.size(); i++) {
@@ -72,15 +57,26 @@ public class Model {
 
 
 
-    public void removeFinishedToDoItems() {
-        toDos = new ArrayList<>(getToDosCompleted(false));
+    public int nextId() {
+        if (toDos.size() == 0) {
+            return 1;
+        }
+        int max = toDos.get(0).id();
+        for (int i = 1; i < toDos.size(); i++) {
+            if (toDos.get(i).id() > max) {
+                max = toDos.get(i).id();
+            }
+        }
+        return max + 1;
     }
-
+    public void add(String text) {
+        toDos.add(new ToDo(nextId(), text));
+    }
 
 
     public void toggle(int id) {
         int index = idToIndex(id);
-        toDos.set(index, toDos.get(index).toggleDone());
+        toDos.set(index, toDos.get(index).toggle());
     }
 
     public void updateText(int id, String text) {
@@ -91,6 +87,10 @@ public class Model {
     public void delete(int id) {
         int index = idToIndex(id);
         toDos.remove(index);
+    }
+
+    public void removeFinishedToDoItems() {
+        toDos = new ArrayList<>(getToDosCompleted(false));
     }
 
     public String showCountOfActiveToDoItems() {

@@ -10,7 +10,6 @@ class ModelTest {
 
     @Test
     void getToDosCompleted() {
-
         var toDos = List.of(
                 new ToDo(1, "Kaffee trinken", false),
                 new ToDo(2, "Rakete bauen", true),
@@ -30,11 +29,10 @@ class ModelTest {
                 new ToDo(2, "App programmieren", true)
         );
         assertEquals(completed, model.getToDosCompleted(true));
-
     }
 
     @Test
-    void getToDosStatus() {
+    void getToDosWithFilter() {
         Model model = new Model(List.of(
                 new ToDo(1, "Kaffee trinken", false),
                 new ToDo(2, "Rakete bauen", true),
@@ -64,27 +62,6 @@ class ModelTest {
     }
 
     @Test
-    void nextId() {
-        Model model = new Model(List.of(
-                new ToDo(1, "Kaffee trinken", false),
-
-                new ToDo(2, "App programmieren", true),
-                new ToDo(3, "Welt retten", false)
-        ));
-        assertEquals(4, model.nextId());
-    }
-
-    @Test
-    void add() {
-        Model model = new Model();
-        model.add("Kaffee trinken");
-        assertEquals(new ToDo(1, "Kaffee trinken"), model.getToDoItem(1));
-        model.add("Rakete bauen");
-        assertEquals(new ToDo(2, "Rakete bauen"), model.getToDoItem(2));
-    }
-
-
-    @Test
     void idToIndex() {
         Model model = new Model(List.of(
                 new ToDo(3, "Kaffee trinken", false),
@@ -108,25 +85,25 @@ class ModelTest {
                 new ToDo(2, "Welt retten", false)
         ));
         assertEquals(new ToDo(5, "Rakete bauen", true), model.getToDoItem(5));
-
     }
 
-
-
+    @Test
+    void nextId() {
+        Model model = new Model(List.of(
+                new ToDo(1, "Kaffee trinken", false),
+                new ToDo(2, "App programmieren", true),
+                new ToDo(3, "Welt retten", false)
+        ));
+        assertEquals(4, model.nextId());
+    }
 
     @Test
-    void removeFinishedToDoItems() {
-        Model model = new Model(List.of(
-                new ToDo(3, "Kaffee trinken", false),
-                new ToDo(5, "Rakete bauen", true),
-                new ToDo(7, "App programmieren", true),
-                new ToDo(2, "Welt retten", false)
-        ));
-
-
-        model.removeFinishedToDoItems();
-        assertEquals(0, model.getToDosCompleted(true).size());
-        assertEquals(2, model.getToDosWithFilter("All").size());
+    void add() {
+        Model model = new Model();
+        model.add("Kaffee trinken");
+        assertEquals(new ToDo(1, "Kaffee trinken"), model.getToDoItem(1));
+        model.add("Rakete bauen");
+        assertEquals(new ToDo(2, "Rakete bauen"), model.getToDoItem(2));
     }
 
     @Test
@@ -142,7 +119,7 @@ class ModelTest {
     }
 
     @Test
-    void set() {
+    void updateText() {
         Model model = new Model(List.of(
                 new ToDo(1, "Kaffee trinken", false)
         ));
@@ -159,6 +136,19 @@ class ModelTest {
         model.delete(2);
         assertEquals(-1, model.idToIndex(2));
         assertEquals(1, model.getToDosWithFilter(null).size());
+    }
+
+    @Test
+    void removeFinishedToDoItems() {
+        Model model = new Model(List.of(
+                new ToDo(3, "Kaffee trinken", false),
+                new ToDo(5, "Rakete bauen", true),
+                new ToDo(7, "App programmieren", true),
+                new ToDo(2, "Welt retten", false)
+        ));
+        model.removeFinishedToDoItems();
+        assertEquals(0, model.getToDosCompleted(true).size());
+        assertEquals(2, model.getToDosWithFilter("All").size());
     }
 
     @Test

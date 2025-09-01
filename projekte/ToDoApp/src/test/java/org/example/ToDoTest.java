@@ -2,8 +2,6 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ToDoTest {
@@ -16,9 +14,9 @@ class ToDoTest {
 
     @Test
     void toggleDone() {
-        assertEquals(new ToDo(1, "IFT-Homework", true), task1.toggleDone());
-        assertEquals(new ToDo(2, "Drink Coffee", false), task2.toggleDone());
-        assertEquals(new ToDo(3, "Write an App", true), task3.toggleDone());
+        assertEquals(new ToDo(1, "IFT-Homework", true), task1.toggle());
+        assertEquals(new ToDo(2, "Drink Coffee", false), task2.toggle());
+        assertEquals(new ToDo(3, "Write an App", true), task3.toggle());
     }
 
     @Test
