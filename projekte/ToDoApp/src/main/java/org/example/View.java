@@ -62,7 +62,7 @@ public record View() {
     }
 
 
-    public int askUntilElementInList(List<Integer> elems, String prompt) {
+    private int askUntilElementInList(List<Integer> elems, String prompt) {
         var input = "";
         while (!NumberUtils.isCreatable(input) || !elems.contains(Integer.parseInt(input))) {
             println(prompt);
@@ -77,14 +77,15 @@ public record View() {
     }
 
 
-    public int askUntilInputIsSmallerOrEqual(int upperBound) {
+    private int askUntilInputIsSmallerOrEqual(int upperBound) {
         return askUntilElementInList(numbersFromOneTo(upperBound), "Enter a number between 1 and " + upperBound);
     }
 
 
-    public int showMainMenuAskForOption(List<ToDo> selectedToDos, String displayOfActiveToDos) {
+    public int showMainMenuAskForOption(List<ToDo> selectedToDos, String displayOfActiveToDos, String currentFilter) {
         printToDos(selectedToDos);
         println(displayOfActiveToDos);
+        println("Current Filter: " + currentFilter);
         println("\nWhat do you want to do?  \n 1 Add ToDo \n 2 Edit ToDo \n 3 Delete all completed ToDos \n 4 Change ToDo filter \n 5 Quit the app");
         return askUntilInputIsSmallerOrEqual(5);
     }

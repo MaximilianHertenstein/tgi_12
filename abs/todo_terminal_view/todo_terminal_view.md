@@ -446,20 +446,22 @@ In diesem Beispiel ist die Rückgabe `Completed`.
 ## Aufgabe
 
 Erweitere die Klasse `View` um die Methode `showMainMenuAskForOption`
-Sie bekommt eine Liste von ToDos und einen String zur Anzeige der Anzahl aktiver ToDos.  
-Die Methode gibt das Hauptmenü aus und fragt nach einer Option (1-5).
+Sie bekommt eine Liste von ToDos, einen String zur Anzeige der Anzahl aktiver ToDos und den gewählten Filter.  
+Die Methode gibt die übergebenen Daten und das Hauptmenü aus und fragt nach einer Option (1-5).
 Sie fragt solange erneut nach bis eine der Zahlen  (1-3) eingegeben wurde.
 
 
-
+\scriptsize
 ```java
 var view = new View();
-view.showMainMenuAskForOption(List.of(new ToDo(1, "A", false), new ToDo(1, "A", true)), "1 open");
+view.showMainMenuAskForOption(List.of(new ToDo(1, "A", false), new ToDo(1, "A", true)), "1 open", "All");
 ```
+\normalsize
 ```
 		todos
 X A				 ID: 1
 C A				 ID: 1
+Current Filter: All
 1 open
 
 What do you want to do?  
@@ -476,11 +478,12 @@ In diesem Beispiel ist die Rückgabe $3$.
 
 
 ```java
-view.showMainMenuAskForOption(List.of(), "Nothing to do!");
+view.showMainMenuAskForOption(List.of(), "Nothing to do!", "Completed");
 ```
 ```
 		todos
 Nothing to do!
+Current Filter: Completed
 
 What do you want to do?  
  1 Add ToDo 
@@ -497,3 +500,322 @@ Enter a number between 1 and 5
 In diesem Beispiel ist die Rückgabe $5$.
 
 **Hinweis**: Nutze `printToDos` und `askUntilInputIsSmallerOrEqual`!
+
+
+## Aufgabe
+Schütze die Methoden `numberToFilter`, `showToDo`, `printToDos`, `getIDs`, `numbersFromOneTo`, `askUntilElementInList` und `askUntilInputIsSmallerOrEqual` vor dem Zugriff außerhalb der Klasse `View`.
+
+# Terminal-Controller
+
+
+## Aufgabe
+
+Erstelle eine Klasse `TerminalController`. Die Atrribute der Klasse sind ein Objekt der Klasse `View` und ein Objekt der Klasse `Model`.
+
+## Aufgabe
+
+Erweitere die Klasse `TerminalController` um die Methode `runApp`.  
+Die Methode zeigt das Hauptmenü an, verarbeitet Benutzereingaben und steuert den Ablauf der ToDo-App, bis der Benutzer das Programm beendet.
+
+Implementiere zunächst nur die Möglichkeit ToDos hinzuzufügen und das Programm zu beenden.
+
+```{java .cb-nb}
+var controller = new TerminalController();
+controller.runApp();
+```
+
+```
+		todos
+0 items left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+1
+Enter the text for the new item!
+IFT-Hausaufgaben
+
+		todos
+X IFT-Hausaufgaben				 ID: 1
+1 item left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+Fußball spielen
+Enter a number between 1 and 5
+5
+```
+
+**Hinweis:** Nutze die Methoden `showMainMenuAskForOption`, `askForNewToDo` der Klasse `View` und die Methoden
+`getToDosWithFilter`, `showCountOfActiveToDoItems` und `add` der Klasse `Model`.
+
+## Aufgabe
+
+Erweitere `runApp` um eine Möglichkeit den gewählten Filter zu ändern.
+
+
+```java
+var controller = new TerminalController();
+controller.runApp();
+```
+
+```
+		todos
+0 items left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+4
+Which ToDos do you want to display? 
+ 1 All 
+ 2 Only active 
+ 3 Only completed
+Enter a number between 1 and 3
+2
+
+		todos
+0 items left
+Current Filter: Active
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+```
+
+Nutze die Methode `askForFilter` der Klasse `View`!
+
+## Aufgabe
+
+Erweitere die Klasse `TerminalController` um die Methode `updateItem`.  
+Die Methode fragt nach einer ToDo-ID, einer Änderungsoption und führt dann die entsprechende Aktion (Text ändern, Status umschalten oder löschen) aus.
+
+```java
+var controller = new TerminalController();
+controller.runApp();
+```
+```
+		todos
+0 items left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+1
+Enter the text for the new item!
+IFT-Hausaufgaben
+
+		todos
+X IFT-Hausaufgaben				 ID: 1
+1 item left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+2
+Enter the ID of the ToDo
+1
+What do you want to change? 
+ 1 Update text 
+ 2 Change status 
+ 3 Delete item
+Enter a number between 1 and 3
+1
+Enter the new text for the ToDo!
+App programmieren
+
+		todos
+X App programmieren				 ID: 1
+1 item left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+2
+Enter the ID of the ToDo
+1
+What do you want to change? 
+ 1 Update text 
+ 2 Change status 
+ 3 Delete item
+Enter a number between 1 and 3
+2
+
+		todos
+C App programmieren				 ID: 1
+0 items left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+2
+Enter the ID of the ToDo
+1
+What do you want to change? 
+ 1 Update text 
+ 2 Change status 
+ 3 Delete item
+Enter a number between 1 and 3
+3
+
+		todos
+0 items left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+5
+```
+
+
+**Hinweis**: Nutze die Methoden `toggle`, `delete`, `updateText` und `getToDosWithFilter` der Klasse `Model` und die Methoden `askUntilInputIsId`
+`askForUpdateOperation` und `askForNewText` der Klasse `View`!
+
+## Aufgabe
+
+Erweitere `runApp` um die Möglichkeit alle erledigten ToDos zu löschen.
+
+```java
+var controller = new TerminalController();
+controller.runApp();
+```
+```
+		todos
+0 items left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+1
+Enter the text for the new item!
+Programmieren
+
+		todos
+X Programmieren				 ID: 1
+1 item left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+1
+Enter the text for the new item!
+Fußball spielen
+
+		todos
+X Programmieren				 ID: 1
+X Fußball spielen				 ID: 2
+2 items left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+2
+Enter the ID of the ToDo
+2
+What do you want to change? 
+ 1 Update text 
+ 2 Change status 
+ 3 Delete item
+Enter a number between 1 and 3
+2
+
+		todos
+X Programmieren				 ID: 1
+C Fußball spielen				 ID: 2
+1 item left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+3
+
+		todos
+X Programmieren				 ID: 1
+1 item left
+Current Filter: All
+
+What do you want to do?  
+ 1 Add ToDo 
+ 2 Edit ToDo 
+ 3 Delete all completed ToDos 
+ 4 Change ToDo filter 
+ 5 Quit the app
+Enter a number between 1 and 5
+5
+```
+
+
+**Hinweis:** Nutze die Methode `removeFinishedToDoItems()` der Klasse `Model`!
+
+
+## Aufgabe
+
+Teste dein Programm
+
+## Aufgabe
+Hilf den anderen SuS!

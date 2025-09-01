@@ -8,12 +8,8 @@ import org.example.View;
 
 
 void main() {
-    var view = new View();
-    view.askForFilter();
-
-
-
-
+    var controller = new TerminalController();
+    controller.runApp();
 
 }
 

@@ -5,7 +5,7 @@ public class TerminalController {
     Model model = new Model();
     View view = new View();
 
-    private void updateItem() {
+    public void updateItem() {
         var id = view.askUntilInputIsId(model.getToDosWithFilter("All"));
         var updateOperation = view.askForUpdateOperation();
         switch (updateOperation) {
@@ -22,7 +22,7 @@ public class TerminalController {
         var choice = -1;
         var selectedFilter = "All";
         while ((choice != 5)) {
-            choice = view.showMainMenuAskForOption(model.getToDosWithFilter(selectedFilter), model.showCountOfActiveToDoItems());
+            choice = view.showMainMenuAskForOption(model.getToDosWithFilter(selectedFilter), model.showCountOfActiveToDoItems(), selectedFilter);
             switch (choice) {
                 case 1 -> {
                     var textOfNewToDo = view.askForNewToDo();
