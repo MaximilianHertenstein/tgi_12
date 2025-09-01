@@ -91,10 +91,10 @@ class ModelTest {
     void nextId() {
         Model model = new Model(List.of(
                 new ToDo(1, "Kaffee trinken", false),
-                new ToDo(2, "App programmieren", true),
+                new ToDo(5, "App programmieren", true),
                 new ToDo(3, "Welt retten", false)
         ));
-        assertEquals(4, model.nextId());
+        assertEquals(6, model.nextId());
     }
 
     @Test

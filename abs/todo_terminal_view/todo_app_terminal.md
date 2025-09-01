@@ -485,7 +485,7 @@ In diesem Beispiel ist die Rückgabe $2$.
 ## Aufgabe
 
 Erweitere die Klasse `View` um die Methode `askUntilInputIsSmallerOrEqual`.
-Sie erhält einen Parameter `upperBound` und fragt so lange nach einer Zahl, bis eine Zahl zwischen 1 und `upperBound` eingegeben wurde. Gibt die Zahl zurück.
+Sie erhält einen Parameter `upperBound` und fragt so lange nach einer Zahl, bis eine Zahl zwischen 1 und `upperBound` eingegeben wurde. Die Methode gibt diese Zahl zurück.
 
 ```java
 var view = new View();
@@ -524,8 +524,10 @@ In diesem Beispiel ist die Rückgabe $2$.
 ## Aufgabe
 
 Implementiere die Methode `askForUpdateOperation` in der Klasse `View`.  
-Sie fragt, was an einem ToDo geändert werden soll, und gibt die gewählte Option (1-3) zurück.
-Sie fragt solange erneut nach bis eine der Zahlen  (1-3) eingegeben wurde.
+Sie fragt, was an einem ToDo geändert werden soll. 
+die Frage wird gestellt, bis eine der Zahlen  (1-3) eingegeben wurde.
+Anschließend wird die Eingabe zurückgegeben.
+
 
 ```java
 var view = new View();
@@ -552,9 +554,10 @@ In diesem Beispiel ist die Rückgabe $1$.
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um die Methode `askForFilter`.  
-Sie fragt, welche ToDos angezeigt werden sollen, und gibt `All`, `Active` oder `Completed` zurück.
-Sie fragt solange erneut nach bis eine der Zahlen  (1-3) eingegeben wurde.
+Erweitere die Klasse `View` um die Methode `askForFilter`. Diese fragt, welche ToDos angezeigt werden sollen.
+Sie fragt solange nach einer Eingabe bis eine der Zahlen  (1-3) eingegeben wurde.
+Die Methode gibt anschließend den entsprechenden Filter (`All`, `Active` oder `Completed`) zurück.
+
 
 
 
@@ -600,7 +603,7 @@ In diesem Beispiel ist die Rückgabe `Completed`.
 Erweitere die Klasse `View` um die Methode `showMainMenuAskForOption`
 Sie bekommt eine Liste von ToDos, einen String zur Anzeige der Anzahl aktiver ToDos und den gewählten Filter.  
 Die Methode gibt die übergebenen Daten und das Hauptmenü aus und fragt nach einer Option (1-5).
-Sie fragt solange erneut nach bis eine der Zahlen  (1-3) eingegeben wurde.
+Sie fragt solange erneut nach bis eine der Zahlen  (1-5) eingegeben wurde. Diese Eingabe wird anschließend zurückgegben.
 
 
 \scriptsize
@@ -655,7 +658,7 @@ In diesem Beispiel ist die Rückgabe $5$.
 
 
 ## Aufgabe
-Schütze die Methoden `numberToFilter`, `showToDo`, `printToDos`, `getIDs`, `numbersFromOneTo`, `askUntilElementInList` und `askUntilInputIsSmallerOrEqual` vor dem Zugriff außerhalb der Klasse `View`.
+Schütze die Methoden `numberToFilter`, `showToDo`, `printToDos`, `getIDs`, `numbersFromOneTo`, `askUntilElementInList` und `askUntilInputIsSmallerOrEqual` vor einem Zugriff außerhalb der Klasse `View`.
 
 
 # Model
@@ -917,7 +920,7 @@ model.showCountOfActiveToDoItems();
 
 
 ## Aufgabe
-Schütze die Methoden `getToDosCompleted`, `idToIndex`, `nextId` durch den Zugriff außerhalb der Klasse `Model`. Schütze auch die Liste der ToDos.
+Schütze die Methoden `getToDosCompleted`, `idToIndex` und `nextId` durch einen Zugriff außerhalb der Klasse `Model`. Schütze auch die Liste der ToDos.
 
 # Terminal-Controller
 
@@ -931,9 +934,9 @@ Erstelle eine Klasse `TerminalController`. Die Atrribute der Klasse sind ein Obj
 Erweitere die Klasse `TerminalController` um die Methode `runApp`.  
 Die Methode zeigt das Hauptmenü an, verarbeitet Benutzereingaben und steuert den Ablauf der ToDo-App, bis der Benutzer das Programm beendet.
 
-Implementiere zunächst nur die Möglichkeit ToDos hinzuzufügen und das Programm zu beenden.
+Implementiere zunächst nur die Optionen ToDos hinzuzufügen und das Programm zu beenden.
 
-```{java .cb-nb}
+```java
 var controller = new TerminalController();
 controller.runApp();
 ```
