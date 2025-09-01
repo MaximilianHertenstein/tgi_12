@@ -578,7 +578,7 @@ In diesem Beispiel ist die Rückgabe `All`.
 
 ```java
 var view = new View();
-view.askForFilter()
+view.askForUpdateOperation()
 ```
 ```
 Which ToDos do you want to display? 
@@ -933,7 +933,7 @@ Die Methode zeigt das Hauptmenü an, verarbeitet Benutzereingaben und steuert de
 
 Implementiere zunächst nur die Möglichkeit ToDos hinzuzufügen und das Programm zu beenden.
 
-```java
+```{java .cb-nb}
 var controller = new TerminalController();
 controller.runApp();
 ```
@@ -1022,7 +1022,7 @@ Nutze die Methode `askForFilter` der Klasse `View`!
 ## Aufgabe
 
 Erweitere die Klasse `TerminalController` um die Methode `updateItem`.  
-Die Methode fragt nach einer ToDo-ID und einer Änderungsoption. Sie führt dann die entsprechende Aktion (Text ändern, Status umschalten oder löschen) aus.
+Die Methode fragt nach einer ToDo-ID, einer Änderungsoption und führt dann die entsprechende Aktion (Text ändern, Status umschalten oder löschen) aus.
 
 ```java
 var controller = new TerminalController();
@@ -1127,7 +1127,7 @@ Enter a number between 1 and 5
 ```
 
 
-**Hinweis**: Nutze die Methoden `toggle`, `delete`, `updateText` und `getToDosWithFilter` der Klasse `Model` und die Methoden `askUntilInputIsId`,
+**Hinweis**: Nutze die Methoden `toggle`, `delete`, `updateText` und `getToDosWithFilter` der Klasse `Model` und die Methoden `askUntilInputIsId`
 `askForUpdateOperation` und `askForNewText` der Klasse `View`!
 
 ## Aufgabe

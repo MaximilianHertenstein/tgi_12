@@ -12,6 +12,7 @@ import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.List;
 
+import static java.io.IO.println;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SingleItemTemplateTest {
@@ -26,6 +27,7 @@ class SingleItemTemplateTest {
         templateEngine.render("web/singleItem.jte", todo, output);
 
         String html = output.toString();
+        println(output);
         assertTrue(html.contains("Testaufgabe"));
         assertTrue(html.contains("todo1"));
     }
