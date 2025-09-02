@@ -11,7 +11,6 @@ codebraid:
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static java.io.IO.println;
 import static java.io.IO.readln;
 
@@ -31,6 +30,8 @@ public record ToDo(int id, String text, boolean completed) {
 
 }
 
+public record UIState(String currentFilter, List<ToDo> selectedToDos ,String displayOfActiveToDos) {
+}
 
 public record View() {
 
@@ -53,9 +54,9 @@ public record View() {
     }
 
     public void printToDos(List<ToDo> toDos) {
-        println("\n\t\ttodos");
+        System.out.println("\n\t\ttodos");
         for (var toDoItem : toDos) {
-            println(showToDo(toDoItem));
+            System.out.println(showToDo(toDoItem));
         }
     }
 
@@ -75,7 +76,6 @@ public record View() {
         return smallerNumbersAsStrings;
     }
 
-    
 
 
 }
@@ -83,19 +83,18 @@ public record View() {
 
 public class Model {
     public ArrayList<ToDo> toDos;
-
+    public String selectedFilter = "All";
+    
+    
     public Model() {
         this.toDos = new ArrayList<>();
+        selectedFilter = "All";
     }
 
-    public Model(List<ToDo> toDos) {
+    public Model(List<ToDo> toDos, String selectedFilter) {
+        this.selectedFilter = selectedFilter;
         this.toDos = new ArrayList<>(toDos);
     }
-
-
-
-
-
 
     public List<ToDo> getToDosCompleted(boolean status) {
         var acc = new ArrayList<ToDo>();
@@ -109,8 +108,8 @@ public class Model {
 
 
 
-    public List<ToDo> getToDosWithFilter(String completed) {
-        return switch (completed) {
+    public List<ToDo> getFilteredToDos() {
+        return switch (selectedFilter) {
             case "Completed" -> getToDosCompleted(true);
             case "Active" -> getToDosCompleted(false);
             case null, default -> toDos;
@@ -118,22 +117,7 @@ public class Model {
     }
 
 
-    public int nextId() {
-        if (toDos.size() == 0) {
-            return 1;
-        }
-        int max = toDos.get(0).id();
-        for (int i = 1; i < toDos.size(); i++) {
-            if (toDos.get(i).id() > max) {
-                max = toDos.get(i).id();
-            }
-        }
-        return max + 1;
-    }
 
-    public void add(String text) {
-        toDos.add(new ToDo(nextId(), text));
-    }
 
     public int idToIndex(int id) {
         for (int i = 0; i < toDos.size(); i++) {
@@ -150,10 +134,21 @@ public class Model {
 
 
 
-    public void removeFinishedToDoItems() {
-        toDos = new ArrayList<>(getToDosCompleted(false));
+    public int nextId() {
+        if (toDos.size() == 0) {
+            return 1;
+        }
+        int max = toDos.get(0).id();
+        for (int i = 1; i < toDos.size(); i++) {
+            if (toDos.get(i).id() > max) {
+                max = toDos.get(i).id();
+            }
+        }
+        return max + 1;
     }
-
+    public void add(String text) {
+        toDos.add(new ToDo(nextId(), text));
+    }
 
 
     public void toggle(int id) {
@@ -171,6 +166,10 @@ public class Model {
         toDos.remove(index);
     }
 
+    public void removeFinishedToDoItems() {
+        toDos = new ArrayList<>(getToDosCompleted(false));
+    }
+
     public String showCountOfActiveToDoItems() {
         int countOfActiveToDoItems = getToDosCompleted(false).size();
         var sOrEmpty = "s";
@@ -178,6 +177,14 @@ public class Model {
             sOrEmpty = "";
         }
         return countOfActiveToDoItems + " item" + sOrEmpty + " left";
+    }
+
+    public void setFilter(String newFilter) {
+        selectedFilter = newFilter;
+    }
+
+    public UIState getUIState(){
+        return new UIState(selectedFilter, getFilteredToDos(), showCountOfActiveToDoItems());
     }
 
 }
@@ -242,12 +249,12 @@ new ToDo(2, "Zocken", true).updateText("Lesen");
 
 ##
 
-Definiere  eine Klasse `View` in einer neuen Datei.
+Definiere eine Klasse `View` in einer neuen Datei.
 
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um eine Methode `numberToFilter`. Diese gibt für 1 `All`, für 2 `Active` und für 3 `Completed` zurückgibt.
+Ergänze die Klasse `View` um eine Methode `numberToFilter`. Diese gibt für 1 `All`, für 2 `Active` und für 3 `Completed` zurückgibt.
 
 
 
@@ -270,34 +277,34 @@ view.numberToFilter(3);
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um eine Methode `showToDo`. Dieser wird ein ToDo übergeben. Sie gibt eine Darstellung als String zurück.
+Ergänze die Klasse `View` um eine Methode `showToDo`. Dieser wird ein ToDo übergeben. Sie gibt eine Darstellung als String zurück.
 Wenn ein ToDo abgeschlossen ist, wird das mit einem `C` dargestellt. Wenn es nicht abgeschlossen wird das mit einem `X` dargestellt.
 Vor der ID sollen vier Tabulatorzeichen (`\t`) und ein Leerzeichen stehen.
 
 ```{.java .cb-nb}
 var view = new View();
-view.showToDo(new ToDo(1, "Testaufgabe", false))
+view.showToDo(new ToDo(1, "Testaufgabe", false));
 ```
 
 ```{.java .cb-nb}
-view.showToDo(new ToDo(2, "Erledigte Aufgabe", true))
+view.showToDo(new ToDo(2, "Erledigte Aufgabe", true));
 ```
 
 **Hinweis:** In Java kann man sowohl zwei String als auch einen String und ein Integer addieren.
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um eine Methode `printToDos`.
+Ergänze die Klasse `View` um eine Methode `printToDos`.
 Implementiere die Methode `printToDos` in der Klasse `View`. Dieser wird eine Liste von ToDos übergeben. 
-Sie gibt diese formatiert aus. Darüber zeigt sie die ÜberschrifÜberschrift `todos` an. Vor dieser stehen ein New-Line-Zeichen(`\n`) und zwei Tabulatorzeichen.
+Sie gibt diese formatiert aus. Darüber zeigt sie die Überschrift `todos` an. Vor dieser stehen ein New-Line-Zeichen(`\n`) und zwei Tabulatorzeichen.
 
 ```{.java .cb-nb}
 var view = new View();
-view.printToDos(List.of(new ToDo(1, "Test", false)))
+view.printToDos(List.of(new ToDo(1, "Test", false)));
 ```
 
 ```{.java .cb-nb}
-view.printToDos(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)))
+view.printToDos(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)));
 ```
 
 **Hinweis**: Nutze `showToDo`!
@@ -305,7 +312,7 @@ view.printToDos(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)))
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um eine Methode `getIDs`. Dieser wird eine Liste von ToDos übergeben. Sie gibt eine unveränderliche Liste aller IDs der ToDos zurückgibt.
+Ergänze die Klasse `View` um eine Methode `getIDs`. Dieser wird eine Liste von ToDos übergeben. Sie gibt eine unveränderliche Liste aller IDs der ToDos zurückgibt.
 
 ```{.java .cb-nb}
 var view = new View();
@@ -320,7 +327,7 @@ view.getIDs(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)))
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um eine Methode `numbersFromOneTo`, die eine unveränderliche Liste aller Zahlen von 1 bis zur übergebenen Zahl (inklusive) zurückgibt.
+Ergänze die Klasse `View` um eine Methode `numbersFromOneTo`, die eine unveränderliche Liste aller Zahlen von 1 bis zur übergebenen Zahl (inklusive) zurückgibt.
 
 ```{.java .cb-nb}
 var view = new View();
@@ -335,7 +342,7 @@ view.numbersFromOneTo(5)
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um eine Methode `askForNewText`.  
+Ergänze die Klasse `View` um eine Methode `askForNewText`.  
 Sie soll den Benutzer auffordern, einen neuen Text für ein ToDo einzugeben, und diesen Text zurückgeben.
 
 
@@ -365,8 +372,8 @@ In diesem Beispiel ist die Rückgabe `"Fußball spielen"`
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um eine Methode `askForNewToDo`.  
-Sie fragt den Benutzer nach dem Text für ein **neues** ToDo und gibt diesen zurück. Nur die Frage ist anders als bei der letzen Aufgabe.
+Ergänze die Klasse `View` um eine Methode `askForNewToDo`.  
+Sie fragt den Benutzer nach dem Text für ein **neues** ToDo und gibt diesen zurück. Nur die Frage, die dem Benutzer gestellt wird, ist anders als bei der letzten Aufgabe.
 
 ```java
 var view = new View();
@@ -396,7 +403,7 @@ In diesem Beispiel ist die Rückgabe `"Fußball spielen"`
 
 ## Hilfsfunktionen
 
-Für die nächste Aufgabe brauchst du die Listen-Methode `contains`. Mit dieser kann bestimt werden, ob ein Wert in einer Liste vorkommt. 
+Für die nächste Aufgabe brauchst du die Listen-Methode `contains`. Mit dieser kann bestimmt werden, ob ein Wert in einer Liste vorkommt. 
 
 ```{.java .cb-nb}
 var xs = List.of(1, 3, 5);
@@ -420,8 +427,8 @@ NumberUtils.isCreatable(myString)
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um die Methode `askUntilElementInList`.
-Sie erhält eine Liste von Integern  und einen Prompt-Text. Die Methode fragt so lange nach einer Zahl, bis eine Zahl aus der Liste eingegeben wurde, und gibt diese als Integer zurück.
+Ergänze die Klasse `View` um die Methode `askUntilElementInList`.
+Sie erhält eine Liste von Integern und einen Prompt-Text. Die Methode fragt so lange nach einer Zahl, bis eine Zahl aus der Liste eingegeben wurde, und gibt diese als Integer zurück.
 
 ```java
 var view = new View();
@@ -451,7 +458,7 @@ In diesem Beispiel ist die Rückgabe $20$.
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um die Methode `askUntilInputIsId`.
+Ergänze die Klasse `View` um die Methode `askUntilInputIsId`.
 Sie bekommt eine Liste von ToDos und fragt so lange nach einer ID, bis eine gültige ID aus der Liste eingegeben wurde. Sie gibt die ID als Integer zurück.
 
 ```java
@@ -484,7 +491,7 @@ In diesem Beispiel ist die Rückgabe $2$.
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um die Methode `askUntilInputIsSmallerOrEqual`.
+Ergänze die Klasse `View` um die Methode `askUntilInputIsSmallerOrEqual`.
 Sie erhält einen Parameter `upperBound` und fragt so lange nach einer Zahl, bis eine Zahl zwischen 1 und `upperBound` eingegeben wurde. Die Methode gibt diese Zahl zurück.
 
 ```java
@@ -554,8 +561,8 @@ In diesem Beispiel ist die Rückgabe $1$.
 
 ## Aufgabe
 
-Erweitere die Klasse `View` um die Methode `askForFilter`. Diese fragt, welche ToDos angezeigt werden sollen.
-Sie fragt solange nach einer Eingabe bis eine der Zahlen  (1-3) eingegeben wurde.
+Ergänze die Klasse `View` um die Methode `askForFilter`. Diese fragt, welche ToDos angezeigt werden sollen.
+Sie fragt so lange nach einer Eingabe bis eine der Zahlen  (1-3) eingegeben wurde.
 Die Methode gibt anschließend den entsprechenden Filter (`All`, `Active` oder `Completed`) zurück.
 
 
@@ -597,19 +604,35 @@ In diesem Beispiel ist die Rückgabe `Completed`.
 
 **Hinweis**: Nutze `numberToFilter` und `askUntilInputIsSmallerOrEqual`!
 
-
 ## Aufgabe
 
-Erweitere die Klasse `View` um die Methode `showMainMenuAskForOption`
-Sie bekommt eine Liste von ToDos, einen String zur Anzeige der Anzahl aktiver ToDos und den gewählten Filter.  
+Erstelle in einer neuen Datei ein Record namens `UIState` mit den Feldern 
+
+- `currentFilter` (String), 
+- `selectedToDos` (Liste von ToDos) und 
+- `displayOfActiveToDos` (String).
+
+\scriptsize
+```{.java .cb-nb}
+new UIState("Active", List.of(new ToDo(1, "Test", false)), "1 item left");
+```
+```{.java .cb-nb}
+new UIState("Completed", List.of(), "0 items left");
+```
+\normalsize
+## Aufgabe
+
+Ergänze die Klasse `View` um die Methode `showMainMenuAskForOption`!
+Sie bekommt ein Objekt der Klasse `UIState` übergeben.
 Die Methode gibt die übergebenen Daten und das Hauptmenü aus und fragt nach einer Option (1-5).
-Sie fragt solange erneut nach bis eine der Zahlen  (1-5) eingegeben wurde. Diese Eingabe wird anschließend zurückgegben.
+Sie fragt so lange erneut nach bis eine der Zahlen  (1-5) eingegeben wurde. Diese Eingabe wird anschließend zurückgegeben.
 
 
 \scriptsize
 ```java
+var uiState = new UIState(List.of("All", new ToDo(1, "A", false), new ToDo(1, "A", true)), "1 open")
 var view = new View();
-view.showMainMenuAskForOption(List.of(new ToDo(1, "A", false), new ToDo(1, "A", true)), "1 open", "All");
+view.showMainMenuAskForOption(uiState);
 ```
 \normalsize
 ```
@@ -633,7 +656,7 @@ In diesem Beispiel ist die Rückgabe $3$.
 
 
 ```java
-view.showMainMenuAskForOption(List.of(), "Nothing to do!", "Completed");
+view.showMainMenuAskForOption(UIState("Completed", List.of(), "Nothing to do!"));
 ```
 ```
 		todos
@@ -667,23 +690,41 @@ Schütze die Methoden `numberToFilter`, `showToDo`, `printToDos`, `getIDs`, `num
 
 ## Aufgabe
 
-Definiere eine Klasse `Model` mit einem privaten Attribut `toDos`, das eine `ArrayList` von `ToDo`s ist.
-Füge der Klasse `Model` einen Konstruktor hinzu, der eine leere ToDo-Liste anlegt.
+Definiere eine Klasse `Model` mit einem Attribut 
+
+- `toDos`, das eine `ArrayList` von `ToDo`s ist
+- `filter`, das ein `String` ist
+
+
+
+
+## Aufgabe
+
+Füge der Klasse `Model` einen Konstruktor hinzu, der 
+
+- `toDos` mit einer leeren `ArrayList` 
+- `filter` mit dem String `All"`
+
+initialisiert.
 
 ```{.java .cb-nb}
 Model model = new Model();
 model.toDos;
 ```
+```{.java .cb-nb}
+model.toDos;
+```
+
 
 ## Aufgabe
 
-Füge der Klasse `Model` einen Konstruktor hinzu, der eine bestehende Liste von ToDos übernimmt.
+Füge der Klasse `Model` einen Konstruktor hinzu, der eine bestehende Liste von ToDos und einen Filter übernimmt.
 
 \scriptsize
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "Completed");
 model.toDos;
 ```
 
@@ -697,7 +738,7 @@ Füge der Klasse `Model` die Methode `getToDosCompleted` hinzu, die alle ToDos m
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.getToDosCompleted(false);
 ```
 
@@ -709,22 +750,23 @@ model.getToDosCompleted(true);
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `getToDosWithFilter` hinzu, die je nach Filter (`All`, `Active` oder `Completed`) die passenden ToDos liefert.
+Füge der Klasse `Model` die Methode `getFilteredToDos` hinzu, die je nach Filter (`All`, `Active` oder `Completed`) die passenden ToDos liefert.
 
 \scriptsize
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
-model.getToDosWithFilter("Active");
+Model model = new Model(list, "All");
+model.getFilteredToDos();
 ```
 
 ```{.java .cb-nb}
-model.getToDosWithFilter("Completed");
+model = new Model(list, "Active");
+model.getFilteredToDos();
 ```
 
 ```{.java .cb-nb}
-model.getToDosWithFilter("All");
+model.getFilteredToDos();
 ```
 
 \normalsize
@@ -733,12 +775,29 @@ model.getToDosWithFilter("All");
 
 ## Aufgabe
 
+Ergänze die Klasse `Model` um die Methode `getUIState`.
+Die Methode gibt ein Objekt der Klasse `UIState` zurück. Diesen enthält den aktuellen Filter, die gefilterten ToDos und die Anzeige der Anzahl offener Aufgaben.
+
+\scriptsize
+```{.java .cb-nb}
+List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
+Model model = new Model(list, "Active");
+model.getUIState();
+```
+\normalsize
+
+
+**Hinweis:** Nutze `getFilteredToDos` und `showCountOfActiveToDoItems`!
+
+
+## Aufgabe
+
 Füge der Klasse `Model` die Methode `idToIndex` hinzu, die den Index eines ToDos mit einer bestimmten ID findet.
 \scriptsize
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.idToIndex(3);
 ```
 
@@ -761,7 +820,7 @@ Füge der Klasse `Model` die Methode `getToDoItem` hinzu, die das ToDo mit einer
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.getToDoItem(3);
 ```
 
@@ -782,7 +841,7 @@ Dafür wird die bisher größte ID bestimmt und $1$ mehr zurückgegeben.
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.nextId();
 ```
 
@@ -803,7 +862,7 @@ Füge der Klasse `Model` die Methode `add` hinzu, die ein neues ToDo mit eindeut
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.add("Einkaufen");
 model.toDos;
 ```
@@ -826,7 +885,7 @@ Füge der Klasse `Model` die Methode `delete` hinzu, die das ToDo mit der entspr
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.delete(1);
 model.toDos;
 ```
@@ -848,7 +907,7 @@ Füge der Klasse `Model` die Methode `toggle` hinzu, die den Status eines ToDos 
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.toggle(7);
 model.getToDoItem(7);
 ```
@@ -870,7 +929,7 @@ Füge der Klasse `Model` die Methode `updateText` hinzu, die den Text eines ToDo
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.updateText(3, "Hausaufgaben machen");
 model.getToDoItem(3);
 ```
@@ -882,6 +941,22 @@ model.getToDoItem(7);
 
 \normalsize
 
+
+## Aufgabe
+
+Ergänze die Klasse `Model` um die Methode `setFilter`.
+Die Methode setzt den aktuellen Filter für die Anzeige der ToDos auf den übergebenen Wert.
+
+```{java .cb-nb}
+var model = new Model();
+model.setFilter("Completed");
+model.filter;
+```
+```{java .cb-nb}
+model.setFilter("Active");
+model.filter;
+```
+
 ## Aufgabe
 
 Füge der Klasse `Model` die Methode `removeFinishedToDoItems` hinzu, die alle erledigten ToDos aus der Liste entfernt.
@@ -890,7 +965,7 @@ Füge der Klasse `Model` die Methode `removeFinishedToDoItems` hinzu, die alle e
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(2, "Test2", true), new ToDo(3, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.removeFinishedToDoItems();
 model.toDos;
 ```
@@ -898,6 +973,7 @@ model.toDos;
 \normalsize
 
 **Hinweis**: Nutze `getToDosCompleted!`!
+
 
 ## Aufgabe
 
@@ -907,7 +983,7 @@ Füge der Klasse `Model` die Methode `showCountOfActiveToDoItems` hinzu, die die
 
 ```{.java .cb-nb}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list);
+Model model = new Model(list, "All");
 model.showCountOfActiveToDoItems();
 ```
 
@@ -927,11 +1003,11 @@ Schütze die Methoden `getToDosCompleted`, `idToIndex` und `nextId` durch einen 
 
 ## Aufgabe
 
-Erstelle eine Klasse `TerminalController`. Die Atrribute der Klasse sind ein Objekt der Klasse `View` und ein Objekt der Klasse `Model`.
+Erstelle eine Klasse `TerminalController`. Die Attribute der Klasse sind ein Objekt der Klasse `View` und ein Objekt der Klasse `Model`.
 
 ## Aufgabe
 
-Erweitere die Klasse `TerminalController` um die Methode `runApp`.  
+Ergänze die Klasse `TerminalController` um die Methode `runApp`.  
 Die Methode zeigt das Hauptmenü an, verarbeitet Benutzereingaben und steuert den Ablauf der ToDo-App, bis der Benutzer das Programm beendet.
 
 Implementiere zunächst nur die Optionen ToDos hinzuzufügen und das Programm zu beenden.
@@ -975,7 +1051,7 @@ Enter a number between 1 and 5
 ```
 
 **Hinweis:** Nutze die Methoden `showMainMenuAskForOption`, `askForNewToDo` der Klasse `View` und die Methoden
-`getToDosWithFilter`, `showCountOfActiveToDoItems` und `add` der Klasse `Model`.
+`getFilteredToDos`, `showCountOfActiveToDoItems` und `add` der Klasse `Model`.
 
 ## Aufgabe
 
@@ -1024,7 +1100,7 @@ Nutze die Methode `askForFilter` der Klasse `View`!
 
 ## Aufgabe
 
-Erweitere die Klasse `TerminalController` um die Methode `updateItem`.  
+Ergänze die Klasse `TerminalController` um die Methode `updateItem`.  
 Die Methode fragt nach einer ToDo-ID, einer Änderungsoption und führt dann die entsprechende Aktion (Text ändern, Status umschalten oder löschen) aus.
 
 ```java
@@ -1130,7 +1206,7 @@ Enter a number between 1 and 5
 ```
 
 
-**Hinweis**: Nutze die Methoden `toggle`, `delete`, `updateText` und `getToDosWithFilter` der Klasse `Model` und die Methoden `askUntilInputIsId`
+**Hinweis**: Nutze die Methoden `toggle`, `delete`, `updateText` und `getFilteredToDos` der Klasse `Model` und die Methoden `askUntilInputIsId`
 `askForUpdateOperation` und `askForNewText` der Klasse `View`!
 
 ## Aufgabe
