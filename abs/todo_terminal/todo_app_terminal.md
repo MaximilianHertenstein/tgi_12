@@ -222,7 +222,7 @@ new ToDo(3, "Sport machen");
 
 ## Aufgabe
 
-Füge dem `ToDo`-Record die Methode `toggle` hinzu, die ein neues ToDo mit umgekehrtem Status zurückgibt.
+Füge dem `ToDo`-Record die Methode `toggle` hinzu, die ein neues To-do mit umgekehrtem Status zurückgibt.
 
 ```{.java .cb-nb}
 new ToDo(1, "Test", false).toggle();
@@ -234,7 +234,7 @@ new ToDo(2, "Sport machen", true).toggle();
 
 ## Aufgabe
 
-Füge dem `ToDo`-Record die Methode `updateText` hinzu, die ein neues ToDo mit geändertem Text zurückgibt.
+Füge dem `ToDo`-Record die Methode `updateText` hinzu, die ein neues To-do mit geändertem Text zurückgibt.
 
 ```{.java .cb-nb}
 new ToDo(1, "Test", false).updateText("Sport machen");
@@ -277,8 +277,8 @@ view.numberToFilter(3);
 
 ## Aufgabe
 
-Ergänze die Klasse `View` um eine Methode `showToDo`. Dieser wird ein ToDo übergeben. Sie gibt eine Darstellung als String zurück.
-Wenn ein ToDo abgeschlossen ist, wird das mit einem `C` dargestellt. Wenn es nicht abgeschlossen wird das mit einem `X` dargestellt.
+Ergänze die Klasse `View` um eine Methode `showToDo`. Dieser wird ein To-do übergeben. Sie gibt eine Darstellung als String zurück.
+Wenn ein To-do abgeschlossen ist, wird das mit einem `C` dargestellt. Wenn es nicht abgeschlossen wird das mit einem `X` dargestellt.
 Vor der ID sollen vier Tabulatorzeichen (`\t`) und ein Leerzeichen stehen.
 
 ```{.java .cb-nb}
@@ -295,7 +295,7 @@ view.showToDo(new ToDo(2, "Erledigte Aufgabe", true));
 ## Aufgabe
 
 Ergänze die Klasse `View` um eine Methode `printToDos`.
-Implementiere die Methode `printToDos` in der Klasse `View`. Dieser wird eine Liste von ToDos übergeben. 
+Implementiere die Methode `printToDos` in der Klasse `View`. Dieser wird eine Liste von To-dos übergeben. 
 Sie gibt diese formatiert aus. Darüber zeigt sie die Überschrift `todos` an. Vor dieser stehen ein New-Line-Zeichen(`\n`) und zwei Tabulatorzeichen.
 
 ```{.java .cb-nb}
@@ -312,7 +312,7 @@ view.printToDos(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)));
 
 ## Aufgabe
 
-Ergänze die Klasse `View` um eine Methode `getIDs`. Dieser wird eine Liste von ToDos übergeben. Sie gibt eine unveränderliche Liste aller IDs der ToDos zurückgibt.
+Ergänze die Klasse `View` um eine Methode `getIDs`. Dieser wird eine Liste von To-dos übergeben. Sie gibt eine unveränderliche Liste aller IDs der To-dos zurück.
 
 ```{.java .cb-nb}
 var view = new View();
@@ -343,7 +343,7 @@ view.numbersFromOneTo(5)
 ## Aufgabe
 
 Ergänze die Klasse `View` um eine Methode `askForNewText`.  
-Sie soll den Benutzer auffordern, einen neuen Text für ein ToDo einzugeben, und diesen Text zurückgeben.
+Sie soll den Benutzer auffordern, einen neuen Text für ein To-do einzugeben, und diesen Text zurückgeben.
 
 
 ```java
@@ -373,7 +373,7 @@ In diesem Beispiel ist die Rückgabe `"Fußball spielen"`
 ## Aufgabe
 
 Ergänze die Klasse `View` um eine Methode `askForNewToDo`.  
-Sie fragt den Benutzer nach dem Text für ein **neues** ToDo und gibt diesen zurück. Nur die Frage, die dem Benutzer gestellt wird, ist anders als bei der letzten Aufgabe.
+Sie fragt den Benutzer nach dem Text für ein **neues** To-do und gibt diesen zurück. Nur die Frage, die dem Benutzer gestellt wird, ist anders als bei der letzten Aufgabe.
 
 ```java
 var view = new View();
@@ -459,7 +459,7 @@ In diesem Beispiel ist die Rückgabe $20$.
 ## Aufgabe
 
 Ergänze die Klasse `View` um die Methode `askUntilInputIsId`.
-Sie bekommt eine Liste von ToDos und fragt so lange nach einer ID, bis eine gültige ID aus der Liste eingegeben wurde. Sie gibt die ID als Integer zurück.
+Sie bekommt eine Liste von To-dos und fragt so lange nach einer ID, bis eine gültige ID aus der Liste eingegeben wurde. Sie gibt die ID als Integer zurück.
 
 ```java
 var view = new View();
@@ -531,7 +531,7 @@ In diesem Beispiel ist die Rückgabe $2$.
 ## Aufgabe
 
 Implementiere die Methode `askForUpdateOperation` in der Klasse `View`.  
-Sie fragt, was an einem ToDo geändert werden soll. 
+Sie fragt, was an einem To-do geändert werden soll. 
 die Frage wird gestellt, bis eine der Zahlen  (1-3) eingegeben wurde.
 Anschließend wird die Eingabe zurückgegeben.
 
@@ -561,7 +561,7 @@ In diesem Beispiel ist die Rückgabe $1$.
 
 ## Aufgabe
 
-Ergänze die Klasse `View` um die Methode `askForFilter`. Diese fragt, welche ToDos angezeigt werden sollen.
+Ergänze die Klasse `View` um die Methode `askForFilter`. Diese fragt, welche To-dos angezeigt werden sollen.
 Sie fragt so lange nach einer Eingabe bis eine der Zahlen  (1-3) eingegeben wurde.
 Die Methode gibt anschließend den entsprechenden Filter (`All`, `Active` oder `Completed`) zurück.
 
@@ -609,7 +609,7 @@ In diesem Beispiel ist die Rückgabe `Completed`.
 Erstelle in einer neuen Datei ein Record namens `UIState` mit den Feldern 
 
 - `currentFilter` (String), 
-- `selectedToDos` (Liste von ToDos) und 
+- `selectedToDos` (Liste von To-dos) und 
 - `displayOfActiveToDos` (String).
 
 \scriptsize
@@ -718,7 +718,7 @@ model.toDos;
 
 ## Aufgabe
 
-Füge der Klasse `Model` einen Konstruktor hinzu, der eine bestehende Liste von ToDos und einen Filter übernimmt.
+Füge der Klasse `Model` einen Konstruktor hinzu, der eine bestehende Liste von To-dos und einen Filter übernimmt.
 
 \scriptsize
 
@@ -732,7 +732,7 @@ model.toDos;
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `getToDosCompleted` hinzu, die alle ToDos mit dem gewünschten Status zurückgibt.
+Füge der Klasse `Model` die Methode `getToDosCompleted` hinzu, die alle To-dos mit dem gewünschten Status zurückgibt.
 
 \scriptsize
 
@@ -750,7 +750,7 @@ model.getToDosCompleted(true);
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `getFilteredToDos` hinzu, die je nach Filter (`All`, `Active` oder `Completed`) die passenden ToDos liefert.
+Füge der Klasse `Model` die Methode `getFilteredToDos` hinzu, die je nach Filter (`All`, `Active` oder `Completed`) die passenden To-dos liefert.
 
 \scriptsize
 
@@ -776,7 +776,7 @@ model.getFilteredToDos();
 ## Aufgabe
 
 Ergänze die Klasse `Model` um die Methode `getUIState`.
-Die Methode gibt ein Objekt der Klasse `UIState` zurück. Diesen enthält den aktuellen Filter, die gefilterten ToDos und die Anzeige der Anzahl offener Aufgaben.
+Die Methode gibt ein Objekt der Klasse `UIState` zurück. Diesen enthält den aktuellen Filter, die gefilterten To-dos und die Anzeige der Anzahl offener Aufgaben.
 
 \scriptsize
 ```{.java .cb-nb}
@@ -792,7 +792,7 @@ model.getUIState();
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `idToIndex` hinzu, die den Index eines ToDos mit einer bestimmten ID findet.
+Füge der Klasse `Model` die Methode `idToIndex` hinzu, die den Index eines To-dos mit einer bestimmten ID findet.
 \scriptsize
 
 ```{.java .cb-nb}
@@ -814,7 +814,7 @@ model.idToIndex(2);
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `getToDoItem` hinzu, die das ToDo mit einer bestimmten ID zurückgibt.
+Füge der Klasse `Model` die Methode `getToDoItem` hinzu, die das To-do mit einer bestimmten ID zurückgibt.
 
 \scriptsize
 
@@ -834,7 +834,7 @@ model.getToDoItem(1);
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `nextId` hinzu, die die ID für ein neues ToDo berechnet.
+Füge der Klasse `Model` die Methode `nextId` hinzu, die die ID für ein neues To-do berechnet.
 Dafür wird die bisher größte ID bestimmt und $1$ mehr zurückgegeben.
 
 \scriptsize
@@ -845,7 +845,7 @@ Model model = new Model(list, "All");
 model.nextId();
 ```
 
-Wenn keine ToDos vorhanden sind, wird mit der ID $1$ angefangen.
+Wenn keine To-dos vorhanden sind, wird mit der ID $1$ angefangen.
 
 ```{.java .cb-nb}
 Model model = new Model();
@@ -856,7 +856,7 @@ model.nextId();
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `add` hinzu, die ein neues ToDo mit eindeutiger `id` und dem übergebenen Text hinzufügt.
+Füge der Klasse `Model` die Methode `add` hinzu, die ein neues To-do mit eindeutiger `id` und dem übergebenen Text hinzufügt.
 
 \scriptsize
 
@@ -879,7 +879,7 @@ model.toDos;
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `delete` hinzu, die das ToDo mit der entsprechenden ID entfernt.
+Füge der Klasse `Model` die Methode `delete` hinzu, die das To-do mit der entsprechenden ID entfernt.
 
 \scriptsize
 
@@ -901,7 +901,7 @@ model.toDos;
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `toggle` hinzu, die den Status eines ToDos umschaltet.
+Füge der Klasse `Model` die Methode `toggle` hinzu, die den Status eines To-dos umschaltet.
 
 \scriptsize
 
@@ -923,7 +923,7 @@ model.getToDoItem(3);
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `updateText` hinzu, die den Text eines ToDos ändert.
+Füge der Klasse `Model` die Methode `updateText` hinzu, die den Text eines To-dos ändert.
 
 \scriptsize
 
@@ -945,7 +945,7 @@ model.getToDoItem(7);
 ## Aufgabe
 
 Ergänze die Klasse `Model` um die Methode `setFilter`.
-Die Methode setzt den aktuellen Filter für die Anzeige der ToDos auf den übergebenen Wert.
+Die Methode setzt den aktuellen Filter für die Anzeige der To-dos auf den übergebenen Wert.
 
 ```{java .cb-nb}
 var model = new Model();
@@ -959,7 +959,7 @@ model.filter;
 
 ## Aufgabe
 
-Füge der Klasse `Model` die Methode `removeFinishedToDoItems` hinzu, die alle erledigten ToDos aus der Liste entfernt.
+Füge der Klasse `Model` die Methode `removeFinishedToDoItems` hinzu, die alle erledigten To-dos aus der Liste entfernt.
 
 \scriptsize
 
@@ -996,7 +996,7 @@ model.showCountOfActiveToDoItems();
 
 
 ## Aufgabe
-Schütze die Methoden `getToDosCompleted`, `idToIndex` und `nextId` durch einen Zugriff außerhalb der Klasse `Model`. Schütze auch die Liste der ToDos.
+Schütze die Methoden `getToDosCompleted`, `idToIndex` und `nextId` durch einen Zugriff außerhalb der Klasse `Model`. Schütze auch die Liste der To-dos.
 
 # Terminal-Controller
 
@@ -1010,7 +1010,7 @@ Erstelle eine Klasse `TerminalController`. Die Attribute der Klasse sind ein Obj
 Ergänze die Klasse `TerminalController` um die Methode `runApp`.  
 Die Methode zeigt das Hauptmenü an, verarbeitet Benutzereingaben und steuert den Ablauf der ToDo-App, bis der Benutzer das Programm beendet.
 
-Implementiere zunächst nur die Optionen ToDos hinzuzufügen und das Programm zu beenden.
+Implementiere zunächst nur die Optionen To-dos hinzuzufügen und das Programm zu beenden.
 
 ```java
 var controller = new TerminalController();
@@ -1211,7 +1211,7 @@ Enter a number between 1 and 5
 
 ## Aufgabe
 
-Erweitere `runApp` um die Möglichkeit alle erledigten ToDos zu löschen.
+Erweitere `runApp` um die Möglichkeit alle erledigten To-dos zu löschen.
 
 ```java
 var controller = new TerminalController();

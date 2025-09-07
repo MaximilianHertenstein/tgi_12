@@ -1,0 +1,289 @@
+\documentclass[a4paper]{scrartcl}
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig
+]{schule}
+
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+\usepackage{tikz}
+\usepackage{float}
+\usetikzlibrary{arrows,calc,positioning}
+
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+\usepackage{verbatim}
+\usepackage[ngerman]{babel} 
+\usepackage{shellesc}
+\usepackage{minted}
+	\usepackage{url}
+\usepackage{microtype}	
+\usepackage[font=tiny,labelfont=bf]{caption}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\date{}
+\usetikzlibrary{positioning} 
+\title{HTTP-Protokoll}
+\begin{document}
+\maketitle
+\section{Client-Server-Modell}\label{sec:client-server-modell}
+
+
+Das Client-Server-Modell beschreibt die Aufteilung von Aufgaben in einem Netzwerk.
+Client und Server sind Programme, die miteinander kommunizieren.
+
+
+\begin{itemize}
+\item Der Client schickt Anfragen an den Server. 
+\item Der Server beantwortet die Anfragen.
+\end{itemize}
+\begin{tikzpicture}[block/.style={draw,minimum width=2cm,minimum height=1cm}, font=\sffamily] 
+\node[block](C) {Client}; 
+\node[block,right=9cm of C](S) {Server}; 
+\draw[-latex] (C.15) -- (S.165)
+node[midway, above]{Anfrage};
+\draw[-latex] (S.195) -- (C.-15) node[midway, below]{Antwort};
+\end{tikzpicture} 
+
+Z. B. kann eine Schülerin auf ihrem IPAD die App Untis starten.
+Diese ist ein Client.
+Die Schülerin kann sich in der App ihren Stundenplan anschauen.
+Dabei wird eine Anfrage an den Server geschickt.
+Dieser beantwortet die Abfrage mit dem gewünschten Stundenplan.
+
+Sie kann dem Server aber auch eine Aufgabe schicken, z.B.\ sich für diesen Tag krankzumelden.
+Der Server versucht die Aufgabe zu erledigen und schickt der Schülerin, ob das geklappt hat.
+
+\section{Netzwerkprotokolle}\label{sec:netzwerkprotokolle}
+
+Die Kommunikation von Client und Server wird über Protokolle geregelt.
+In einem Protokoll ist festgelegt, welche Form die Nachrichten haben müssen und wie die Kommunikation abläuft.
+
+\section{Grundlagen des HTTP-Protokolls}\label{sec:grundlagen-des-http-protokolls}
+
+Das Protokoll HTTP (Hypertext-Transfer-Protokoll) wird eingesetzt um HTML(Hypertext-Markup-Language) von HTTP-Servern zu Browsern zu schicken.
+
+
+\begin{tikzpicture}[block/.style={draw,minimum width=2cm,minimum height=1cm}, font=\sffamily] 
+\node[block](C) {Client}; 
+\node[block,right=9cm of C](S) {HTTP-Server}; 
+\draw[-latex] (C.15) -- (S.165)
+node[midway, above]{HTTP-Anfrage};
+\draw[-latex] (S.195) -- (C.-15) node[midway, below]{HTTP-Antwort};
+\end{tikzpicture} 
+
+Wenn wir in die Adresszeile unseres Browsers \url{github.com/login}  eingeben und Enter drücken, wird die folgende HTTP-Anfrage versendet.
+
+\begin{Verbatim}[label={verb:verbatim2}]
+GET /login HTTP/2
+Host: github.com
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+...
+...
+\end{Verbatim}
+
+In der ersten Zeile steht, welche
+\begin{itemize}
+\item  welche HTTP-Methode verwendet wurde (\texttt{GET})
+\item  der Pfad zu der abgefragten Seite (\texttt{/login})
+\item  welche Version des Protokolls verwendet wurde (HTTP 2)
+
+\end{itemize}
+
+ 
+
+
+
+Anschließend folgen die HTTP-Header.
+Jeder Header hat einen Namen und einen Wert.
+Zum Beispiel hat der Header \texttt{Host} den Wert \texttt{github.com}.
+Das gibt an, dass der Name des angefragten Servers \texttt{github.com} lautet.
+Im zweiten Header ist angegeben, dass der Client, HTML-Code als Antwort bevorzugt, aber auch noch eine Reihe anderer Formate wie z.B.\ XML akzeptiert.
+
+Der HTTP-Server \texttt{github.com} schickt daraufhin eine Antwort, die folgendermaßen beginnt.
+\begin{Verbatim}[label={verb:verbatim3}]
+HTTP/2 200 
+date: Thu, 04 Sep 2025 15:55:26 GMT
+content-type: text/html; charset=utf-8
+...
+...
+\end{Verbatim}
+
+In der ersten Zeile steht neben der HTTP-Version der Statuscode $200$.
+Das bedeutet, dass die Anfrage ohne Probleme beantwortet werden kann.
+Der zweite Header \texttt{content-type} gibt an, welches Format die Antwort des Servers hat.
+In diesem Fall wurde also mit HTML-Code geantwortet.
+
+Nach den Headern folgt der eigentliche Inhalt der Nachricht 
+
+\begin{Verbatim}[label={verb:verbatim4}]
+<!DOCTYPE html>
+<html lang="en">
+....
+
+  <title> Sign in to github
+  </title>
+...
+</html>
+\end{Verbatim}
+Der Browser rendert den HTML-Code korrekt, da durch das Lesen des Headers \texttt{content-type} weiß, dass die Antwort des Servers HTML-Code ist.
+
+
+
+\begin{Verbatim}[label={verb:verbatim5}]
+┌────────────────────────┐      ┌─HTTP REQUEST────────────────┐
+│ BROWSER              X │      │                             │
+├────────────────────────┤      │ GET /login HTTP2            │
+│ ┌────────────────────┐ │      │ Host: github.com            │
+│ │  github.com/login  │ │      │ Accept: text/html ...       │
+│ └────────────────────┘ │      └─────────────────────────────┘
+│                    ────┼───────────┐
+│                        │           │
+│                        │           │
+└────────────────────────┘           │
+                              ┌──────▼──────┐
+                              │   H T T P   │
+                              │ S E R V E R │
+                              └──────┬──────┘
+┌────────────────────────┐           │
+│ BROWSER              X │           │
+├────────────────────────┤           │
+│                        │           │
+│ Sign in to github      │ ◀─────────┘
+│                        │
+│                        │      ┌─HTTP RESPONSE───────────────┐
+│ ────────────────────── │      │                             │
+│  ....                  │      │ HTTP/2 200                  │
+│                        │      │ ...                         │
+└────────────────────────┘      │ <html lang="en">            │
+                                │ ....                        │
+                                │ <title>Sign in to github    │
+                                └─────────────────────────────┘
+\end{Verbatim}
+
+\section{HTTP-Methoden}\label{sec:http-methoden}
+
+Die HTTP-Anfrage, die wir oben gesehen hatten, hatte die Methode \texttt{GET}.
+Es gibt eine Vielzahl von HTTP Methoden.
+Wir benötigen neben dieser Methode aber nur noch eine Weitere.
+
+\begin{itemize}
+\item Die Methode \texttt{GET} wird genutzt, um Inhalte abzufragen.
+Bei \texttt{GET}-Abfragen sollte sich auf dem Zustand nichts ändern.
+
+\item Die Methode \texttt{POST} wird genutzt, um Daten vom Client zum Server zu übertragen.
+Dies kann zu einer Zustandsänderung führen.
+Z.B.\ würde das Anmelden bei einem Newsletter per \texttt{POST}-Abfrage übertragen werden.
+Bei Postabfragen können Informationen, wie z.B.\ eine eingegebene E-Mail-Adresse als Schlüssel-Wert-Paar(z.B. \texttt{email=joe@example.com}) im Request-Body übertragen werden.
+
+\pagebreak
+\begin{Verbatim}[label={verb:verbatim}]
+┌────────────────────────┐      ┌─HTTP REQUEST────────────────┐
+│ BROWSER              X │      │                             │
+├────────────────────────┤      │ POST /                      │
+│                        │      │ Host: hypermedia.systems    │
+│ SIGN UP                │      │ ...                         │
+│ ┌────────────────────┐ │      │ email=joe@example.com       │
+│ │ joe@example.com    │ │      └─────────────────────────────┘
+│ └────────────────────┘ │
+│ ┌─────────┐        ────┼───────────┐
+│ │ Sign up │            │           │
+│ └─────────┘            │           │
+└────────────────────────┘           │
+                              ┌──────▼──────┐
+                              │   H T T P   │
+                              │ S E R V E R │
+                              └──────┬──────┘
+┌────────────────────────┐           │
+│ BROWSER              X │           │
+├────────────────────────┤           │
+│                        │           │
+│ THANK YOU FOR SIGNING  ◀───────────┘
+│ UP                     │
+│                        │      ┌─HTTP RESPONSE───────────────┐
+│                        │      │                             │
+│                        │      │ 201 Created                 │
+│                        │      │ ...                         │
+└────────────────────────┘      │ <h1>Thank you for signing   │
+                                │ up</h1>                     │
+                                └─────────────────────────────┘
+\end{Verbatim}
+\tiny{Quelle:\url{https://hypermedia.systems/hypermedia-a-reintroduction/#_form_tags}}
+\end{itemize}
+
+
+\section{URLs}\label{sec:urls}
+
+Eine URL gibt eindeutig an, wo sich eine Resource befindet und wo auf diese zugegriffen werden kann.
+Z.B.\ ist \url{http://github.com/login}eine Ressource.
+Diese hat die folgenden Bestandteile:
+
+\begin{table}[H]
+\begin{tabular}{ll}
+
+Bestandteil & im Beispiel \\
+\hline
+Das verwendete Protokoll & \texttt{http}\\
+
+Der Name des Servers & \texttt{github.com}  \\
+
+Der Pfad zu der angefragten Ressource & \texttt{/login}   \\
+
+\end{tabular}\label{tab:table}
+\end{table}
+
+
+
+
+Eine URL kann auch relativ angegeben werden.
+Wenn z.B.\ auf der Seite \texttt{github.com} ein Link auf die URL \url{/login}verweist, führt der Browser beim Klick auf den Link eine HTTP-Anfrage an die Adresse \texttt{github.com/login} durch.
+
+\section{Query-Parameter}\label{sec:query-parameter}
+
+Wenn man GHSE googelt, wird eine HTTP Anfrage an die folgende URI durchgeführt:
+
+\url{https://www.google.com/search?q=ghse&...}
+
+Hinter dem Pfad \texttt{/search} steht ein Fragezeichen.
+Dahinter wird mit \texttt{q=ghse} angegeben, wonach gesucht wurde.
+Dabei handelt es sich um einem Query Parameter.
+In diesem Beispiel hat dieser den Namen \texttt{q} und den Wert \texttt{GHSE}.
+
+
+Danach können weitere solcher Query-Parameter folgen.
+Zwischen zwei Query-Parameter steht ein \texttt{\&}.
+
+
+\section{Statuscodes}\label{sec:statuscodes}
+
+Die HTTP-Antwort oben hat mit dem Statuscode $200$ begonnen.
+Neben diesem sind auch noch zwei weitere Statuscodes besonders wichtig für uns.
+
+\begin{table}[H]
+
+\begin{tabular}{ll}
+
+Code & Bedeutung \\
+\hline
+200 & Die Abfrage wurde erfolgreich bearbeitet  \\
+
+404 & Die abgefragte Ressource konnte nicht gefunden werden  \\
+
+500 & Bei der Bearbeitung der Abfrage ist auf ein Fehler auf dem Server aufgetreten   \\
+
+\end{tabular}\label{tab:table2}
+\end{table}
+
+
+
+\end{document}
