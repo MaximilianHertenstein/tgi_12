@@ -181,7 +181,7 @@ contains(List.of("hello", "how", "are", "you", "?") , "are")
 
 # Aufgabe
 
-Erstelle eine Datenklasse `V2`{.java}. Die Objekte dieser Klasse sind Vektoren im zweidimensionalen Raum mit ganzzahligen Komponenten. Beide Komponenten sind unveränderlich.
+Erstelle ein Record `V2`{.java}. Die Objekte dieser Klasse sind Vektoren im zweidimensionalen Raum mit ganzzahligen Komponenten. Beide Komponenten sind unveränderlich.
 
 ```{.java .cb-nb first_number=1}
 new V2(3, 2);
@@ -193,7 +193,7 @@ new V2(1, -5);
 
 
 # Aufgabe
-Erweitere die Datenklasse `V2`{.java} um die Methode `plus`{.java}. Dieser wird ein Vektor übergeben. Es wird die Summe der beiden Vektoren zurückgegeben.
+Erweitere die Klasse `V2`{.java} um die Methode `plus`{.java}. Dieser wird ein Vektor übergeben. Es wird die Summe der beiden Vektoren zurückgegeben.
 
 
 
@@ -210,7 +210,7 @@ $$\begin{pmatrix} v_{1} \\ v_{2}\end{pmatrix} +  \begin{pmatrix} w_{1} \\ w_{2} 
 
 
 # Aufgabe
-Erweitere die Datenklasse `V2`{.java} um die Methode `times`{.java}. Dieser wird ein Vektor übergeben. Es wird das Skalarprodukt der beiden Vektoren zurückgegeben.
+Erweitere die Klasse `V2`{.java} um die Methode `times`{.java}. Dieser wird ein Vektor übergeben. Es wird das Skalarprodukt der beiden Vektoren zurückgegeben.
 
 
 
@@ -225,6 +225,11 @@ new V2(3, 2).times(new V2(1, -5))
 
 $$\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} \cdot \begin{pmatrix} w_1 \\ w_2 \end{pmatrix} =  v_1 w_1 + v_2 w_2 $$
 
+
+
+# Aufgabe
+
+Verschiebe die Klasse `V2` in eine Datei mit diesem Namen. Schreibe `public` vor den Namen der Klasse, um sie in anderen Dateien nutzen zu können.
 
 
 # Aufgabe
@@ -365,7 +370,7 @@ List.of(1, 2).contains(2);
 
 # Aufgabe
 
-Implementiere eine Daten-Klasse `Snake`. Die Eigenschaften der Klasse sind
+Implementiere ein Record `Snake`. Die Eigenschaften der Klasse sind
 
 - die Postion des Schlangenkopfes als Vektor
 - die Postion aller anderen Teile der Schlange als Liste von Vektoren
@@ -492,7 +497,7 @@ new Snake(new V2(3, 2))
 
 
 # Aufgabe 
-Implementiere die Klasse `Model`.
+Implementiere die Klasse `Model` mit dem Schlüssenwort `class`.
 Die Eigenschaften der Klasse sind
 
 - die Anzahl der Spalten des Spielfelds
@@ -626,6 +631,10 @@ new UIState(new V2(6, 5), List.of(new V2(5, 5), new V2(5, 4)), new V2(1, 0))
 ```{.java .cb-nb first_number=1}
 new UIState(new V2(6, 5), List.of(), new V2(2, 3))
 ```
+
+# Aufgabe
+Verschiebe die Klasse `UISTate` in eine Datei mit diesem Namen. Schreibe `public` vor den Namen der Klasse, um sie in anderen Dateien nutzen zu können.
+
 
 
 # Aufgabe 
@@ -770,6 +779,9 @@ TUI(5, 3).print(UIState(new V2(2,2), List.of(new V2(1, 2), new V2(1,1), new V2(1
 ![](print_2.png){ width=30% }
 
 
+# Aufgabe 
+
+Verschiebe die Klasse `TUI` in eine Datei mit diesem Namen. Schreibe `public` vor den Namen der Klasse, um sie in anderen Dateien nutzen zu können.
 
 
 # Aufgabe

@@ -246,7 +246,9 @@ Sie reagiert auf Anfragen, die von dem Input-Element in `editingForm` geschickt 
 
 **Hinweis:** Nutze die Methode `showToDo` und die Methode `updateText` der Klasse `Model`.
 
+#
 
+Nutze HTMX um beim Hinzufügen eines To-dos nicht immer die ganze Seite neu zu laden. Ändere dafür das Formular mit dem To-dos hinzugefügt werden. 
 
 # Aufgabe
 

@@ -1,4 +1,5 @@
 package org.example;
 
-public class Snake {
-}
+import java.util.ArrayList;
+import java.util.List;
+

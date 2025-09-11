@@ -1,26 +1,24 @@
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.TerminalSize;
-import org.example.TUI;
-import org.example.UIState;
-import org.example.V2;
+---
+title: Snake
+codebraid:
+  jupyter: true
+---
 
-import java.util.Random;
+```{.java .cb-run}
+//import java.util.Random;
 
 
-import static java.lang.Thread.sleep;
+record V2(int x, int y) {
 
-void main() throws IOException, InterruptedException {
+    V2 plus(V2 other) {
+        return new V2(x + other.x(), y + other.y());
+    }
 
-    playSnake(50, 20);
-
+    int times(V2 other) {
+        return x * other.x() + y * other.y();
+    }
 
 }
-
-
-
 
 
 V2 keyToV2(char pressedKey) {
@@ -59,7 +57,7 @@ boolean isOnBoard(V2 v, int cols, int rows) {
 
 V2 generateRandomFreeCoordinates(List<V2> blockedCoordinates, int rows, int cols) {
     while (true) {
-        var random = new Random();
+        Random random = new Random();
         var newAppleX = random.nextInt(0, cols);
         var newAppleY = random.nextInt(0, rows);
         var newAppleCoordinates = new V2(newAppleX, newAppleY);
@@ -69,8 +67,7 @@ V2 generateRandomFreeCoordinates(List<V2> blockedCoordinates, int rows, int cols
     }
 }
 
-
-public record Snake(
+record Snake(
         V2 head,
         List<V2> tail,
         boolean digesting
@@ -107,13 +104,16 @@ public record Snake(
 
 }
 
+record UIState(V2 snakeHead, List<V2> snakeTail, V2 applePosition) {
+}
+
 class Model {
 
-    private final int cols;
-    private final int rows;
-    private Snake snake;
-    private V2 direction;
-    private V2 applePosition;
+     final int cols;
+     final int rows;
+     Snake snake;
+    V2 direction;
+     V2 applePosition;
 
     Model(int cols, int rows, Snake snake, V2 direction, V2 applePosition) {
         this.cols = cols;
@@ -122,18 +122,11 @@ class Model {
         this.direction = direction;
         this.applePosition = applePosition;
     }
-
-
+    
+    
     Model(int cols, int rows) {
         this(cols,rows,new Snake(new V2(cols / 2, rows / 2)), new V2(1, 0), new V2(cols - 1, rows - 1));
-
-//        this.cols = cols;
-//        this.rows = rows;
-//        this.snake = new Snake(new V2(cols / 2, rows / 2));
-//        this.direction = new V2(1, 0);
-//        this.applePosition = new V2(cols - 1, rows - 1);
     }
-
 
     boolean snakeIsAlive() {
         return isOnBoard(snake.head(), cols, rows) && !snake.tailBitten();
@@ -153,7 +146,7 @@ class Model {
 
     void moveSnake() {
         snake = snake.move(direction, applePosition);
-        if (snake.digesting && !boardIsFull()) {
+        if (snake.digesting() && !boardIsFull()) {
             applePosition = generateRandomFreeCoordinates(snake.getCoordinates(), rows, cols);
         }
     }
@@ -173,19 +166,57 @@ class Model {
 
 
 
+```
+
+# Aufgabe 
+
+Erstelle ein Klassendiagramm, in dem die Klassen `V2`, `Snake`, `Model` und `UIState` dargestellt sind.
 
 
-void playSnake(int columns, int rows) throws IOException, InterruptedException {
-    var tui = new TUI(columns, rows);
-    var model = new Model(columns, rows);
-    tui.print(model.getUIState());
-    while (model.gameOngoing()) {
-        var input = tui.getPressedKey();
-        model.setDirection(input);
-        model.moveSnake();
-        tui.print(model.getUIState());
-    }
-    tui.print(model.getUIState());
-    tui.printString(model.getEndMessage());
-    tui.close();
-}
+# Aufgabe 
+
+Erstelle ein Objektdiagramm für das Objekt `snake`.
+
+
+```{.java .cb-nb first_number=1}
+var snake = new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5), new V2(4, 6)), true);
+```
+
+
+# Aufgabe 
+
+Die Schlagen wird folgendermaßen bewegt.
+
+\footnotesize
+```{.java .cb-nb first_number=1}
+var newSnake = snake.move(new V2(1, 0), new V2(7, 9));
+newSnake;
+```
+\normalsize
+
+
+Erstelle ein Objektdiagramm für das Objekt `newSnake`.
+
+
+# Aufgabe 
+
+Erstelle ein Objektdiagramm für das Objekt `model`!
+
+
+```{.java .cb-nb first_number=1}
+var model = new Model(8, 9, snake, new V2(1, 0), new V2(3, 2));
+```
+
+
+# Aufgabe 
+
+Erstelle ein weiteres Objektdiagramm für das Objekt `model` nach dem die Methode `moveSnake` aufgerufen wurde!
+
+\footnotesize
+
+```{.java .cb-nb first_number=1}
+model.moveSnake();
+System.out.println(model.snake);
+System.out.println(model.applePosition);
+```
+\normalsize

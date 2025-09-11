@@ -30,7 +30,7 @@ public record ToDo(int id, String text, boolean completed) {
 
 }
 
-public record UIState(String currentFilter, List<ToDo> selectedToDos ,String displayOfActiveToDos) {
+public record UIState(String selectedFilter, List<ToDo> selectedToDos ,String displayOfActiveToDos) {
 }
 
 public record View() {
@@ -608,7 +608,7 @@ In diesem Beispiel ist die Rückgabe `Completed`.
 
 Erstelle in einer neuen Datei ein Record namens `UIState` mit den Feldern 
 
-- `currentFilter` (String), 
+- `selectedFilter` (String), 
 - `selectedToDos` (Liste von To-dos) und 
 - `displayOfActiveToDos` (String).
 

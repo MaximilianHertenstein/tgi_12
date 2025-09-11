@@ -1,0 +1,231 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+%\usepackage[simplified]{pgf
+%-umlcd}
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig,
+%module={ohne}
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Objektdiagramme}
+\begin{document}
+\switchUmlcdSchool
+%\section*{Objektdiagramme}
+\subsection*{Grundlagen}
+Ein Klassendiagramm beschreibt die Klassenstruktur eines Programms. Diese ist nicht vom Zeitpunkt der Ausführung abhängig.
+Im Gegensatz zeigt ein Objektdiagramm, welche Objekte es zu einen ganz konkreten Zeitpunkt gibt und welche Werte deren Eigenschaften haben. Im folgenden Code wird eine Klasse definiert und zwei Objekte dieser Klasse erzeugt.
+\begin{minted}[]{Java}
+record Student(String name, int age){}
+
+var max = new Student("Max", 17);
+var alex = new Student("Alex", 18);
+\end{minted}
+\noindent
+
+Nach der Ausführung des gesamten Codes kann man den Zustand mit folgendem Objektdiagramm darstellen.
+
+\begin{center}
+\begin {tikzpicture}
+
+\begin{object}[text width =3 cm]{max}{0, 0}
+\instanceOf{Student}
+\attribute{name = \dq Max\dq}
+\attribute{age = 17}
+\end{object}
+
+\begin{object}[text width =3 cm]{alex}{8, 0}
+\instanceOf{Student}
+\attribute{name = \dq Alex\dq}
+\attribute{age = 18}
+\end{object}
+%\begin{class}[text width =6 cm]{Student}{0 ,0}
+%\attribute {name: String }
+%\attribute {age: Int }
+%\operation{Student(name: String, age: Int)}
+%\end{class}
+\end{tikzpicture}
+
+In jedem Kasten steht oben der Name des Objekts und hinter dem einem Doppelpunkt der Namen der Klasse.
+
+Unter einem Querstrich folgen die Eigenschaften des Objekts. In jeder Zeile steht der Name einer Eigenschaft, ein Gleichheitszeichen und der Wert der Eigenschaft.
+\end{center}
+
+\subsection*{Beziehungen zwischen Objekten}
+
+Genau so wie Klassen Beziehungen zu anderen Klassen haben, können Objekte Beziehungen zu Objekten haben.
+\begin{minted}[]{Java}
+record Subject(String name, int hoursPerWeek)
+record Student(String name, int age, Subject mainSubject){}
+
+var ift = new Subject("IFT", 5);
+var max = new Student("Max", 17, ift);
+var alex = new Student("Alex", 18, ift);
+\end{minted}
+Solche Beziehungen werden mit Pfeilen gekennzeichnet. 
+Ein Pfeil geht von einem einem Objekt zu einer Eigenschaft.
+Über dem Pfeil steht der Name der Eigenschaft.
+
+
+\begin {tikzpicture}
+\begin{object}[text width =3 cm]{max}{0, 0}
+\instanceOf{Student}
+\attribute{name = \dq Max\dq}
+\attribute{age = 17}
+\end{object}
+
+
+
+\begin{object}[text width =3 cm]{alex}{12, 0}
+\instanceOf{Student}
+\attribute{name = \dq Alex\dq}
+\attribute{age = 18}
+\end{object}
+
+
+\begin{object}[text width =4 cm]{ift}{6, 0}
+\instanceOf{Subject}
+\attribute{name = \dq ift\dq}
+\attribute{hoursPerWeek = 5}
+\end{object}
+
+\unidirectionalAssociation{max}{\tiny{mainSubject}}{}{ift}
+\unidirectionalAssociation{alex}{\tiny{mainSubject}}{}{ift}
+\end{tikzpicture}
+
+\newpage
+
+\begin{minted}[]{Java}
+record Subject(String name, int hoursPerWeek)
+record Student(String name, int age, Subject mainSubject, List<Subject> subjects){}
+
+var ift = new Subject("IFT", 5);
+var math = new Subject("Math", 5);
+var ggk = new Subject("GGK", 2);
+var max = new Student("Max", 17, ift, List.of(math, ggk));
+\end{minted}
+
+
+
+\begin {tikzpicture}
+\begin{object}[text width =3 cm]{max}{6, 0}
+\instanceOf{Student}
+\attribute{name = \dq Max\dq}
+\attribute{age = 17}
+\end{object}
+
+
+
+
+
+
+\begin{object}[text width =3.5 cm]{ift}{0, 0}
+\instanceOf{Subject}
+\attribute{name = \dq IFT\dq}
+\attribute{hoursPerWeek = 5}
+\end{object}
+
+
+\begin{object}[text width =3.5 cm]{math}{12, 0}
+\instanceOf{Subject}
+\attribute{name = \dq Math\dq}
+\attribute{hoursPerWeek = 5}
+\end{object}
+
+\begin{object}[text width =3.5 cm]{ggk}{6, -3}
+\instanceOf{Subject}
+\attribute{name = \dq GGK\dq}
+\attribute{hoursPerWeek = 2}
+\end{object}
+
+
+\unidirectionalAssociation{max}{\tiny{mainSubject}}{}{ift}
+\unidirectionalAssociation{max}{\tiny{subjects}}{}{math}
+\unidirectionalAssociation{max}{\tiny{subjects}}{}{ggk}
+\end{tikzpicture}
+
+
+Solche Beziehungen zwischen Klassen nennt man Assoziationen.
+
+\subsection*{Unbenannte Objekte}
+
+Wir können in Java Objekte erzeugen und verwenden ohne ihnen einen Namen zu geben.
+
+\begin{minted}{java}
+record Subject(String name, int hoursPerWeek)
+record Student(String name, int age, Subject mainSubject)
+
+var pana = Student("Pana", 18, new Subject("IFT", 5));
+\end{minted}
+
+
+Im Objektdiagramm taucht dann auch kein Name auf.
+
+
+
+\begin {tikzpicture}
+\begin{object}[text width =3 cm]{pana}{0, 0}
+
+\instanceOf{Student}
+\attribute{name = \dq Pana\dq}
+\attribute{age = 18}
+\end{object}
+
+
+\begin{object}[text width =4 cm]{}{9, 0}
+
+\instanceOf{Subject}
+\attribute{name = \dq IFT\dq}
+\attribute{hoursPerWeek = 5}
+\end{object}
+
+%\unidirectionalAssociation{pana}{\tiny{mainSubject}}{}{$\quad$}
+
+\end{tikzpicture}
+\end{document}
