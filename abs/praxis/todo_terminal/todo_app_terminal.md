@@ -11,8 +11,6 @@ codebraid:
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.io.IO.println;
-import static java.io.IO.readln;
 
 public record ToDo(int id, String text, boolean completed) {
 
@@ -200,11 +198,11 @@ public class Model {
 
 Definiere ein `record` `ToDo` mit den Feldern `id` (int), `text` (String) und `completed` (boolean).
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(1, "Kaffee trinken", false);
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(5, "App programmieren", true);
 ```
 
@@ -212,11 +210,11 @@ new ToDo(5, "App programmieren", true);
 
 Füge dem `ToDo`-Record einen Konstruktor hinzu, der nur `id` und `text` als Parameter hat und `completed` auf `false` setzt.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(2, "Einkaufen gehen");
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(3, "Sport machen");
 ```
 
@@ -224,11 +222,11 @@ new ToDo(3, "Sport machen");
 
 Füge dem `ToDo`-Record die Methode `toggle` hinzu, die ein neues To-do mit umgekehrtem Status zurückgibt.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(1, "Test", false).toggle();
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(2, "Sport machen", true).toggle();
 ```
 
@@ -236,11 +234,11 @@ new ToDo(2, "Sport machen", true).toggle();
 
 Füge dem `ToDo`-Record die Methode `updateText` hinzu, die ein neues To-do mit geändertem Text zurückgibt.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(1, "Test", false).updateText("Sport machen");
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new ToDo(2, "Zocken", true).updateText("Lesen");
 ```
 
@@ -260,15 +258,15 @@ Ergänze die Klasse `View` um eine Methode `numberToFilter`. Diese gibt für 1 `
 
 
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var view = new View();
 view.numberToFilter(1);
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 view.numberToFilter(2);
 ```
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 view.numberToFilter(3);
 ``` 
 
@@ -281,12 +279,12 @@ Ergänze die Klasse `View` um eine Methode `showToDo`. Dieser wird ein To-do üb
 Wenn ein To-do abgeschlossen ist, wird das mit einem `C` dargestellt. Wenn es nicht abgeschlossen wird das mit einem `X` dargestellt.
 Vor der ID sollen vier Tabulatorzeichen (`\t`) und ein Leerzeichen stehen.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var view = new View();
 view.showToDo(new ToDo(1, "Testaufgabe", false));
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 view.showToDo(new ToDo(2, "Erledigte Aufgabe", true));
 ```
 
@@ -298,12 +296,12 @@ Ergänze die Klasse `View` um eine Methode `printToDos`.
 Implementiere die Methode `printToDos` in der Klasse `View`. Dieser wird eine Liste von To-dos übergeben. 
 Sie gibt diese formatiert aus. Darüber zeigt sie die Überschrift `todos` an. Vor dieser stehen ein New-Line-Zeichen(`\n`) und zwei Tabulatorzeichen.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var view = new View();
 view.printToDos(List.of(new ToDo(1, "Test", false)));
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 view.printToDos(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)));
 ```
 
@@ -314,12 +312,12 @@ view.printToDos(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)));
 
 Ergänze die Klasse `View` um eine Methode `getIDs`. Dieser wird eine Liste von To-dos übergeben. Sie gibt eine unveränderliche Liste aller IDs der To-dos zurück.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var view = new View();
 view.getIDs(List.of(new ToDo(42, "Kaffee trinken", false)))
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 view.getIDs(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)))
 ```
 
@@ -329,12 +327,12 @@ view.getIDs(List.of(new ToDo(1, "A", false), new ToDo(2, "B", true)))
 
 Ergänze die Klasse `View` um eine Methode `numbersFromOneTo`, die eine unveränderliche Liste aller Zahlen von 1 bis zur übergebenen Zahl (inklusive) zurückgibt.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var view = new View();
 view.numbersFromOneTo(3)
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 view.numbersFromOneTo(5)
 ```
 
@@ -405,12 +403,12 @@ In diesem Beispiel ist die Rückgabe `"Fußball spielen"`
 
 Für die nächste Aufgabe brauchst du die Listen-Methode `contains`. Mit dieser kann bestimmt werden, ob ein Wert in einer Liste vorkommt. 
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var xs = List.of(1, 3, 5);
 xs.contains(3)
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var xs = List.of(1, 3, 5);
 xs.contains(2)
 ```
@@ -422,6 +420,25 @@ Außerdem brauchst du die Methode
 
 ```{.java}
 NumberUtils.isCreatable(myString)
+```
+
+Um die Methode nutzen zu können, musst du die folgende Abhängigkeit in `pom.xml` ergänzen.
+
+
+```
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.18.0</version>
+</dependency>
+```
+
+
+Strings zu Integern konvertieren kannst du mit `Integer.parseInt`.
+
+
+```{.java .cb-nb line_numbers=false}
+Integer.parseInt("3")
 ```
 
 
@@ -613,10 +630,10 @@ Erstelle in einer neuen Datei ein Record namens `UIState` mit den Feldern
 - `displayOfActiveToDos` (String).
 
 \scriptsize
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new UIState("Active", List.of(new ToDo(1, "Test", false)), "1 item left");
 ```
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 new UIState("Completed", List.of(), "0 items left");
 ```
 \normalsize
@@ -707,11 +724,11 @@ Füge der Klasse `Model` einen Konstruktor hinzu, der
 
 initialisiert.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 Model model = new Model();
 model.toDos;
 ```
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.toDos;
 ```
 
@@ -722,7 +739,7 @@ Füge der Klasse `Model` einen Konstruktor hinzu, der eine bestehende Liste von 
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "Completed");
 model.toDos;
@@ -736,7 +753,7 @@ Füge der Klasse `Model` die Methode `getToDosCompleted` hinzu, die alle To-dos 
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.getToDosCompleted(false);
@@ -744,7 +761,7 @@ model.getToDosCompleted(false);
 
 \normalsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.getToDosCompleted(true);
 ```
 
@@ -754,18 +771,18 @@ Füge der Klasse `Model` die Methode `getFilteredToDos` hinzu, die je nach Filte
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.getFilteredToDos();
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model = new Model(list, "Active");
 model.getFilteredToDos();
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.getFilteredToDos();
 ```
 
@@ -779,7 +796,7 @@ Ergänze die Klasse `Model` um die Methode `getUIState`.
 Die Methode gibt ein Objekt der Klasse `UIState` zurück. Diesen enthält den aktuellen Filter, die gefilterten To-dos und die Anzeige der Anzahl offener Aufgaben.
 
 \scriptsize
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "Active");
 model.getUIState();
@@ -795,20 +812,20 @@ model.getUIState();
 Füge der Klasse `Model` die Methode `idToIndex` hinzu, die den Index eines To-dos mit einer bestimmten ID findet.
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.idToIndex(3);
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.idToIndex(1);
 ```
 
 \normalsize
 Wenn kein ToDo mit dieser ID in der Liste ist, wird $-1$ zurückgegeben.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.idToIndex(2);
 ```
 
@@ -818,13 +835,13 @@ Füge der Klasse `Model` die Methode `getToDoItem` hinzu, die das To-do mit eine
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.getToDoItem(3);
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.getToDoItem(1);
 ```
 
@@ -839,7 +856,7 @@ Dafür wird die bisher größte ID bestimmt und $1$ mehr zurückgegeben.
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.nextId();
@@ -847,7 +864,7 @@ model.nextId();
 
 Wenn keine To-dos vorhanden sind, wird mit der ID $1$ angefangen.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 Model model = new Model();
 model.nextId();
 ```
@@ -860,14 +877,14 @@ Füge der Klasse `Model` die Methode `add` hinzu, die ein neues To-do mit eindeu
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false));
 Model model = new Model(list, "All");
 model.add("Einkaufen");
 model.toDos;
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 Model model = new Model();
 model.add("Coden");
 model.toDos;
@@ -883,14 +900,14 @@ Füge der Klasse `Model` die Methode `delete` hinzu, die das To-do mit der entsp
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.delete(1);
 model.toDos;
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.delete(7);
 model.toDos;
 ```
@@ -905,14 +922,14 @@ Füge der Klasse `Model` die Methode `toggle` hinzu, die den Status eines To-dos
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.toggle(7);
 model.getToDoItem(7);
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.toggle(3);
 model.getToDoItem(3);
 ```
@@ -927,14 +944,14 @@ Füge der Klasse `Model` die Methode `updateText` hinzu, die den Text eines To-d
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.updateText(3, "Hausaufgaben machen");
 model.getToDoItem(3);
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.updateText(7, "Joggen");
 model.getToDoItem(7);
 ```
@@ -947,14 +964,14 @@ model.getToDoItem(7);
 Ergänze die Klasse `Model` um die Methode `setFilter`.
 Die Methode setzt den aktuellen Filter für die Anzeige der To-dos auf den übergebenen Wert.
 
-```{java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 var model = new Model();
 model.setFilter("Completed");
-model.filter;
+model.selectedFilter;
 ```
-```{java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.setFilter("Active");
-model.filter;
+model.selectedFilter;
 ```
 
 ## Aufgabe
@@ -963,7 +980,7 @@ Füge der Klasse `Model` die Methode `removeFinishedToDoItems` hinzu, die alle e
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(2, "Test2", true), new ToDo(3, "Test3", false));
 Model model = new Model(list, "All");
 model.removeFinishedToDoItems();
@@ -981,13 +998,13 @@ Füge der Klasse `Model` die Methode `showCountOfActiveToDoItems` hinzu, die die
 
 \scriptsize
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "All");
 model.showCountOfActiveToDoItems();
 ```
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 model.add("Neue Aufgabe");
 model.showCountOfActiveToDoItems();
 ```
@@ -1305,6 +1322,9 @@ Enter a number between 1 and 5
 
 **Hinweis:** Nutze die Methode `removeFinishedToDoItems()` der Klasse `Model`!
 
+## Aufgabe
+
+Definiere so viele Methoden wie möglich als statische Methoden.
 
 ## Aufgabe
 

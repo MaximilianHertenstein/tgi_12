@@ -59,8 +59,11 @@ farbig,
 \switchUmlcdSchool
 %\section*{Objektdiagramme}
 \subsection*{Grundlagen}
-Ein Klassendiagramm beschreibt die Klassenstruktur eines Programms. Diese ist nicht vom Zeitpunkt der Ausführung abhängig.
-Im Gegensatz zeigt ein Objektdiagramm, welche Objekte es zu einen ganz konkreten Zeitpunkt gibt und welche Werte deren Eigenschaften haben. Im folgenden Code wird eine Klasse definiert und zwei Objekte dieser Klasse erzeugt.
+
+Ein Klassendiagramm beschreibt die Klassenstruktur eines Programms.
+Diese ist nicht vom Zeitpunkt der Ausführung abhängig.
+Im Gegensatz dazu zeigt ein Objektdiagramm, welche Objekte es zu einem ganz konkreten Zeitpunkt gibt und welche Werte deren Eigenschaften haben.
+Im folgenden Code wird eine Klasse definiert und zwei Objekte dieser Klasse erzeugt.
 \begin{minted}[]{Java}
 record Student(String name, int age){}
 
@@ -91,17 +94,18 @@ Nach der Ausführung des gesamten Codes kann man den Zustand mit folgendem Objek
 %\operation{Student(name: String, age: Int)}
 %\end{class}
 \end{tikzpicture}
-
+\end{center}
 In jedem Kasten steht oben der Name des Objekts und hinter dem einem Doppelpunkt der Namen der Klasse.
 
-Unter einem Querstrich folgen die Eigenschaften des Objekts. In jeder Zeile steht der Name einer Eigenschaft, ein Gleichheitszeichen und der Wert der Eigenschaft.
-\end{center}
+Unter einem Querstrich folgen die Eigenschaften des Objekts.
+In jeder Zeile steht der Name einer Eigenschaft, ein Gleichheitszeichen und der Wert der Eigenschaft.
+
 
 \subsection*{Beziehungen zwischen Objekten}
 
-Genau so wie Klassen Beziehungen zu anderen Klassen haben, können Objekte Beziehungen zu Objekten haben.
+Genauso wie Klassen Beziehungen zu anderen Klassen haben, können Objekte Beziehungen zu Objekten haben.
 \begin{minted}[]{Java}
-record Subject(String name, int hoursPerWeek)
+record Subject(String name, int hoursPerWeek){}
 record Student(String name, int age, Subject mainSubject){}
 
 var ift = new Subject("IFT", 5);
@@ -109,7 +113,7 @@ var max = new Student("Max", 17, ift);
 var alex = new Student("Alex", 18, ift);
 \end{minted}
 Solche Beziehungen werden mit Pfeilen gekennzeichnet. 
-Ein Pfeil geht von einem einem Objekt zu einer Eigenschaft.
+Ein Pfeil geht von einem Objekt zu einer Eigenschaft.
 Über dem Pfeil steht der Name der Eigenschaft.
 
 
@@ -142,7 +146,7 @@ Ein Pfeil geht von einem einem Objekt zu einer Eigenschaft.
 \newpage
 
 \begin{minted}[]{Java}
-record Subject(String name, int hoursPerWeek)
+record Subject(String name, int hoursPerWeek){}
 record Student(String name, int age, Subject mainSubject, List<Subject> subjects){}
 
 var ift = new Subject("IFT", 5);
@@ -191,14 +195,14 @@ var max = new Student("Max", 17, ift, List.of(math, ggk));
 \end{tikzpicture}
 
 
-Solche Beziehungen zwischen Klassen nennt man Assoziationen.
+
 
 \subsection*{Unbenannte Objekte}
 
 Wir können in Java Objekte erzeugen und verwenden ohne ihnen einen Namen zu geben.
 
 \begin{minted}{java}
-record Subject(String name, int hoursPerWeek)
+record Subject(String name, int hoursPerWeek){}
 record Student(String name, int age, Subject mainSubject)
 
 var pana = Student("Pana", 18, new Subject("IFT", 5));

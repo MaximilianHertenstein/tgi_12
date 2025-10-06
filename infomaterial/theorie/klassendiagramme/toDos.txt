@@ -1,0 +1,3 @@
+vordefinierte Werte
+Selbstrefernz 
+Bidirektional

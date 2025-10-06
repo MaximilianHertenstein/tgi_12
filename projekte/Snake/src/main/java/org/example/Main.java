@@ -1,16 +1,7 @@
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.TerminalSize;
+
+import org.example.Model;
 import org.example.TUI;
-import org.example.UIState;
-import org.example.V2;
 
-import java.util.Random;
-
-
-import static java.lang.Thread.sleep;
 
 void main() throws IOException, InterruptedException {
 
@@ -23,151 +14,12 @@ void main() throws IOException, InterruptedException {
 
 
 
-V2 keyToV2(char pressedKey) {
-    return switch (pressedKey) {
-        case 'w' -> new V2(0, -1);
-        case 'd' -> new V2(1, 0);
-        case 's' -> new V2(0, 1);
-        case 'a' -> new V2(-1, 0);
-        default -> new V2(0, 0);
-    };
-}
 
 
-V2 computeNewDirection(V2 currentDirection, char pressedKey) {
-    var maybeNewDir = keyToV2(pressedKey);
-    if (!maybeNewDir.equals(new V2(0, 0)) && maybeNewDir.times(currentDirection) == 0) return maybeNewDir;
-    else return currentDirection;
-}
 
 
-static <T> List<T> dropLast(List<T> xs) {
-    var acc = new ArrayList<T>();
-    for (int i = 0; i < xs.size() - 1; i++) {
-        acc.add(xs.get(i));
-    }
-    return acc;
-//     var acc = new ArrayList<T>(xs);
-//     acc.removeLast()
-}
 
 
-boolean isOnBoard(V2 v, int cols, int rows) {
-    return v.x() < cols && v.x() >= 0 && v.y() < rows && v.y() >= 0;
-}
-
-
-V2 generateRandomFreeCoordinates(List<V2> blockedCoordinates, int rows, int cols) {
-    while (true) {
-        var random = new Random();
-        var newAppleX = random.nextInt(0, cols);
-        var newAppleY = random.nextInt(0, rows);
-        var newAppleCoordinates = new V2(newAppleX, newAppleY);
-        if (!blockedCoordinates.contains(newAppleCoordinates)) {
-            return newAppleCoordinates;
-        }
-    }
-}
-
-
-public record Snake(
-        V2 head,
-        List<V2> tail,
-        boolean digesting
-) {
-
-    Snake(V2 head) {
-        this(head, List.of(), false);
-    }
-
-    List<V2> getCoordinates() {
-        var res = new ArrayList<V2>();
-        res.add(head);
-        for (var v2 : tail) {
-            res.add(v2);
-        }
-        return res;
-    }
-
-    boolean tailBitten() {
-        return tail.contains(head);
-    }
-
-    Snake move(V2 direction, V2 applePosition) {
-        var newSnakeHead = direction.plus(head);
-        var newDigesting = newSnakeHead.equals(applePosition);
-        var newSnakeBody = getCoordinates();
-        if (!digesting) {
-            newSnakeBody = dropLast(newSnakeBody);
-        }
-
-        return new Snake(newSnakeHead, newSnakeBody, newDigesting);
-    }
-
-
-}
-
-class Model {
-
-    private final int cols;
-    private final int rows;
-    private Snake snake;
-    private V2 direction;
-    private V2 applePosition;
-
-    Model(int cols, int rows, Snake snake, V2 direction, V2 applePosition) {
-        this.cols = cols;
-        this.rows = rows;
-        this.snake = snake;
-        this.direction = direction;
-        this.applePosition = applePosition;
-    }
-
-
-    Model(int cols, int rows) {
-        this(cols,rows,new Snake(new V2(cols / 2, rows / 2)), new V2(1, 0), new V2(cols - 1, rows - 1));
-
-//        this.cols = cols;
-//        this.rows = rows;
-//        this.snake = new Snake(new V2(cols / 2, rows / 2));
-//        this.direction = new V2(1, 0);
-//        this.applePosition = new V2(cols - 1, rows - 1);
-    }
-
-
-    boolean snakeIsAlive() {
-        return isOnBoard(snake.head(), cols, rows) && !snake.tailBitten();
-    }
-
-    boolean boardIsFull() {
-        return snake.getCoordinates().size() == rows * cols;
-    }
-
-    boolean gameOngoing() {
-        return snakeIsAlive() && !boardIsFull();
-    }
-
-    UIState getUIState() {
-        return new UIState(snake.head(), snake.tail(), applePosition);
-    }
-
-    void moveSnake() {
-        snake = snake.move(direction, applePosition);
-        if (snake.digesting && !boardIsFull()) {
-            applePosition = generateRandomFreeCoordinates(snake.getCoordinates(), rows, cols);
-        }
-    }
-
-    void setDirection(char key) {
-        direction = computeNewDirection(direction, key);
-    }
-
-    String getEndMessage() {
-        if (boardIsFull()) return "won";
-        else return "lost";
-    }
-
-}
 
 
 

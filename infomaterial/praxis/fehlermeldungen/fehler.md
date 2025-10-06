@@ -11,7 +11,7 @@ codebraid:
 
 
 
-Wir haben berteits gesehen, dass bei der Ausführung des  folgenden Code 
+Wir haben bereits gesehen, dass bei der Ausführung des folgenden Codes
 ```java
 var x= 1/0;
 ```
@@ -31,20 +31,20 @@ wird die Fehlermeldung `IndexOutOfBoundsException: Index: 2 Size: 2` ausgegeben.
 
 
 
-Fehler sind in Java Klassen und wir können  mit einem Konstuktor Objekte von diesen Klassen erzeugen.
+Fehler sind in Java Klassen und wir können mit einem Konstruktor Objekte von diesen Klassen erzeugen.
 
 ```{.java .cb-nb line_numbers=false session=block_error2}
 new ArithmeticException("/ by zero")
 ```
 
-Viel wichtiger ist, aber das die Fehler geworfen werden können.
+Viel wichtiger ist, aber das die Fehler mit `trow` geworfen werden können.
 
 ```java
-new ArithmeticException("/ by zero")
+throw new ArithmeticException("/ by zero")
 ```
 
 Dies führt dazu, dass die Fehlermeldung beim Programmierer oder Benutzer ankommt.
-Fehlermeldungen können genutzt werden um anzuzeigen, dass eine Methode/ein Konstruktor mit einem ungültigen Wert aufgerufen wurde.
+Fehlermeldungen können genutzt werden, um anzuzeigen, dass eine Methode/ein Konstruktor mit einem ungültigen Wert aufgerufen wurde.
 
 
 ```java

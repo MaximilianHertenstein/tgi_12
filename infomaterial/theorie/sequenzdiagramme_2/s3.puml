@@ -1,0 +1,9 @@
+@startuml s3
+autoactivate on 
+hide footbox
+actor Akteur
+    Akteur -> Student : getGradeOfMainSubject
+    Student -> Subject : grade
+    return grade
+    return gradeOfMainSubject
+@enduml

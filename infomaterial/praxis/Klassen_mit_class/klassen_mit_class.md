@@ -39,8 +39,8 @@ class MutableStudent{
 # Konstruktoren definieren
 
 
-Alle Konstruktoren muss selbst geschrieben werden. Konstruktoren werden ähnlich wie eine Methode definiert. Der Name des Konstruktors stimmt immer mit dem Namen der Klasse überein.
-Ein Rückgabetyp wird nicht angebenen. 
+Alle Konstruktoren muss selbst geschrieben werden. Konstruktoren werden ähnlich wie Methoden definiert. Der Name des Konstruktors stimmt immer mit dem Namen der Klasse überein.
+Ein Rückgabetyp wird nicht angebenden. 
 
 
 ```java
@@ -55,7 +55,7 @@ class MutableStudent{
 }
 ```
 
-Zwischen den geschweiften Klammern
+Zwischen den geschweiften Klammern kann jeder beliebige Java-Code stehen. In der Regel werden aber nur Werte für die Eigenschaften der Klasse gesetzt.
 
 
 
@@ -79,7 +79,7 @@ var pana = new MutableStudent("Pana", 17);
 # Methoden
 
 
-Methoden können wie bei Records definiert werden.
+Methoden können wie bei Records definiert werden. Es ist jetzt aber möglich, die Eigenschaften der Klasse in Methoden zu ändern.
 
 
 ```java
@@ -153,24 +153,39 @@ class MutableStudent{
 
 Um trotzdem auf private Eigenschaften zuzugreifen, werden Methoden definiert, die den Wert einer Eigenschaft zurückgeben.
 
-```java  
+```java 
+...
 public int getAge(){
     return age;
   }
+  ...
+```
+
+```{.java .cb-nb first_number=1}
+var luca = new MutableStudent("Luca", 18);
+luca.getAge();
 ```
 
 oder ändern.
 
 ```java
+...
   public void setAge(int age){
      this.age = age;
   }
+  ...
 }
+```
+
+
+```{.java .cb-nb first_number=1}
+luca.setAge(19);
+luca.getAge();
 ```
 
 # Invalide Werte durch Fehlermeldungen im Setter und Konstruktor verhindern
 
-Wenn ein Setter definiert ist, kann es trotzdem seind, dass ein privates Attribut auf einen ungültigen Wert gesetzt wird.
+Wenn ein Setter definiert ist, kann es trotzdem sein, dass ein privates Attribut auf einen ungültigen Wert gesetzt wird.
 
 ```{.java .cb-nb first_number=1}
 var matti = new MutableStudent("Matti", 17);
@@ -178,19 +193,19 @@ matti.setAge(-3);
 matti.getAge();
 ```
 
-Wir können das verhinden, wenn wir eine Fehlermelung werfen wenn, dem Setter ein ungültiger wert übergeben wird.
+Wir können das verhindern, wenn wir eine Fehlermeldung werfen, wenn dem Setter ein ungültiger wert übergeben wird.
 
 ```java
 ...
   public void setAge(int age){
     if (age < 0){
-     throw new IllegalArgumentException("age must be postive")
+     throw new IllegalArgumentException("age must be positive");
   }
   this.age = age;
 }
 ```
 
-Leider ist es immer noch möglich mit dem Kostruktor Objekte mit ungülitgen Eigenschaften  zu  erzeugen.
+Leider ist es immer noch möglich mit dem Konstruktor Objekte mit ungültigen Eigenschaften zu erzeugen.
 
 ```{.java .cb-nb first_number=1}
 var matti = new MutableStudent("Matti", -17);
@@ -203,7 +218,7 @@ Deshalb sollte die Überprüfung auch im Konstruktor genutzt werden.
 ```java
   public MutableStudent(String name, int age){
     if (age < 0){
-     throw new IllegalArgumentException("age must be postive")
+     throw new IllegalArgumentException("age must be positive");
     }
     this.name = name;
     this.age = age;
@@ -217,8 +232,8 @@ Wir können Eigenschaften auch direkt im Klassenkörper, statt im Konstruktor in
 
 ```{.java .cb-nb first_number=1}
 class Cat{
-  String name;
-  int lives = 7;
+  private String name;
+  public int lives = 7;
 
   Cat(String name){
     this.name = name;
@@ -231,8 +246,12 @@ var garfield = new Cat("Garfield");
 garfield.lives;
 ```
 
+Bei jedem Objekt der Klasse `Cat` hat die Eigenschaft `lives` nach dem Erzeugen den Wert $7$. 
 
-
+```{.java .cb-nb first_number=1}
+var catmando = new Cat("Catmando");
+catmando.lives;
+```
 
 
 <!-- 
@@ -244,7 +263,7 @@ micha.getAge();
 ```
 
 Auch zum Setzen von Eigenschaften werden Methoden definiert. 
-In diesen sollte ein Fehler geworfen werden, wenn ein invalider Wert gestzt werden soll. 
+In diesen sollte ein Fehler geworfen werden, wenn ein invalider Wert gesetzt werden soll. 
 
 
 

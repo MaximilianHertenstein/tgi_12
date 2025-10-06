@@ -1,0 +1,3 @@
+Snake.move aufteilen
+
+Hilfsfunktion computeNewTail

@@ -90,14 +90,17 @@ record Snake(
         return tail.contains(head);
     }
 
-    Snake move(V2 direction, V2 applePosition) {
+     List<V2> computeNewTail(){
+        if (!digesting) {
+            return dropLast(getCoordinates());
+        }
+        return getCoordinates();
+    }
+
+    public Snake move(V2 direction, V2 applePosition) {
         var newSnakeHead = direction.plus(head);
         var newDigesting = newSnakeHead.equals(applePosition);
-        var newSnakeBody = getCoordinates();
-        if (!digesting) {
-            newSnakeBody = dropLast(newSnakeBody);
-        }
-
+        var newSnakeBody = computeNewTail();
         return new Snake(newSnakeHead, newSnakeBody, newDigesting);
     }
 
@@ -171,11 +174,11 @@ class Model {
 
 Implementiere eine Funktion `contains`. Dieser wird eine Liste und ein einzelnes Element übergeben. Die Elemente in der Liste und dieses Element haben denselben Typ. Die Funktion gibt zurück, ob das einzelne Element in der Liste enthalten ist.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 contains(List.of(1, 2, 3) , 4)
 ```
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 contains(List.of("hello", "how", "are", "you", "?") , "are")
 ``` -->
 
@@ -183,10 +186,10 @@ contains(List.of("hello", "how", "are", "you", "?") , "are")
 
 Erstelle ein Record `V2`{.java}. Die Objekte dieser Klasse sind Vektoren im zweidimensionalen Raum mit ganzzahligen Komponenten. Beide Komponenten sind unveränderlich.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new V2(3, 2);
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new V2(1, -5);
 ```
 
@@ -197,10 +200,10 @@ Erweitere die Klasse `V2`{.java} um die Methode `plus`{.java}. Dieser wird ein V
 
 
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new V2(3, 2).plus(new V2(1, -5));
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new V2(3, 4).plus(new V2(-4, -5));
 ```
 **Hinweis:**
@@ -214,10 +217,10 @@ Erweitere die Klasse `V2`{.java} um die Methode `times`{.java}. Dieser wird ein 
 
 
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new V2(1, 2).times(new V2(3, 4))
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new V2(3, 2).times(new V2(1, -5))
 ```
 
@@ -243,19 +246,19 @@ Implementiere eine Funktion `keyToV2`{.java}. Diese bestimmt den Richtungsvektor
 \end{center}
 
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 keyToV2('w')
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 keyToV2('a')
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 keyToV2('s')
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 keyToV2('d')
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 keyToV2('i')
 ```
 
@@ -263,13 +266,13 @@ keyToV2('i')
 # Aufgabe
 Implementiere eine Funktion `computeNewDirection`{.java}. Dieser wird die aktuelle Richtung der Schlange als `V2` und die zuletzt drückte Taste als Character übergeben. Sie gibt die neue Richtung zurück. Die Richtung wird nur geändert, wenn eine Richtungstaste gedrückt wurde und die gewünschte Richtung orthogonal zur aktuellen Richtung ist. Außerdem darf die neue Richtung nicht der Nullvektor sein.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 computeNewDirection(new V2(1, 0), 'w');
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 computeNewDirection(new V2(0, 1), 's');
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 computeNewDirection(new V2(0, 1), 't');
 ```
 **Hinweis:** Zwei Vektoren sind orthogonal zueinander, wenn ihr Skalarprodukt $0$ ist.
@@ -278,13 +281,13 @@ computeNewDirection(new V2(0, 1), 't');
 # Aufgabe
 Implementiere eine Funktion `dropLast`{.java}. Dieser wird eine Liste übergeben. Sie gibt die Liste ohne das letzte Element zurück. Wenn die übergebene Liste leer ist, wird auch die leere Liste zurückgegeben.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 dropLast(List.of('i', 'a'));
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 dropLast(new ArrayList<>());
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 dropLast(List.of(new V2(5, 5), new V2(4, 5), new V2(4, 6)));
 ```
 
@@ -299,19 +302,19 @@ Implementiere eine Funktion `isOnBoard`{.java}. Dieser werden
 
 übergeben. Sie gibt zurück, ob diese Zelle auf dem Spielfeld ist. Die $x$- und $y$-Koordinaten der Zellen des Spielfelds werden hierfür mit $0$ beginnend durchnummeriert.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 isOnBoard(new V2(3, 4), 4, 5)
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 isOnBoard(new V2(6, 5), 6, 7)
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 isOnBoard(new V2(6, 5), 7, 5)
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 isOnBoard(new V2(3, 2), 7, 5)
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 isOnBoard(new V2(3, -2), 7, 5)
 ```
 
@@ -319,22 +322,23 @@ isOnBoard(new V2(3, -2), 7, 5)
 
 # Aufgabe
 
-In der nächsten Aufgabe brauchst du die Klasse `Random`
+In der nächsten Aufgabe brauchst du die Klasse `Random`. Diese kannst du einfach so in deinem Code verwenden.
 
-```{.java .cb-nb first_number=1}
-var random = new Random();
+```{.java .cb-nb line_numbers=false}
+Random random = new Random();
 ```
 
 Diese hat eine Methode `nextInt`.
 Dieser werden zwei positive ganze Zahl $n$ und $m$ übergeben. Sie gibt eine zufällige natürliche Zahl zurück, die mindestens $n$ und **echt kleiner** als $m$ ist.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 random.nextInt(0, 5);
 ```
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 random.nextInt(0, 5);
 ```
+
 
 
 
@@ -347,22 +351,22 @@ Implementiere eine Funktion `generateRandomFreeCoordinates`{.java}. Dieser werde
 
 übergeben. Sie gibt die Koordinaten einer zufällig ausgewählten freien Zelle zurück.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 generateRandomFreeCoordinates(List.of(new V2(0,0), new V2(1,0), new V2(0,1)), 2, 2);
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 generateRandomFreeCoordinates(List.of(new V2(0,0), new V2(1,0), new V2(0,1)), 3, 2);
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 generateRandomFreeCoordinates(List.of(new V2(0,0), new V2(1,0), new V2(0,1)), 3, 2);
 ```
 
 **Hinweis:** Nutze `nextInt` und die Listen-Methode `contains`!
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 List.of(1, 2, 3).contains(4);
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 List.of(1, 2).contains(2);
 ```
 
@@ -377,10 +381,10 @@ Implementiere ein Record `Snake`. Die Eigenschaften der Klasse sind
 - ein Boolean, das angibt, ob die Schlange gerade verdaut
 
  
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5), new V2(4, 6)), true);
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(1, 0), new ArrayList<V2>(), false);
 ```
 
@@ -388,21 +392,21 @@ new Snake(new V2(1, 0), new ArrayList<V2>(), false);
 # Aufgabe
 Erweitere die Klasse `Snake` um eine Methode   `getCoordinates`{.java}. Diese gibt eine Liste aller Koordinaten der Schlange zurück.
 Das erste Element dieser Liste ist der Kopf der Schlange. Die Reihenfolge der übrigen Elemente wird nicht verändert.
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5), new V2(4, 6)), true).getCoordinates();
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(1, 0), List.of(), false).getCoordinates();
 ```
 
 
 # Aufgabe
 Erweitere die Klasse `Snake` um eine Methode  `tailBitten`{.java}. Diese gibt zurück, ob sich die Schlange selbst gebissen hat.
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5), new V2(4, 6)), true).tailBitten()
 ```
 \small
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(2, 3), 
       List.of(new V2(3, 3), new V2(4, 3), new V2(4,2), new V2(4, 1), 
              new V2(3, 1), new V2(2, 1), new V2(2, 2), new V2(2, 3)), 
@@ -420,7 +424,7 @@ Erweitere die Klasse `Snake` um eine Methode `move`{.java}. Dieser wird die Rich
 
 - Wenn der Kopf der Schlange nach der Bewegung auf dem Apfel ist, isst die Schlange den Apfel und verdaut diesen. Ansonsten verdaut sie nicht mehr.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), true).move(new V2(1, 0), new V2(7, 9))
 ```
 \begin{figure}[ht!]
@@ -450,7 +454,7 @@ new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), true).move(new V2(1
 
 
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(4, 5), List.of(new V2(4, 4)), false).move(new V2(0, 1), new V2(4, 6))
 ```
 
@@ -474,10 +478,10 @@ new Snake(new V2(4, 5), List.of(new V2(4, 4)), false).move(new V2(0, 1), new V2(
 \end{tikzpicture}
 \end{figure}
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), false).move(new V2(1, 0), new V2(7, 9))
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Snake(new V2(4, 5), List.of(new V2(4, 4)), true).move(new V2(0, 1), new V2(4, 6))
 ```
 
@@ -491,13 +495,13 @@ new Snake(new V2(4, 5), List.of(new V2(4, 4)), true).move(new V2(0, 1), new V2(4
 
 Schreibe einen zweiten Konstruktor für die Klasse `Snake`. Für diesen muss nur der Kopf übergeben werden. Falls dieses Konstruktor verwendet wird, besteht die Schlange nur aus dem Kopf und verdaut nicht.
 
-```{.java .cb-nb first_number=1}
-new Snake(new V2(3, 2))
+```{.java .cb-nb line_numbers=false}
+new Snake(new V2(3, 2));
 ```
 
 
 # Aufgabe 
-Implementiere die Klasse `Model` mit dem Schlüssenwort `class`.
+Implementiere die Klasse `Model` mit dem Schlüsselwort `class`.
 Die Eigenschaften der Klasse sind
 
 - die Anzahl der Spalten des Spielfelds
@@ -506,16 +510,30 @@ Die Eigenschaften der Klasse sind
 - die Richtung der Schlange als Vektor
 - die Position des Apfels als Vektor
 
-\tiny
 
-Dem Konstruktor der Klasse werden Werte für alle Eigenschaften übergeben.
 
-```{.java .cb-nb first_number=1}
-new Model(8, 9, new Snake(new V2(6, 5), List.of(), true), new V2(1, 0), new V2(3, 2))
+# Aufgabe
+
+Implementiere einen Konstruktor für die Klasse `Model`. Diesem Konstruktor werden Werte für alle Eigenschaften übergeben.
+
+```{.java .cb-nb line_numbers=false}
+var m1 = new Model(8, 9, new Snake(new V2(6, 5), List.of(), true), new V2(1, 0), new V2(3, 2));
+System.out.println(m1.cols);
+System.out.println(m1.rows);
+System.out.println(m1.snake);
+System.out.println(m1.direction);
+System.out.println(m1.applePosition);
 ```
 
+# Aufgabe
 
-```{.java .cb-nb first_number=1}
+Implementiere einen Konstruktor für die Klasse `Model`
+Diesem Konsturktor werden nur die Zeilen- und Spaltenanzahl übergeben.
+
+Alle anderen Werte müssen im Konsturktor berechnet werden.
+Der Kopf der Schlange ist zu Beginn des Spiels mitten auf dem Spielfeld. Die Schlange besteht dann nur aus dem Kopf, verdaut nicht und bewegt sich nach rechts. Der Apfel ist rechts unten.
+
+```{.java .cb-nb line_numbers=false}
 var m1 = new Model(10, 5);
 System.out.println(m1.cols);
 System.out.println(m1.rows);
@@ -523,7 +541,7 @@ System.out.println(m1.snake);
 System.out.println(m1.direction);
 System.out.println(m1.applePosition);
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 var m2 = new Model(30, 20);
 System.out.println(m2.cols);
 System.out.println(m2.rows);
@@ -534,22 +552,22 @@ System.out.println(m2.applePosition);
 
 \normalsize
 
-Der Kopf der Schlange ist zu Beginn des Spiels mitten auf dem Spielfeld. Die Schlange besteht dann nur aus dem Kopf, verdaut nicht und bewegt sich nach rechts. Der Apfel ist rechts unten.
+
 
 
 
 # Aufgabe 
 Erweitere die Klasse `Model` um eine Methode `snakeIsAlive`{.java}. Diese bestimmt, ob die Schlange noch lebt. Die Schlange stirbt, wenn sie sich selbst beißt, oder ihr Kopf nicht mehr auf dem Spielfeld ist.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(8, 9, new Snake(new V2(6, 5), List.of(), true), new V2(1, 0), new V2(3, 2)).
     snakeIsAlive()
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(8, 9, new Snake(new V2(-1, 5), List.of(), true), new V2(1, 0), new V2(3, 2)).
     snakeIsAlive()
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(5, 5, new Snake(new V2(2, 3), 
                   List.of(new V2(3, 3), new V2(4, 3), new V2(4,2), new V2(4, 1), 
                           new V2(3, 1), new V2(2, 1), new V2(2, 2), new V2(2, 3)), 
@@ -563,11 +581,11 @@ new Model(5, 5, new Snake(new V2(2, 3),
 Erweitere die Klasse `Model` um eine Methode `boardIsFull`{.java}. Diese gibt zurück, ob die Schlange das ganze Spielfeld ausfüllt.
 
 \tiny
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(2, 2, new Snake(new V2(0, 0), List.of(new V2(0, 1), new V2(1, 1), new V2(1, 0)), true), new V2(1, 0), new V2(0, 0)).boardIsFull()
 ```
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(2, 2, new Snake(new V2(0, 0), List.of(new V2(0, 1), new V2(1, 1)), true), new V2(1, 0), new V2(0, 0)).boardIsFull()
 
 ```
@@ -580,14 +598,14 @@ new Model(2, 2, new Snake(new V2(0, 0), List.of(new V2(0, 1), new V2(1, 1)), tru
 Erweitere die Klasse `Model` um eine Methode `gameOngoing`{.java}. Diese gibt zurück, ob das Spiel weitergeht. Das ist der Fall, wenn es auf dem Spielfeld noch freie Plätze gibt und die Schlange noch lebt.
 
 \tiny
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(2, 2, new Snake(new V2(0, 0), List.of(new V2(0, 1), new V2(1, 1), new V2(1, 0)), true), new V2(1, 0), new V2(0, 0)).gameOngoing()
 ```
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(2, 2, new Snake(new V2(0, 0), List.of(new V2(0, 1), new V2(1, 1)), true), new V2(1, 0), new V2(0, 0)).gameOngoing()
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(2, 2, new Snake(new V2(-1, 0), List.of(new V2(0, 0)), true), new V2(-1, 0), new V2(0, 0)).gameOngoing()
 ```
 \normalsize
@@ -599,10 +617,10 @@ new Model(2, 2, new Snake(new V2(-1, 0), List.of(new V2(0, 0)), true), new V2(-1
 Erweitere die Klasse `Model` um eine Methode `getEndMessage`{.java}. Diese gibt einen String zurück, indem steht ob der Spieler gewonnen oder verloren hat. Du kannst
 davon ausgehen, dass diese Methode nur aufgerufen wird, wenn das Spiel zu Ende ist.
 \tiny
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(2, 2, new Snake(new V2(0, 0), List.of(new V2(0, 1), new V2(1, 1), new V2(1, 0)), true), new V2(1, 0), new V2(0, 0)).getEndMessage()
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new Model(2, 2, new Snake(new V2(-1, 0), List.of(new V2(0, 0)), true), new V2(-1, 0), new V2(0, 0)).getEndMessage()
 ```
 \normalsize
@@ -623,12 +641,12 @@ Implementiere die Klasse `UIState`. Die Eigenschaften der Klasse sind
 
 \small
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new UIState(new V2(6, 5), List.of(new V2(5, 5), new V2(5, 4)), new V2(1, 0))
 ```
 \normalsize
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 new UIState(new V2(6, 5), List.of(), new V2(2, 3))
 ```
 
@@ -639,14 +657,15 @@ Verschiebe die Klasse `UISTate` in eine Datei mit diesem Namen. Schreibe `public
 
 # Aufgabe 
 Erweitere die Klasse `Model` um eine Methode `getUIState`{.java}. Diese gibt den `UIState` des `new Model`s zurück.
-
-```{.java .cb-nb first_number=1}
-new Model(8, 9, new Snake(new V2(6, 5), List.of(), true), new V2(1, 0), new V2(3, 2)).getUIState()
-```
 \small
 
-```{.java .cb-nb first_number=1}
-new Model(8, 9, new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(5, 4)), false), new V2(1, 0), new V2(0, 1)).getUIState()
+```{.java .cb-nb line_numbers=false}
+new Model(8, 9, new Snake(new V2(6, 5), List.of(), true), new V2(1, 0), new V2(3, 2)).getUIState();
+```
+\tiny
+```{.java .cb-nb line_numbers=false}
+var m = new Model(8, 9, new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(5, 4)), false), new V2(1, 0), new V2(0, 1));
+m.getUIState();
 ```
 \normalsize
 
@@ -657,14 +676,14 @@ Erweitere die Klasse `Model` um eine Methode `moveSnake`{.java}. Beim Ausführen
 Falls die Schlange verdaut, wird die Position des Apfels neu berechnet.
 \tiny
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 var m = new Model(8, 9, new Snake(new V2(6, 5), List.of(new V2(5, 5)), false), new V2(1, 0), new V2(3, 2));
 m.moveSnake();
 System.out.println(m.snake);
 System.out.println(m.applePosition);
 ```
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 var m = new Model(8, 9, new Snake(new V2(4, 5), List.of(new V2(5, 5)), true), new V2(-1, 0), new V2(3, 5));
 m.moveSnake();
 System.out.println(m.snake);
@@ -676,7 +695,7 @@ System.out.println(m.applePosition);
 Falls die Schlange nach der Bewegung das ganze Spielfeld ausfüllt, wird die Position des Apfels nicht neu berechnet.
 
 \tiny
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 var m = new Model(2, 2, new Snake(new V2(0, 0), List.of(new V2(0, 1), new V2(1, 1)), true), new V2(1, 0), new V2(1, 1));
 m.moveSnake();
 m.applePosition;
@@ -692,13 +711,13 @@ Erweitere die Klasse `Model` um eine Methode `setDirection`{.java}. Dieser wird 
 
 \tiny
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 var m = new Model(8, 9, new Snake(new V2(6, 5), List.of(new V2(5, 5)), false), new V2(1, 0), new V2(3, 2));
 m.setDirection('w');
 m.direction
 ```
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 var m = new Model(8, 9, new Snake(new V2(6, 5), List.of(new V2(5, 5)), false), new V2(1, 0), new V2(3, 2));
 m.setDirection('a');
 m.direction
@@ -714,7 +733,15 @@ Die Methoden `setDirection`, `moveSnake`, `getUIState`, `getEndMessage` und `gam
 
 
 
-## Aufgabe
+
+# Aufgabe
+Für IntelliJ-Projekte:
+
+Klicke auf `File` - `Project-Structure` - `Libraries` -`+` - `From Maven`. Suche hier nach `com.googlecode.lanterna`. Mit `Okay` kannst du die Bibliothek hinzufügen. 
+
+
+# Aufgabe
+Für Gradle-Projekte:
 
 Ergänze in `build.gradle.kts` die folgende Zeile in den geschweiften Klammern hinter `dependencies`:
 ```
@@ -722,6 +749,37 @@ implementation("com.googlecode.lanterna:lanterna:3.1.3")
 ```
 
 Klicke anschließend auf den Elefanten.
+
+
+# Aufgabe
+Für Maven-Projekte:
+
+Ergänze in `pom.xml` die das folgende Element im Element `dependencies`:
+```
+<dependency>
+    <groupId>com.googlecode.lanterna</groupId>
+    <artifactId>lanterna</artifactId>
+    <version>3.1.3</version>
+</dependency>
+```
+
+Der ganze `dependencies`-Block sieht dann folgendermaßen aus:
+
+```
+<dependencies>
+
+<!--andere Abhängigkeiten-->
+    <dependency>
+        <groupId>com.googlecode.lanterna</groupId>
+        <artifactId>lanterna</artifactId>
+        <version>3.1.3</version>
+    </dependency>
+</dependencies>
+```
+
+
+Klicke anschließend auf das `M`.
+
 
 
 # Aufgabe
@@ -791,3 +849,9 @@ Dieser werden eine gewünschte Spalten- und Zeilenanzahl übergeben. Sie spielt 
 
 **Hinweis:** Nutze die Methoden`setDirection`, `moveSnake`, `getUIState`, `getEndMessage` und `gameOngoing` der Klasse `Model` und die Methoden `getPressedKey` `print`, `printString` und `close` der Klasse `TUI`! 
 
+**Hinweis** Da du die Klasse `TUI` verwendest, musst die in der Kopfzeile der Funktion angeben, welche Fehler die Funktion auswerfen kann. IntelliJ kann die Angabe selbst ergänzen, wenn du über die Fehlermeldung hoverst.
+
+
+# Aufgabe
+
+Definiere in einer neuen Datei `Utils.java` eine Klasse `Utils`. Verschiebe alle Hilfsfunktionen (**keine** Methoden) in diese Klasse. Definiere diese Methoden als statische Methoden.

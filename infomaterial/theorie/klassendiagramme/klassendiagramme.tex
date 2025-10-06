@@ -59,7 +59,8 @@ farbig,
 
 \section*{Klassendiagramme}
 \subsection*{Grundlagen}
-Wir haben bereits gesehen, wie wir in Java-Klassen definieren können.
+
+Wir haben bereits gesehen, wie wir in Java Klassen definieren können.
 
 \begin{minted}[]{Java}
 class Student {
@@ -68,10 +69,10 @@ class Student {
 }
 \end{minted}
 \noindent
-In einem Klassendiagramm können Klassen einfach dargestellt werden.
+Diese Klasse kann folgendermaßen in einem Klassendiagramm dargestellt werden.
 \begin{center}
 \begin {tikzpicture}
-\begin{class}[text width =6 cm]{Student}{0 ,0}
+\begin{class}[text width =3 cm]{Student}{0 ,0}
 \attribute {name: String }
 \attribute {age: Int }
 
@@ -84,6 +85,7 @@ die Eigenschaften der Klasse. Diese werden in der Form \texttt{Eigenschaftsname:
 
 
 \subsection*{Methoden}
+
 Nach der letzten Eigenschaft folgt ein Querstrich. Darunter sind die Methoden der Klasse aufgelistet.
 
 
@@ -121,7 +123,7 @@ Methoden werden in der Form \\ \texttt{methodenname(parameter1: Typ1, parameter2
 
 \subsection*{Sichtbarkeitsmodifikatoren}
 
-Sichtsbarkeitsmodifikatoren werden mit einem Zeichen vor den Namen einer Eigenschaft/Methode angegeben.
+Sichtbarkeitsmodifikatoren werden mit einem Zeichen vor den Namen einer Eigenschaft/Methode angegeben.
 
 \begin{center}
 \begin{tabular}{cc}
@@ -152,7 +154,7 @@ class Student {
 \begin{class}[text width =7 cm]{Student}{0 ,0}
 \attribute {+ name: String }
 \attribute {- age: Int }
-\operation{+ practiceCoding(minutes: Int) : Boolean}
+\operation{+ practiceCoding(minutes: Int): Boolean}
 \end{class}
 \end{tikzpicture}
 \end{center}
@@ -160,7 +162,7 @@ class Student {
 
 \subsection*{Konstruktoren}
 
-Im folgenden werden Konstruktoren für Klasse \texttt{Student} definiert.
+Im folgenden Code werden Konstruktoren für Klasse \texttt{Student} definiert.
 
 \begin{minted}{java}
 class Student {
@@ -186,8 +188,8 @@ Im Klassendiagramm sind diese direkt am Anfang des Methodenblocks aufgeführt.
 \begin{class}[text width =6 cm]{Student}{0 ,0}
 \attribute {$\vdots$ }
 
-\operation{Student(name: String, age: Int)}
-\operation{Student(name: String)}
+\operation{+ Student(name: String, age: Int)}
+\operation{+ Student(name: String)}
 \operation{$\vdots$ }
 \end{class}
 \end{tikzpicture}
@@ -197,6 +199,7 @@ Konstruktoren werden in der Form \\ \texttt{Klassenname(parameter1: Typ1, parame
 
 
 \subsection*{Records}
+
 Wir können die Klasse \texttt{Student} auch als Record definieren.
 \begin{minted}[escapeinside=||]{Java}
 record Student(String name, int age){
@@ -211,10 +214,10 @@ Die Eigenschaften von \texttt{Records} sind immer privat. Es wird automatisch ei
 Außerdem werden automatisch Methoden definiert, mit denen auf die Eigenschaften zugegriffen werden kann. Diese heißen genau so, wie die Eigenschaften.
 \begin{center}
 \begin {tikzpicture}
-\begin{class}[text width =8 cm]{Student}{0 ,0}
+\begin{class}[text width =7.5 cm]{Student}{0 ,0}
 \attribute {- name: String }
-\attribute {- age: int }
-\operation{Student(name: String, age: Int)}
+\attribute {- age: Int }
+\operation{+ Student(name: String, age: Int)}
 \operation {+ name(): String }
 \operation {+ age(): Int }
 \operation{+ practiceCoding(minutes: Int): Boolean}
@@ -231,13 +234,13 @@ record Subject(String name, int hoursPerWeek){}
 record Student(|$\dots$|, Subject mainSubject){}
 \end{minted}
 
-Auch Eigenschaften die selbst Klassen sind, können in einem Kasten dargestellt werden.
+Auch Eigenschaften, die selbst Klassen sind, können in einem Kasten dargestellt werden.
 \begin{center}
 \begin{tikzpicture}
 
-\begin{class}[text width =6 cm]{Student}{0 ,0}
+\begin{class}[text width =5 cm]{Student}{0 ,0}
 \attribute {$\vdots$ }
-\attribute {-mainSubject: Subject }
+\attribute {- mainSubject: Subject }
 \operation{$\vdots$ }
 \end{class}
 
@@ -246,27 +249,29 @@ Auch Eigenschaften die selbst Klassen sind, können in einem Kasten dargestellt 
 
 
 \noindent
-Eine Eigenschaft die selbst wieder eine Klasse ist kann auch mit einem Pfeil dargestellt werden. Der Pfeil zeigt auf die Klasse, die eine Eigenschaft der anderen Klasse ist.
+Eine Eigenschaft, die selbst wieder eine Klasse ist, kann auch mit einem Pfeil dargestellt werden. Der Pfeil zeigt auf die Klasse, die eine Eigenschaft der anderen Klasse ist.
 \begin{center}
 \begin {tikzpicture}
 
 
-\begin{class}[text width =6 cm]{Student}{0 ,0}
+\begin{class}[text width =4 cm]{Student}{0 ,0}
 \attribute {$\vdots$ }
 \operation{$\vdots$ }
 %\attribute {+ mainSubject: Subject }
 \end{class}
 
-\begin{class}[text width =5 cm]{Subject}{10 ,0}
-\attribute {name: String }
-\attribute {hoursPerWeek: int }
+\begin{class}[text width =4.5 cm]{Subject}{10 ,0}
+\attribute {- name: String }
+\attribute {- hoursPerWeek: Int}
 \end{class}
 
 \unidirectionalAssociation{Student}{mainSubject}{1}{Subject}
 
 \end{tikzpicture}
 \end{center}
-Über dem Pfeil steht der Name der Beziehung/Eigenschaft/Rolle. Darunter steht mit wie vielen Objekten der Klasse auf die der Pfeil zeigt, ein Objekt der Klasse von der dieser Pfeil ausgeht, in Beziehung steht.
+Über dem Pfeil steht der Name der Eigenschaft. Diese nennt man in Klassendiagrammen Rollennamen.
+
+Darunter steht mit wie vielen Objekten der Klasse, auf die der Pfeil zeigt, ein Objekt der Klasse, von der dieser Pfeil ausgeht, in Beziehung steht.
 
 
 Wenn jede Anzahl möglich ist, wird dies als \texttt{*} dargestellt.
@@ -279,15 +284,15 @@ record Student(|$\dots$|, List<Subject> subjects){}
 \begin {tikzpicture}
 
 
-\begin{class}[text width =6 cm]{Student}{0 ,0}
+\begin{class}[text width =4 cm]{Student}{0 ,0}
 \attribute {$\vdots$ }
 %\attribute {+ mainSubject: Subject }
 \operation{$\vdots$ }
 \end{class}
 
 \begin{class}[text width =5 cm]{Subject}{10 ,0}
-\attribute {name: String }
-\attribute {hoursPerWeek: int }
+\attribute {- name: String }
+\attribute {- hoursPerWeek: Int }
 \end{class}
 
 \unidirectionalAssociation{Student}{subjects}{*}{Subject}
@@ -295,9 +300,9 @@ record Student(|$\dots$|, List<Subject> subjects){}
 \end{tikzpicture}
 \end{center}
 
+Die Verbindungen zwischen Klassen nennt man Assoziativitäten. Die Anzahl der Objekte, mit denen ein Objekt einer Klasse in Verbindung steht, nennt man Multiplizitäten.
 
-
-\subsection*{Mehrere Beziehungen zwischen den selben Klassen}
+\subsection*{Mehrere Beziehungen zwischen denselben Klassen}
 Zwei Klassen können auch in mehreren Beziehungen zueinander stehen
 \begin{minted}[escapeinside=||]{Java}
 record Student(|$\dots$|, Subject mainSubject, List<Subject> subjects){}
@@ -308,18 +313,73 @@ record Student(|$\dots$|, Subject mainSubject, List<Subject> subjects){}
 \begin {tikzpicture}
 
 
-\begin{class}[text width =6 cm]{Student}{0 ,0}
+\begin{class}[text width =4 cm]{Student}{0 ,0}
 \attribute {$\vdots$ }
 %\attribute {+ mainSubject: Subject }
 \operation{$\vdots$ }
 \end{class}
 
 \begin{class}[text width =5 cm]{Subject}{10 ,0}
-\attribute {name: String }
-\attribute {hoursPerWeek: int }
+\attribute {- name: String }
+\attribute {- hoursPerWeek: Int}
 \end{class}
 
 \end{tikzpicture}
 \end{center}
+
+
+\subsection*{Vordefinierte Werte}
+
+Oft ist bei allen Objekten einer Klasse der Wert eines Attributs zunächst gleich.
+
+\begin{minted}{Java}
+class Cat {
+     private int lives = 7;
+     ...
+}
+\end{minted}
+
+Dieser Wert steht dann auch im Klassendiagramm.
+
+
+\begin{center}
+\begin {tikzpicture}
+
+
+\begin{class}[text width =5 cm]{Cat}{10 ,0}
+\attribute {- lives: Int = 7}
+\attribute {$\dots$ }
+\end{class}
+
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{Statische Methoden}
+
+Methoden, die keine Attribute der einzelnen Objekte nutzen, können als statische Methoden definiert werden. 
+\begin{minted}{Java}
+class Utils {
+    public static int square(int x){
+         return x * x
+    }
+}
+\end{minted}
+
+Sie können dann auf der Klasse genutzt werden. Z.B. \texttt{Utils.square(4)}
+
+Solche Methoden werden in Klassendiagrammen unterstrichen.
+\begin{center}
+\begin {tikzpicture}
+
+\begin{class}[text width =5 cm]{Utils}{10 ,0}
+\attribute {$\dots$ }
+\operation{\underline{+ square(x: Int): Int}}
+
+\end{class}
+\end{tikzpicture}
+\end{center}
+
+
 
 \end{document}

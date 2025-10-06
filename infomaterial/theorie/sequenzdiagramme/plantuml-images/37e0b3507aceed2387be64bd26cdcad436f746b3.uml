@@ -1,0 +1,12 @@
+@startuml
+!theme spacelab
+autoactivate on  
+actor Akteur
+  Akteur ->> Student : greet
+
+  Student ->> Student : getGreeting
+
+  
+
+  return greeting
+@enduml

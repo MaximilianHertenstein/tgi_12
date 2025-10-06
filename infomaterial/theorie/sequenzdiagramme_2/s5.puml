@@ -1,0 +1,16 @@
+@startuml s5
+actor Akteur
+participant Student
+participant "other: Student" as other
+autoactivate on 
+hide footbox
+
+Akteur -> Student : greetOtherStudent()
+
+Student -> other : name
+other --> Student
+Student -> other : play()
+
+other --> Student
+
+@enduml

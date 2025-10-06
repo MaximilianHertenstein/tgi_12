@@ -1,0 +1,7 @@
+@startuml s1
+  actor Akteur
+  hide footbox
+  Akteur -> Student : greet
+  activate Student
+  deactivate Student
+@enduml

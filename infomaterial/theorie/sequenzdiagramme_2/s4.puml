@@ -1,0 +1,17 @@
+@startuml s4
+actor Akteur
+participant Student
+participant "snakeGame: Game" as Game
+autoactivate on 
+hide footbox
+
+Akteur -> Student : implementSnakeAndPlay()
+
+create Game
+Student -> Game : Game("Snake")
+return 
+Student -> Game : play()
+
+return
+
+@enduml

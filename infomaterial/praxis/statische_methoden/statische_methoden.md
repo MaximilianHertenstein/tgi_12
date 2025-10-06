@@ -31,7 +31,7 @@ utils.square(3);
 
 
 Die Methode `Utils` verwendet keine Attribute. Deshalb können wir sie auch als statische Methode deklarieren.
-Das geschiet mit dem Schlüsselwort `static`zu Beginn der Methodendefinition.
+Dazu schreiben wir das Schlüsselwort `static` an den Anfang der Methodendefinition.
 
 
 ```{.java .cb-nb line_numbers=false}
@@ -42,7 +42,7 @@ class Utils {
 }
 ```
 
-Statische Methoden werden nicht mit einem Objekt aufgerufen, sondern mit der Klasse selbst.
+Statische Methoden werden nicht auf einem Objekt aufgerufen, sondern auf der Klasse selbst.
 
 ```{.java .cb-nb line_numbers=false}
 Utils.square(3);
