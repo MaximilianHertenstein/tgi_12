@@ -6,7 +6,7 @@ codebraid:
 
 
 
-Um alle Features, die hier erklärt werden, nutzen zu können musst du die JDK 24 und Gradle 9 nutzen.
+Um alle Features, die hier erklärt werden, nutzen zu können musst du die JDK 24 und Maven nutzen.
 
 ![](settings.png){ width=100% }
 
@@ -38,6 +38,11 @@ Beim hovern über diese Funktion wird dir vorgeschlagen, die `Preview-Features` 
 
 
 
+
+# Projekteinstellungen ändern
+Wenn die Projekteinstellungen nicht mehr wie oben gesetzt sind, kannst du auf `File` und `Project Structure` klicken und die Einstellungen wieder korrigieren.
+
+![](change.png){ width=100% }
 
 
 # Variablen

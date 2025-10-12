@@ -1,4 +1,6 @@
 package org.example;
 
-public class InvertedEntry {
+import java.util.List;
+
+public record InvertedEntry(int key, List<String> value) {
 }

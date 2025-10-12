@@ -1,0 +1,179 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "org.example.Snake",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1322970774 { 
+   	label=example
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Model1526836320[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Model</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   applePosition: V2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   cols: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   direction: V2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   rows: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   snake: Snake [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ boardIsFull(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ gameOngoing(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveSnake()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ snakeIsAlive(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Snake1526836320[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Snake</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   digesting: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   head: V2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tail: List&lt;V2&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ computeNewTail(): List&lt;V2&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ digesting(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ head(): V2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ move(direction: V2, applePosition: V2): Snake</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tail(): List&lt;V2&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tailBitten(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Utils1526836320[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Utils</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ computeNewDirection(currentDirection: V2, pressedKey: char): V2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dropLast(xs: List&lt;T&gt;): List&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateRandomFreeCoordinates(blockedCoordinates: List&lt;V2&gt;, rows: int, cols: int): V2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isOnBoard(v: V2, cols: int, rows: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ keyToV2(pressedKey: char): V2</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+V21526836320[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)V2</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ plus(other: V2): V2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ times(other: V2): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ x(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ y(): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+Model1526836320 -> Snake1526836320[label="snake
+[0..1]"];
+Snake1526836320 -> Utils1526836320[label="computeNewTail() -> dropLast()"];
+Snake1526836320 -> V21526836320[label="head
+[0..1]"];
+Snake1526836320 -> V21526836320[label="tail
+[0..*]"];
+    
+}
+@enduml

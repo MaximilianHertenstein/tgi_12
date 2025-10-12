@@ -28,6 +28,25 @@ class SnakeTest {
         assertTrue(s2.tailBitten());
     }
 
+
+    @Test
+    void testComputeNewTailDigestingTrue() {
+        Snake s = new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), true);
+        assertEquals(List.of(new V2(6, 5), new V2(5, 5), new V2(4, 5)), s.computeNewTail());
+
+        Snake s2 = new Snake(new V2(4, 5), List.of(new V2(4, 4)), true);
+        assertEquals(List.of(new V2(4, 5), new V2(4, 4)), s2.computeNewTail());
+    }
+
+    @Test
+    void testComputeNewTailDigestingFalse() {
+        Snake s = new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), false);
+        assertEquals(List.of(new V2(6, 5), new V2(5, 5)), s.computeNewTail());
+
+        Snake s2 = new Snake(new V2(4, 5), List.of(new V2(4, 4)), false);
+        assertEquals(List.of(new V2(4, 5)), s2.computeNewTail());
+    }
+
     @Test
     void testMoveDigestingTrue() {
         Snake s = new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), true);

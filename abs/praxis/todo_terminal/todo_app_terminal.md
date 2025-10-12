@@ -192,7 +192,11 @@ public class Model {
 
 ```
 
+Definiere jede Klasse in einer eigenen Datei.
+
+
 # ToDo
+
 
 ## Aufgabe
 
@@ -367,6 +371,9 @@ Fußball spielen             \\Eingabe
 
 In diesem Beispiel ist die Rückgabe `"Fußball spielen"`
 
+**Hinweis** In Java kann mit `readln` eine Eingabe an der Konsole eingelesen werden.
+
+
 
 ## Aufgabe
 
@@ -432,6 +439,24 @@ Um die Methode nutzen zu können, musst du die folgende Abhängigkeit in `pom.xm
     <version>3.18.0</version>
 </dependency>
 ```
+Diese Abhängigkeit muss im `dependencies`-Block stehen.
+Wenn du noch keinen `dependencies`-Block hast, musst du diesen noch erstellen.
+Der entsrpechende Block sieht dann folgendermaßen aus:
+
+```
+<dependencies>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.18.0</version>
+    </dependency>
+
+    <!-- eventuell weitere Abhängigkeiten-- >
+
+<dependencies>
+```
+
+Klicke nach dem Einfügen auf das `M` auf der rechten Seite.
 
 
 Strings zu Integern konvertieren kannst du mit `Integer.parseInt`.
@@ -647,7 +672,7 @@ Sie fragt so lange erneut nach bis eine der Zahlen  (1-5) eingegeben wurde. Dies
 
 \scriptsize
 ```java
-var uiState = new UIState(List.of("All", new ToDo(1, "A", false), new ToDo(1, "A", true)), "1 open")
+var uiState = new UIState("All", List.of(new ToDo(1, "A", false), new ToDo(1, "A", true)), "1 open")
 var view = new View();
 view.showMainMenuAskForOption(uiState);
 ```
@@ -707,7 +732,7 @@ Schütze die Methoden `numberToFilter`, `showToDo`, `printToDos`, `getIDs`, `num
 
 ## Aufgabe
 
-Definiere eine Klasse `Model` mit einem Attribut 
+Definiere mit dem Schlüsselwort `class` eine Klasse `Model` mit einem Attribut 
 
 - `toDos`, das eine `ArrayList` von `ToDo`s ist
 - `filter`, das ein `String` ist
@@ -789,6 +814,26 @@ model.getFilteredToDos();
 \normalsize
 
 **Hinweis:** Nutze `getToDosCompleted`!
+
+
+## Aufgabe
+
+Füge der Klasse `Model` die Methode `showCountOfActiveToDoItems` hinzu, die die Anzahl der offenen Aufgaben als String zurückgibt (z.B. "2 items left").
+
+\scriptsize
+
+```{.java .cb-nb line_numbers=false}
+List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
+Model model = new Model(list, "All");
+model.showCountOfActiveToDoItems();
+```
+
+```{.java .cb-nb line_numbers=false}
+model.add("Neue Aufgabe");
+model.showCountOfActiveToDoItems();
+```
+
+\normalsize
 
 ## Aufgabe
 
@@ -992,24 +1037,7 @@ model.toDos;
 **Hinweis**: Nutze `getToDosCompleted!`!
 
 
-## Aufgabe
 
-Füge der Klasse `Model` die Methode `showCountOfActiveToDoItems` hinzu, die die Anzahl der offenen Aufgaben als String zurückgibt (z.B. "2 items left").
-
-\scriptsize
-
-```{.java .cb-nb line_numbers=false}
-List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
-Model model = new Model(list, "All");
-model.showCountOfActiveToDoItems();
-```
-
-```{.java .cb-nb line_numbers=false}
-model.add("Neue Aufgabe");
-model.showCountOfActiveToDoItems();
-```
-
-\normalsize
 
 
 ## Aufgabe

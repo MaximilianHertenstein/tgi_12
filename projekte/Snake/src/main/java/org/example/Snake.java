@@ -26,7 +26,7 @@ public record Snake(
         return tail.contains(head);
     }
 
-    private List<V2> computeNewTail(){
+    public List<V2> computeNewTail(){
         if (!digesting) {
             return Utils.dropLast(getCoordinates());
         }

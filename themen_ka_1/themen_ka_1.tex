@@ -1,0 +1,89 @@
+\documentclass[a4paper,DIV =14]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Themen KA1 TGI12}
+\begin{document}
+
+\section{Themen}
+\begin{itemize}
+\item Java Grundlagen \begin{itemize}
+\item Variablen
+\item Fallunterscheidungen
+\item Schleifen
+\item Listen
+\end{itemize}
+\item Objektorientierung in Java\begin{itemize}
+\item Records
+\item Methoden mit Rückgabewert
+\item Klassen mit \texttt{Class}
+\item veränderliche Eigenschaften von Objekten
+\item Eigenschaften mit Methoden ändern
+\item Konstruktoren definieren (auch sekundäre Konstruktoren für Records)
+\item statische Methoden definieren und aufrufen
+\item Typvariablen verwenden(wie in \texttt{dropLast})
+\end{itemize}
+
+\item Klassendiagramme
+%\item Objektdiagramme
+\end{itemize}
+
+\section{Vorbereitung}
+
+\begin{itemize}
+\item ToDo-App und Snake programmieren
+\item Klassendiagramme für ToDo-App und Snake erstellen
+\end{itemize}
+
+Wer Snake und die ToDo-App selbständig programmieren kann und Klassen/Objektdiagramme lesen und zeichnen kann, ist sehr gut vorbereitet.
+
+\end{document}

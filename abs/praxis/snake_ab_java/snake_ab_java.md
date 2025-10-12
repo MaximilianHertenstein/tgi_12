@@ -415,6 +415,77 @@ new Snake(new V2(2, 3),
 \normalsize
 
 
+
+
+# Aufgabe 
+Erweitere die Klasse `Snake` um eine Methode `computeNewTail`{.java}. Diese berechnet den Schwanz der Schlange nach der nächsten Bewegung.
+Wenn die Schlange gerade verdaut, behält sie die letzte Zelle. Ansonsten verliert sie diese.
+
+
+
+
+```{.java .cb-nb line_numbers=false}
+new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), true).computeNewTail()
+```
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[y=-1cm, scale = 0.5]
+  \draw[-latex] (0,0) -- (1,0) node[below] {$x$};
+  \draw[-latex] (0,0) -- (0,1) node[left] {$y$};
+\draw[step=1cm,black,very thin] (0,0) grid (10,10);
+\fill[green!20] (6,5) rectangle (7,6);
+\fill[green] (5,5) rectangle (6,6);
+\fill[green] (4,5) rectangle (5,6);
+\fill[green] (5,5) rectangle (6,6);
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}[y=-1cm, scale = 0.5]
+  \draw[-latex] (0,0) -- (1,0) node[below] {$x$};
+  \draw[-latex] (0,0) -- (0,1) node[left] {$y$};
+\draw[step=1cm,black,very thin] (0,0) grid (10,10);
+\fill[green!20] (7,5) rectangle (8,6);
+\fill[green] (6,5) rectangle (7,6);
+\fill[green] (5,5) rectangle (6,6);
+\fill[green] (4,5) rectangle (5,6);
+\end{tikzpicture}
+\end{figure}
+
+
+
+```{.java .cb-nb line_numbers=false}
+new Snake(new V2(4, 5), List.of(new V2(4, 4)), false).computeNewTail()
+```
+
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[y=-1cm, scale = 0.5]
+  \draw[-latex] (0,0) -- (1,0) node[below] {$x$};
+  \draw[-latex] (0,0) -- (0,1) node[left] {$y$};
+\draw[step=1cm,black,very thin] (0,0) grid (10,10);
+\fill[green!20] (4,5) rectangle (5,6);
+\fill[green] (4,4) rectangle (5,5);
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}[y=-1cm, scale = 0.5]
+  \draw[-latex] (0,0) -- (1,0) node[below] {$x$};
+  \draw[-latex] (0,0) -- (0,1) node[left] {$y$};
+\draw[step=1cm,black,very thin] (0,0) grid (10,10);
+\fill[green!20] (4,6) rectangle (5,7);
+\fill[green] (4,5) rectangle (5,6);
+\end{tikzpicture}
+\end{figure}
+
+```{.java .cb-nb line_numbers=false}
+new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), false).computeNewTail()
+```
+```{.java .cb-nb line_numbers=false}
+new Snake(new V2(4, 5), List.of(new V2(4, 4)), true).computeNewTail()
+```
+
+**Hinweis:** Nutze `dropLast` und `getCoordinates`!
+
+
+
 # Aufgabe 
 Erweitere die Klasse `Snake` um eine Methode `move`{.java}. Dieser wird die Richtung der Schlange und die Position des Apfels gegeben. Sie gibt die neue Schlange zurück.
 
@@ -485,7 +556,7 @@ new Snake(new V2(6, 5), List.of(new V2(5, 5), new V2(4, 5)), false).move(new V2(
 new Snake(new V2(4, 5), List.of(new V2(4, 4)), true).move(new V2(0, 1), new V2(4, 6))
 ```
 
-**Hinweis:** Nutze `dropLast`, `getCoordinates` und die Vektoraddition! Berechne nacheinander 
+**Hinweis:** Nutze `computeNewTail` und die Vektoraddition! Berechne nacheinander 
 
 - den neuen Kopf der Schlange
 - ob die Schlange nach der Bewegung verdaut
