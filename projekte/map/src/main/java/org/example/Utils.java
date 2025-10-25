@@ -4,27 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
+
+
     public static List<Integer> values(List<SimpleEntry> entryList) {
         var values = new ArrayList<Integer>();
         for (var entry : entryList) {
-            if (!values.contains(entry.value())) {
-                values.add(entry.value());
-            }
+            values.add(entry.value());
         }
         return values;
     }
 
-    public static ArrayList<SimpleEntry> updateEntry(List<SimpleEntry> entryList, String key, int value) {
-        var newEntryList = new ArrayList<SimpleEntry>();
-        for (var entry : entryList) {
-            if (entry.key().equals(key)) {
-                newEntryList.add(entry.setValue(value));
-            }
-            else {
-                newEntryList.add(entry);
+    public static <T> List<T> dedup(List<T> xs) {
+        var acc = new ArrayList<T>();
+        for (T x : xs) {
+            if (!acc.contains(x)) {
+                acc.add(x);
             }
         }
-        return newEntryList;
+        return acc;
+    }
+
+    public static List<String> keySet(List<SimpleEntry> entryList) {
+        var keys = new ArrayList<String>();
+        for (var entry : entryList) {
+            keys.add(entry.key());
+        }
+        return dedup(keys);
     }
 
     public static ArrayList<SimpleEntry> remove(List<SimpleEntry> entryList, String key) {
@@ -37,12 +42,28 @@ public class Utils {
         return res;
     }
 
+    public static ArrayList<SimpleEntry> put(List<SimpleEntry> entryList, String key, int value) {
+        if (!keySet(entryList).contains(key)) {
+            var newEntryList = new ArrayList<SimpleEntry>(entryList);
+            newEntryList.add(new SimpleEntry(key, value));
+            return newEntryList;
+        }
+        var newEntryList = new ArrayList<SimpleEntry>();
+        for (var entry : entryList) {
+            if (entry.key().equals(key)) {
+                newEntryList.add(entry.setValue(value));
+            } else {
+                newEntryList.add(entry);
+            }
+        }
+        return newEntryList;
+    }
 
     public static List<InvertedEntry> invertedEntries(List<SimpleEntry> entryList) {
         var res = new ArrayList<InvertedEntry>();
-        for (var value : values(entryList)) {
+        for (var value : dedup(values(entryList))) {
             var acc = new ArrayList<String>();
-            for (var entry : entryList) {
+            for (var entry : dedup(entryList)) {
                 if (entry.value() == value) {
                     acc.add(entry.key());
                 }
@@ -51,6 +72,4 @@ public class Utils {
         }
         return res;
     }
-
-
 }

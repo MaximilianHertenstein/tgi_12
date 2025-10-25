@@ -17,12 +17,6 @@ public class SimpleMap {
         return entryList;
     }
 
-    public void clear() {
-        entryList = new ArrayList<SimpleEntry>();
-    }
-
-
-
     public int size() {
         return entryList.size();
     }
@@ -31,33 +25,15 @@ public class SimpleMap {
         return size() == 0;
     }
 
+    public void clear() {
+        entryList = new ArrayList<SimpleEntry>();
+    }
     public List<String> keySet() {
-        var keys = new ArrayList<String>();
-        for (var entry : entryList) {
-            keys.add(entry.key());
-        }
-        return keys;
-
+        return Utils.keySet(entryList);
     }
 
     public List<Integer> values() {
-        var values = new ArrayList<Integer>();
-        for (var entry : entryList) {
-            if (!values.contains(entry.value())) {
-                values.add(entry.value());
-            }
-
-        }
-        return values;
-    }
-
-    public Integer get(String key) {
-        for (var entry : entryList) {
-            if (entry.key().equals(key)) {
-                return entry.value();
-            }
-        }
-        return -1;
+        return Utils.values(entryList);
     }
 
     public boolean containsKey(String key) {
@@ -67,26 +43,32 @@ public class SimpleMap {
     public boolean containsValue(int value) {
         return values().contains(value);
     }
-
-
-
-
-    public int put(String key, int value) {
-        var res = get(key);
-        if (res == -1) {
-            entryList.add(new SimpleEntry(key, value));
+    public Integer keyToIndex(String key) {
+        for (int i = 0; i < entryList.size(); i++) {
+            if (entryList.get(i).key().equals(key)) {
+                return i;
+            }
         }
-        else {
-            entryList = Utils.updateEntry(entryList, key, value);
-        }
-        return res;
-
+        return -1;
     }
 
+    public Integer get(String key) {
+        var index = keyToIndex(key);
+        if (index == -1) {
+            return -1;
+        }
+        return entryList.get(index).value();
+    }
 
     public Integer remove(String key) {
         var res = get(key);
         entryList = Utils.remove(entryList, key);
+        return res;
+    }
+
+    public int put(String key, int value) {
+        var res = get(key);
+        entryList = Utils.put(entryList, key, value);
         return res;
     }
 

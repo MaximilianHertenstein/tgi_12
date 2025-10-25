@@ -92,6 +92,16 @@ Dafür müssen wir die folgende Zeile im Dependency-Block in `build.gradle` einf
 implementation("gg.jte:jte:3.2.1")
 ```
 
+oder in `pom.xml` die folgende Abhängigkeit ergänzen:
+
+```
+<dependency>
+    <groupId>gg.jte</groupId>
+    <artifactId>jte</artifactId>
+    <version>3.2.1</version>
+</dependency>
+```
+
 
 In der `java` Datei, in der wir die `Template-Engine` nutzen wollen, müssen wir die folgenden Importe einfügen.
 

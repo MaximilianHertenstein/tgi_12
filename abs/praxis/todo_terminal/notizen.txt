@@ -1,0 +1,1 @@
+getIDs und getNumbersFrom One in Klasse Utils als  statische Funktionen definieren.
