@@ -7,6 +7,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 
 import java.io.IOException;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 
@@ -22,7 +23,7 @@ public class TUI {
         this.rows = rows;
         this.screen = new DefaultTerminalFactory().setPreferTerminalEmulator(true).setInitialTerminalSize(new TerminalSize(cols + 2, rows + 2))
                 .setTerminalEmulatorFontConfiguration(
-                        SwingTerminalFontConfiguration.getDefaultOfSize(30)
+                        SwingTerminalFontConfiguration.getDefaultOfSize(15)
                 ).createScreen();
 
         screen.startScreen();
@@ -32,24 +33,14 @@ public class TUI {
     // private val screen = DefaultTerminalFactory().setInitialTerminalSize(TerminalSize(columns + 2, rows + 2)).createScreen()
 
 
-    public void print(UIState uiState) throws IOException, InterruptedException {
+    public void print(List<StringWithLocation> uiState) throws IOException, InterruptedException {
         screen.clear();
-        textGraphics.putString(uiState.snakeHead().x() + 1, uiState.snakeHead().y() + 1, "Q");
-        textGraphics.putString(uiState.applePosition().x() + 1, uiState.applePosition().y() + 1, "@");
-        for (var v : uiState.snakeTail()) {
-            textGraphics.putString(v.x() + 1, v.y() + 1, "O");
+        for (var x : uiState) {
+            textGraphics.putString(x.location().x(), x.location().y(), x.string());
         }
-        for (int i = 0; i < rows + 2; i++) {
-            textGraphics.putString(0, i, "▒");
-            textGraphics.putString(cols + 1, i, "▒");
-        }
-        for (int i = 0; i < cols + 2; i++) {
-            textGraphics.putString(i, 0, "▒");
-            textGraphics.putString(i, rows + 1, "▒");
-        }
-        textGraphics.putString(1, rows + 2, "Points: " + uiState.snakeTail().size());
+
         screen.refresh();
-        sleep(600);
+        sleep(10);
     }
 
     public void close() throws IOException {
@@ -61,12 +52,11 @@ public class TUI {
         textGraphics.putString(cols / 2, rows / 2, s);
         screen.refresh();
         sleep(10000);
-
     }
 
     public char getPressedKey() throws IOException {
         var input = screen.pollInput();
-        if (input != null) {
+        if (input != null && input.getCharacter() != null) {
             return input.getCharacter();
         }
         return ' ';

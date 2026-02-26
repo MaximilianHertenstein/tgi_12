@@ -1,0 +1,151 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+%\usepackage[simplified]{pgf
+%-umlcd}
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig,
+%module={ohne}
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Klassendiagramme}
+\begin{document}
+
+
+
+\subsection*{Bereiche für Multiplizitäten}
+
+Die Eigenschaft \texttt{subjects} der Klasse \texttt{Student} ist eine Liste. Da diese nur durch die Methode \texttt{addSubject} geändert werden kann,  enthält sie nie mehr als $10$ Elemente.
+
+\begin{minted}[escapeinside=||]{Java}
+record Subject(|\dots|) {}
+
+class  Student {
+    |\vdots|
+    List<Subject>subjects;
+
+    public Student(|\dots|) {
+        |\vdots|
+        this.subjects = new ArrayList<>();
+    }
+
+    public void addSubject(Subject subject) {
+        if (subjects.size() < 10) {
+            subjects.add(subject);
+        } else {
+            println("Student can't have more than 5 subjects");
+        }
+    }
+
+}
+\end{minted}
+\noindent
+
+In dem Klassendiagramm wird dies folgendermaßen dargestellt.
+\begin{center}
+\begin {tikzpicture}
+
+
+\begin{class}[text width =8 cm]{Student}{0 ,0}
+\attribute {$\vdots$ }
+%\attribute {+ mainSubject: Subject }
+\operation{$\vdots$ }
+\operation{\texttt{+ Student($\dots$)}}
+\operation{ \texttt{+ addSubject(subject: Subject)}}
+\end{class}
+
+\begin{class}[text width =5 cm]{Subject}{10 ,0}
+\attribute {$\vdots$}
+\operation{$\vdots$ }
+\end{class}
+
+\unidirectionalAssociation{Student}{subjects}{0..10}{Subject}
+
+\end{tikzpicture}
+\end{center}
+
+Die Multiplizität \texttt{0..10} gibt an, dass die Eigenschaft \texttt{subjects} auf zwischen $0$ und $10$ Elemente vom Typ \texttt{Subject} verweist.
+
+\pagebreak 
+\subsection*{Einschränkungen für Eigenschaften}
+In der folgenden Version der Klasse \texttt{Subject}, sorgt der Konstruktor dafür, dass Eigenschaft \texttt{hoursPerWeek} nur Werte zischen $1$ und $5$ haben kann.
+\begin{minted}[escapeinside=||]{Java}
+class Subject {
+    private String name;
+    private int hoursPerWeek;
+
+    public Subject(String name, int hoursPerWeek) {
+        this.name = name;
+        if (hoursPerWeek > 1 && hoursPerWeek <= 5) {
+            this.hoursPerWeek = hoursPerWeek;
+        } 
+        else { 
+            throw new IllegalArgumentException("Hours per week must be between 1 and 5");
+        }
+    }
+}
+\end{minted}
+
+Im Klassendiagramm wird diese Einschränkung in geschweiften Klammern hinter der Eigenschaft angegeben.
+\begin{center}
+\begin {tikzpicture}
+
+
+\begin{class}[text width =10 cm]{Subject}{15 ,0}
+\attribute {\texttt{- name: String}}
+\attribute {\texttt{- hoursPerWeek: Int \{0 >= hoursPerWeek <=5\}}}
+\operation{\texttt{+ Subject(name: String, hoursPerWeek: Int)} }
+\operation{$\vdots$ }
+\end{class}
+
+
+
+\end{tikzpicture}
+\end{center}
+\end{document}

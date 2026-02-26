@@ -1,0 +1,47 @@
+Algorithmus entwickeln
+
+Das Abitur wird u.a. nur dann bestanden, falls in den finf Prifungsfachern
+insgesamt mindestens 100 Punkte erreicht werden (100-Punkte-Regel). Dabei
+muss jede einzelne Note in den Abiturpriifungsfachern vierfach gezahlt
+werden. Weitere Bestehensvoraussetzungen werden in dieser Aufgabe nicht
+berticksichtigt.
+
+Yvonne Leiser hat in ihren Prifungsfachern
+
+e 17 12 Punkte,
+
+e Mathe 7 Punkte,
+
+e Deutsch 3 Punkte,
+
+e Chemie 6 Punkte und
+
+e Katholische Religion 2 Punkte
+erreicht.
+
+Erlautern Sie mit Hilfe einer Rechnung, ob Yvonne Leiser nach der 100-
+Punkte-Regel die Abiturpriifung bestanden hat.
+
+Entwickeln Sie die Operation hat100PunktelmAbi( ):Boolean der Klasse
+Schueler in Pseudocode oder in der im _ Unterricht eingefiihrten
+Programmiersprache. Wird die 100-Punkte-Regel eingehalten, so liefert die
+Operation true ansonsten false zuriick.
+
+Beachten Sie, dass zur Uberpriifung der 100-Punkte-Regel unter allen
+Fachern eines Schilers nur die Prifungsfacher beriicksichtigt werden.
+
+Objektdiagramm ableiten
+
+Ist eine schriftliche Abiturprifung in einem Fach zu schlecht ausgefallen, so
+kann in diesem Fach eine freiwillige mindliche Zusatzpriifung absolviert
+werden, um die Abitur-Endnote in diesem Fach zu verbessern.
+
+Yvonne Leiser hat im 3. Priifungsfach Deutsch in der schriftliche Abiturpriifung
+leider nur 3 Punkte erreicht. Um ihre Abiturnote Deutsch zu verbessern, ist sie
+im Fach Deutsch in die mundliche Zusatzprufung gegangen und hat dort 9
+Notenpunkte erzielt.
+
+Leiten Sie aus der Beschreibung oben Uber Yvonne Leiser das UML-
+Objektdiagramm fiir das Fach Deutsch, das im Objekt fach[2] gespeichert ist,
+mit der Abiturpriifung und der Zusatzpriifung ab. Alle anderen Objekte des
+Szenarios sind nicht gefordert.

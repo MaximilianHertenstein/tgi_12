@@ -1,0 +1,177 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+\usepackage{monaspace-otf}
+\usepackage[default]{fontsetup}
+
+%\usepackage{fontspec}
+%\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+%\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+%\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+\usepackage{float}
+\usepackage{fancyvrb}
+\date{}
+
+\title{LSG Alien Invaders}
+\begin{document}
+
+\section*{Aufgabe 1}
+
+\begin{itemize}
+\item Die Methode \texttt{klickNeuesSpiel} wird auf einem Objekt der Klasse \texttt{GUI} aufgerufen. Da die Methode keine Argumente übergeben bekommt, hat sie keine Parameter. Es geht kein Pfeil zurück zum Akteur. Deshalb hat die Methode keinen Rückgabewert. Außerdem haben Methoden der Klasse \texttt{GUI} in der Regel keinen Rückgabewert. Die Methode wird nicht aus einer Methode der Klasse \texttt{GUI} sondern von außen aufgerufen. Deshalb ist sie öffentlich.
+
+Wir müssen also in der Klasse \texttt{GUI} die Zeile \texttt{+klickNeuesSpiel()} ergänzen.
+
+\item Die Methode \texttt{neuesSpiel} wird auf einem Objekt der Klasse \texttt{Steuerung} aufgerufen. Der Methode wird der Wert \texttt{anzahlAliens} übergeben. Im Klassendiagramm steht, dass es sich dabei um eine ganze Zahl handelt. Am Ende des Blocks geht ein Pfeil ohne Beschriftung zurück zum Objekt \texttt{dieGUI}. Deshalb hat die Methode keinen Rückgabewert. Die Methode wird nicht aus einer Methode der Klasse \texttt{Steuerung}, sondern aus einer Methode der Klasse \texttt{GUI} aufgerufen. Deshalb ist sie öffentlich.
+
+Wir müssen also in der Klasse \texttt{Steuerung} die Zeile \texttt{+neuesSpiel(anzAliens: GZ)} ergänzen.
+Der Name des Parameters kann frei gewählt werden.
+
+
+\item In der Klasse \texttt{Raumschiff} muss die Zeile \texttt{+setPosition(x: GZ, y: GZ)} ergänzt werden.
+
+\item In der Klasse \texttt{Raumschiff} muss die Zeile \texttt{+setLeben(anzahl: GZ)} ergänzt werden.
+
+\item In der Klasse \texttt{Alien} muss die Zeile \texttt{+setPosition(x: GZ, y: GZ)} ergänzt werden.
+
+\item In der Klasse \texttt{Score} muss die Zeile \texttt{+initPunkte()} ergänzt werden.
+
+\item In der Klasse \texttt{GUI} muss die Zeile \texttt{+aktualisierenGUI()} ergänzt werden.
+\end{itemize}
+
+\section*{Aufgabe 2}
+
+\begin{enumerate}
+\item Das Objekt \texttt{dieGUI} ruft die Methode \texttt{neuesSpiel} auf dem Objekt \texttt{dieSteuerung} der Klasse \texttt{Steuerung} auf. Eine Eigenschaft der Klasse \texttt{GUI} hat also den Namen \texttt{dieSteuerung} und den Typ \texttt{Steuerung}. Da kein Index verwendet wird, ist die Eigenschaft keine Liste. Wir müssen also einen Pfeil von \texttt{GUI} zu \texttt{Steuerung} zeichnen.
+An dem Pfeil steht \texttt{dieSteuerung} und eine $1$.
+
+
+\item Wir müssen  einen Pfeil von \texttt{Steuerung} zu \texttt{Raumschiff} zeichnen.
+An dem Pfeil steht \texttt{dasRaumschiff} und eine $1$. Begründung: wie oben.
+
+\item Das Objekt \texttt{dieSteuerung} ruft die Methode \texttt{setPosition} auf einem Objekt \texttt{derAlien[idx]} der Klasse \texttt{Alien} auf. Dabei wird ein Index \texttt{idx} verwendet, um ein Alien-Objekt auszuwählen. \texttt{derAlien[idx]} ist also eine Liste.
+
+Eine Eigenschaft der Klasse \texttt{Steuerung} hat also den Namen \texttt{derAlien} und die Klasse \texttt{List<Alien>}. Wir müssen also einen Pfeil von \texttt{Steuerung} zu \texttt{Alien} zeichnen.
+An dem Pfeil steht \texttt{derAlien} und ein $*$. Da es den Pfeil schon gibt, ist nichts zu tun.
+
+Ganz korrekt wird mit der Schleife auf allen Objekten in \texttt{derAlien} die Methode \texttt{setPosition} aufgerufen.
+
+
+\item Wir müssen  einen Pfeil von \texttt{Steuerung} zu \texttt{Score} zeichnen.
+An dem Pfeil steht \texttt{derScore} und eine $1$. Begründung: wie oben.
+
+\item Wir müssen  einen Pfeil von \texttt{Steuerung} zu \texttt{GUI} zeichnen.
+An dem Pfeil steht \texttt{dieGUI} und eine $1$. Begründung: wie oben.
+
+\end{enumerate}
+
+\section*{Aufgabe 3}
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{a4_ohne_break}
+
+
+\end{figure}
+
+\section*{Aufgabe 3 mit break}
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{a4}
+
+\label{fig:a3}
+\end{figure}
+
+
+
+
+\section*{Aufgabe 4}
+
+\begin{minted}[]{java}
+public void updateScore(){
+    if (punkte > highscore){
+        highscore = punkte;
+    }
+    punkte = 0;
+}
+\end{minted}
+
+\section*{Aufgabe 5}
+
+\begin{minted}[]{java}
+private int getAnzahlAktiverAliens(){
+    int anzahl = 0;
+    for (var alien: derAlien){
+        if (alien.getAktiv()){
+            anzahl = anzahl + 1;
+        }
+    }
+    return anzahl;
+}
+\end{minted}
+
+\section*{Aufgabe 6}
+
+\begin{center}
+\begin {tikzpicture}
+\begin{class}[text width =8 cm]{Alien}{0 ,0}
+\attribute{\dots}
+\attribute { \underline{-vertGeschwindigkeit: GZ} }
+\attribute { \underline{-schussIntervall: GZ} }
+\operation{\dots}
+
+\operation { \underline{+getVertGeschwindigkeit():} }
+\operation { \underline{+setVertGeschwindigkeit(neueGeschw: GZ)} }
+\operation { \underline{+getSchussIntervall()} }
+\operation { \underline{+setSchussIntervall(neuesIntervall: GZ)} }
+\end{class}
+\end{tikzpicture}
+\end{center}
+
+Die Methoden sind nicht unbedingt erforderlich.
+\end{document}

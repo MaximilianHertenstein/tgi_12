@@ -1,0 +1,164 @@
+\documentclass[a4paper, DIV = 13]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.25\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{ToDo-App Klassen und Sequenzdiagramme}
+\begin{document}
+	
+Für einen Programmierwettbewerb soll eine TODO-App programmiert werden.
+An die TODO-App werden im Wettbewerb folgende Anforderungen gestellt:
+
+\begin{itemize}
+	\item Der TG-Abteilungsleiter soll pro Tag einen TG-Termin wie z.B. Skitag,
+	Badminton-Turnier oder Sommerferien eintragen können.
+	\item Jeder Schüler soll für sich beliebig viele persönliche TODOs pro Tag
+	hinzufügen können.
+\end{itemize}
+
+
+Das folgenden UML-Sequenzdiagramm  zeigt das Szenario \enquote{TODOs eines
+Schülers von einem Tag anzeigen}. Neben den persönlichen TODOs des
+Schülers wird auch der TG-Termin des Abteilungsleiters des Tages auf der
+Benutzeroberfläche angezeigt.
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{uml_todos_einens_sus_anzeigen}
+
+
+\end{figure}
+
+
+Das folgende  UML-Klassendiagramm
+für die TODO-App ist noch unvollständig.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{kd_todo}
+
+
+\end{figure}
+\pagebreak
+
+\begin{aufgabe}
+	\begin{teilaufgaben}
+\teilaufgabe Stellen Sie im UML-Klassendiagramm auf dem Arbeitsblatt 1 die fehlenden
+Operationen mit vollständiger Signatur, Rückgabetyp und Sichtbarkeit dar,
+die im UML-Sequenzdiagramm in Abbildung 2 verwendet wurden. Die
+Sichtbarkeit öffentlich darf nur verwendet werden, wenn dies notwendig ist.
+
+\teilaufgabe Stellen Sie im UML-Klassendiagramm auf dem Arbeitsblatt 1 alle noch
+fehlenden Assoziationen mit Rollennamen, Multiplizität und
+Navigationsrichtung dar, die sich aus dem Szenario in Abbildung 2 ableiten
+lassen. Beachten Sie, dass nach der Inbetriebnahme des Programms noch
+keine Schüler im System vorhanden sind.
+	\end{teilaufgaben}
+\end{aufgabe}
+
+\vskip 20pt
+
+In der TODO-App gibt es die Möglichkeit, sich in einem bestimmten Zeitraum
+alle TG-Termine des Abteilungsleiters wie z.B. Probeabitur, Skitag etc.
+anzeigen zu lassen. Dabei werden die Termine mit Datum in Tabellenform
+dargestellt.
+
+Z.B werden die
+TG-Termine vom 17.02.2025 bis 28.02.2025 folgendermaßen dargestellt.
+
+
+\begin{Verbatim}
+18.02.2025 Probeabitur IT
+25.02.2025 Skitag
+\end{Verbatim}
+
+\begin{aufgabe}
+Schreibe den Code für die Methode \texttt{anzeigenTGTermine(von, bis)} der Klasse \texttt{Steuerung}.
+\end{aufgabe}
+\vskip 10pt
+\textbf{Hinweis:} Der betrachtete Zeitraum für die Termine wird in den Parametern \texttt{von} und \texttt{bis}
+angegeben. Dabei werden alle Tage mit dem Datum \texttt{d} betrachtet, für die gilt:
+
+$$\mathtt{von \le d \le bis}$$
+
+
+Die Datumsangaben können mit den Vergleichsoperatoren \texttt{<}, \texttt{<=,} ... verglichen
+werden.
+
+\hinweis{\texttt{print} darf nicht verwendet werden. Nutze stattdessen eine Methode der Klasse \texttt{GUI}}
+
+\begin{aufgabe}
+Schreibe den Code für die Methode \texttt{clickAnzeigenTGTermine(von, bis)} der Klasse \texttt{GUI}.
+\end{aufgabe}
+
+\pagebreak
+
+\begin{aufgabe}
+Vervollständige das Sequenzdiagramm für das Szenario \enquote{Alle TG-Termine in
+einem vorgegebenen Zeitraum anzeigen}.
+
+
+
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=270, width=\linewidth]{sequenzdiagramm_vorlage}
+
+\end{figure}
+
+\end{aufgabe}
+
+
+
+\end{document}

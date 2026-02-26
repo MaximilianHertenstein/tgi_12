@@ -1,0 +1,43 @@
+Bild 3 zeigt wie ein Benutzer auf der Oberflache angibt, dass er das Wort ,Auto“ im
+Wortgitter gefunden hat. Durch das Driicken des Schalters ,Priifen* wird Uberpriift, ob
+sich das Wort tatsachlich im Wortgitter befindet und eine entsprechende Nachricht am
+Bildschirm ausgegeben.
+
+Meldung x
+
+Anzahl Zeilen: 10 Anzahl Worter 5
+——— Richtiges Wort
+Anzahl Spaiten: 20 Starten
+Gefundenes Wort: Auto Priifen
+
+Bild 3: Benutzer hat das Wort ,Auto“ im Wortgitter gefunden
+
+@
+
+Der Beginn des Sequenzdiagramms fiir das Szenario ,Ein Wort wird gepriift ist auf
+Arbeitsblatt 2 dargestellt.
+
+Entwickeln Sie das Sequenzdiagramm entsprechend der folgenden Beschreibung
+weiter:
+
+e Als Erstes wird das gefundene Wort mit allen Suchwortern verglichen. Dazu
+wird die Operation pruefeWort(..): Boolean der Klasse SuchWort verwendet.
+Falls das gefundene Wort und das Suchwort gleich sind, gibt diese Operation
+true zurlick, ansonsten false.
+
+e Falls das gefundene Wort im Gitter versteckt war (ein Suchwort ist gleich wie
+das gefundene Wort), wird mit Hilfe der Operation alleWoerterGefunden():
+Boolean der Klasse Steuerung gepriift, ob alle Worter gefunden wurden.
+
+e Je nach Ergebnis der Prifung wird folgender Hinweis auf der GUI ausgegeben:
+
+- Das gefundene Wort gibt es im Wortgitter und es gibt noch weitere
+Worter, die nicht gefunden wurden: ,,Richtiges Wort"
+
+- Das gefunden Wort gibt es im Wortgitter und alle Wérter wurden
+gefunden: ,,Alle Worter gefunden“
+
+- Das gefunden Wort gibt es nicht im Wortgitter: ,Wort nicht vorhanden“
+
+Hinweis: Botschaften, die von der Operation alleWoerterGefunden() gesendet
+werden, mussen nicht dargestellt werden.

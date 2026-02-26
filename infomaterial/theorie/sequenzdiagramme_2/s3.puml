@@ -2,8 +2,11 @@
 autoactivate on 
 hide footbox
 actor Akteur
-    Akteur -> Student : getGradeOfMainSubject
-    Student -> Subject : grade
-    return grade
-    return gradeOfMainSubject
+participant "student: Student" as Student
+participant "mainSubject: Subject" as Subject
+
+
+    Akteur -> Student : printNameOfMainSubject()
+    Student -> Subject : name()
+    return name
 @enduml

@@ -1,0 +1,40 @@
+A1 1
+
+A2 1
+
+A3 1
+
+A4 +1 Schleife
+   +2 Rückgabe false stimmt
+   +2 Rückgabe true stimmt
+   
+A5
+  + 1 Schleife
+  + 1 acc anlegen
+  + 4 Rückgabe aller Aliens die nicht kollidieren und keine Rückgabe von Aliens die kollidieren
+
+A6 2
+-1 keine ArrayList
+  
+A7 + 2 Eigenschaft
+
+s.o
+
+A8 + 2
+
+A9 + 1
+
+A10 1
+
+A11 +1 Bestimmung niedrigste y-Koordinate
+    +1 acc anlegen
+    +1 Schleife
+    +3 Filtern
+    +1 Rückgabe
+    
+-2 Absturz bei leerer Liste    
+-2 kein return
+
+A12 5
+nur 1 wenn neuer alienManager erzeugt wird.
+  

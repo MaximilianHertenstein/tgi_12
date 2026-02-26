@@ -1,0 +1,42 @@
+@startuml
+autoactivate on
+skinparam monochrome true
+skinparam shadowing false
+
+participant dieGUI
+participant dieSteuerung
+participant dasSuchWort
+
+activate dieGUI
+
+dieGUI -> dieSteuerung : pruefeWort(wort)
+
+loop für i = 0 bis aAnzWoerter - 1
+    dieSteuerung -> dasSuchWort : pruefeWort(wort)
+    return richtig
+
+    break richtig == true
+
+        dieSteuerung -> dieSteuerung : alleWorteGefunden()
+        return allesGefunden
+
+        alt allesGefunden == true
+            dieSteuerung -> dieGUI : zeigeHinweis("alle Worte gefunden")
+            return
+        else
+            dieSteuerung -> dieGUI : zeigeHinweis("richtiges Wort")
+            return
+        end
+end
+opt i == aAnzWoerter - 1
+    dieSteuerung -> dieGUI : zeigeHinweis("Wort nicht vorhanden")
+    return
+end
+end
+
+
+
+return
+deactivate dieGUI
+
+@endumlhttps://go.ezodn.com/utilcave_com/ezoicbwa.png

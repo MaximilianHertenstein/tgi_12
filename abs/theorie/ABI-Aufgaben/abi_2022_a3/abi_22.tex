@@ -1,0 +1,178 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.25\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+\usepackage{float}
+
+\usepackage{microtype}	
+
+\setlength{\parindent}{20pt}
+\date{}
+
+\title{Bücherei}
+\begin{document}
+\noindent
+Die vorliegende Aufgabe ist ein Entwurf für eine Software zur Ausleihe von Büchern in
+einer Schulbibliothek. Die dargestellten Operationen der Klasse \texttt{GUI} in den folgenden Sequenzdiagrammen kann der Anwender durch entsprechende Schaltflächen in der \texttt{GUI}
+auslösen.
+
+Eine Leihe besteht aus einem Buch und einer Person, die das Buch ausgeliehen hat.
+
+
+Ein unvollständiges Klassendiagramm liegt bereits vor.
+
+Abbildung 1 zeigt das Sequenzdiagramm \enquote{Der Benutzer sucht alle Leihen für eine
+bestimmte Person}, und im Sequenzdiagramm in Abbildung 2 wird eine neue Person
+im System angelegt.
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{sequenzdiagramm_1}
+\caption{Der Benutzer sucht alle Leihen für eine bestimmte Person}
+\label{fig:sequenzdiagramm1}
+\end{figure}
+
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{sequenzdiagramm_2}
+\caption{Eine neue Person wird angelegt}
+\label{fig:sequenzdiagramm2}
+\end{figure}
+
+\begin{aufgabe}
+\noindent
+Ergänzen Sie im Klassendiagramm alle Assoziationen, die sich
+aus den Sequenzdiagrammen in Abbildung 1 und 2 ergeben. Tragen Sie für jede
+Assoziation die Richtung, die Multiplizität sowie den Rollennamen ein. 
+\end{aufgabe}
+
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{kd_bücherei}
+\caption{Klassendiagramm Bücherei}
+\label{fig:kdbucherei}
+\end{figure}
+
+\begin{aufgabe}
+\noindent
+Ergänzen Sie im Klassendiagramm alle fehlenden Operationen mit
+der Sichtbarkeitskennzeichnung, der Signatur und dem Rückgabetyp, die sich aus den
+Sequenzdiagrammen in Abbildung 1 und 2 ergeben. Die Sichtbarkeit \enquote{öffentlich} darf
+nur vergeben werden, wenn dies notwendig ist.
+\end{aufgabe}
+
+
+\begin{aufgabe}
+\noindent
+Was bedeutet der Zusatz zum Attribut \texttt{aMahnStatus}?
+\end{aufgabe}
+
+\begin{aufgabe}
+\noindent
+Wenn ein Buch einer Leihe noch nicht zurückgegeben wurde, dann ist die Leihe \enquote{offen}.
+Die Operation \texttt{offen()} der Klasse \texttt{Leihe} prüft, ob eine Leihe offen ist.
+Der Beginn des Sequenzdiagramms für das Szenario \enquote{Aktualisiere alle offenen Leihen} ist auf der nächsten Seite dargestellt.
+
+Entwickeln Sie das Sequenzdiagramm entsprechend der folgenden Beschreibung
+weiter:
+
+\begin{enumerate}
+\item Die Operation \texttt{aktualisiereOffeneLeihen}() prüft jede einzelne Leihe, ob diese
+offen ist.
+\item Wenn eine Leihe offen ist, dann wird der Mahnstatus aktualisiert. Hierzu wird
+die Operation \texttt{aktualisiereMahnstatus}() verwendet.
+\end{enumerate}
+
+\noindent
+Wenn für die Leihe eine Mahnung eingetragen ist (das Attribut \texttt{aMahnstatus} ist
+größer 0), dann wird die genannte Person in der Leihe mit einer E-Mail an die Rückgabe
+erinnert. Dazu wird die Operation \texttt{sendeEMail(pMailAdresse: Text)} verwendet.
+
+\end{aufgabe}
+
+\begin{figure}
+
+\includegraphics[width=0.16\linewidth]{sequenzdiagramm_3}
+
+
+\end{figure}
+
+
+\begin{aufgabe}
+\noindent
+Erstellen Sie mit Hilfe der Informationen aus dem Sequenzdiagramm in Abbildung 1
+den Code für die Operation \texttt{findeLeihe(pNr:GZ)} der Klasse \texttt{Steuerung}.
+\end{aufgabe}
+
+
+
+\begin{aufgabe}
+\noindent
+Wird eine Leihe nicht innerhalb einer bestimmten Zeit zurückgegeben, so wird die ausleihende Person mit einer Gebühr angemahnt. Die Operation
+\texttt{ermittleMahnGebuehren():FKZ} der Klasse Leihe berechnet die Mahngebühren. Dabei
+gelten folgende Regeln:
+\begin{itemize}
+\item Wenn eine Leihe älter als 28 Tage ist, werden 4 € Mahngebühr fällig.
+\item Wenn eine Leihe älter als 42 Tage ist, werden 9 € Mahngebühr fällig.
+\item Wenn eine Leihe älter als 49 Tage ist, werden 11 € Mahngebühr fällig.
+\end{itemize}
+
+
+\textbf{Hinweise}:
+\begin{itemize}
+\item Die Operation \texttt{System.gibAktuellesDatum():Datum} liefert das aktuelle Datum.
+\item Die Differenz in Tagen zwischen zwei Daten kann durch die Operation \texttt{-}(Minus) berechnet werden. Bsp. \texttt{8.4.2022} — \texttt{1.4.2022} = 7
+\end{itemize}
+ 
+
+
+\noindent
+Entwerfen Sie einen Pseudocode, der den Algorithmus der Operation
+\texttt{ermittleMahnGebuehren():FKZ} darstellt.
+\end{aufgabe}
+
+
+
+
+
+
+
+
+
+\end{document}

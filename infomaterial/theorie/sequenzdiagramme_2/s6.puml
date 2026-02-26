@@ -1,0 +1,20 @@
+@startuml s6
+actor Akteur
+participant "student: Student" as Student
+autoactivate on 
+hide footbox
+
+Akteur -> Student : sayHelloOrMainSubject(weirdnessLevel)
+
+group alt [weirdnessLevel > 3]
+    
+    Student -> Student : printNameOfMainSubject()
+    return
+    end
+
+group else
+    Student -> Student : greet()
+    return
+    end
+
+@enduml

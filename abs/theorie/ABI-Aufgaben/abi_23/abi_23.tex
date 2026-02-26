@@ -1,0 +1,241 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.25\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+
+\usepackage{microtype}	
+
+\setlength{\parindent}{20pt}
+\date{}
+
+\title{Alien Invasion}
+\begin{document}
+
+
+\noindent Das einfache Computerspiel \enquote{Alien Invasion} soll entworfen werden.
+
+Im Spiel steuert der Spieler ein Raumschiff am unteren Bildschirmrand von links nach
+rechts.
+
+Im oberen Bereich befinden sich Aliens, die Gegner des Raumschiffs. Sie bewegen
+sich alle in dieselbe horizontale Richtung. Sobald ein Alien den linken Bildschirmrand
+berührt, bewegen sich alle Aliens um ein Stück nach unten und anschließend nach
+rechts. Trifft ein Alien rechts auf den Bildschirmrand, gehen die Aliens ebenfalls etwas
+nach unten und dann nach links.
+
+
+Beim Spielstart hat der Spieler die Möglichkeit, die
+Anzahl der Aliens festzulegen. Je mehr Aliens
+ausgewählt werden, desto geringer ist ihre vertikale
+Geschwindigkeit, wenn sie einen Bildschirmrand
+berühren 
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Anzahl Aliens & Vertikale Geschwindigkeit  \\
+\hline
+15 & 3 \\
+\hline
+10 & 4 \\
+\hline
+5 &  5\\
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+\noindent Sowohl die Aliens als auch das Raumschiff
+können sich mit Geschossen verteidigen.
+
+Ziel des Spiels ist es, mit dem Raumschiff
+alle Aliens abzuschießen, bevor man selbst
+dreimal von den Aliens getroffen wird.
+
+Wird ein Alien durch ein Geschoss des
+Raumschiffs abgeschossen, so wird der
+Score des Spielers um 20 Punkte erhöht.
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=0.3\linewidth]{alien_invasion_screenshot}
+\label{fig:alieninvasionscreenshot}
+\end{figure}
+
+
+
+
+Das Sequenzdiagramm in Bild 2 zeigt den Programmablauf des Szenarios \enquote{Ein neues Spiel wird gestartet}.
+
+Dieses wird ausgeführt, nachdem der Spieler auf der
+Benutzeroberfläche die Anzahl der Aliens ausgewählt und anschließend den Button
+\texttt{Neues Spiel} angeklickt hat.
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{sequenzdiagramm_1}
+\caption{Szenario \emph{Ein neues Spiel wird gestartet}}
+\label{fig:sequenzdiagramm1}
+\end{figure}
+
+
+\begin{aufgabe}
+\noindent
+Ergänzen Sie im Klassendiagramm auf der vorletzten Seite alle Operationen mit
+vollständiger Signatur, Rückgabetyp und Sichtbarkeit, die im Sequenzdiagramm benötigt werden.
+\end{aufgabe}
+
+\begin{aufgabe}
+\noindent
+Ergänzen Sie im Klassendiagramm auf der vorletzten Seite alle Assoziationen, die sich aus dem Sequenzdiagramm ableiten lassen. Tragen Sie für jede Assoziation
+ihre Richtung, Multiplizität sowie ihren Rollennamen ein.
+\end{aufgabe}
+\pagebreak
+\begin{aufgabe*}
+\noindent
+Der Spieler hat vor dem Neustart des Spiels 10 Aliens als Gegner ausgewählt. In der
+Operation \texttt{neuesSpiel} der Klasse Steuerung werden die 10 Aliens auf dem Bildschirm
+positioniert (vgl Sequenzdiagramm).
+
+Nennen Sie die Koordinaten der Positionen der 10 Aliens vor dem Neustart des Spiels.
+\end{aufgabe*}
+
+
+\begin{aufgabe}
+
+\noindent
+Bewegt sich ein \enquote{Geschoss i} des Raumschiffs nach oben, so kann es mit maximal einem Alien kollidieren. Ist dies der Fall, so werden folgende Aktionen ausgeführt:
+\begin{itemize}
+\item Das Alien-Objekt und das Schuss-Objekt werden deaktiviert.
+\item Der Punktestand im Score wird um 20 erhöht.
+\item Der neue Punktestand wird auf der Oberfläche angezeigt.
+\item Die Eigenschaften der noch aktiven Aliens werden angepasst.
+\end{itemize}
+
+
+
+
+
+
+\noindent
+Entwickeln Sie das Sequenzdiagramm auf dem Arbeitsblatt 2 so weiter, dass nach der
+bereits eingetragenen Bewegung eines Geschosses (Operation \texttt{bewegen()}) erst die
+Kollision des Geschosses mit allen Aliens überprüft wird und bei einem Treffer die oben
+beschriebenen Aktionen ausgeführt werden.
+
+
+\noindent Hinweise:
+
+\noindent
+
+\begin{itemize}
+\item  Die Operation \texttt{checkKollision(pxX:GZ,pY:GZ,pBreite:GZ,pHoehe:GZ):Boolean} der
+Klasse Alien überprüft, ob ein Objekt an der Position \texttt{(pX/pY)} mit der Ausdehnung \texttt{pBreite} und \texttt{pHoehe} mit einem Alien kollidiert. Die Geschosse des Raumschiffs haben
+eine quadratische Ausdehnung.
+\item Die Operation \texttt{deaktivierenRG()} der Klasse Schuss entfernt das Schuss-Objekt aus
+der Liste \texttt{dasRGeschoss} und sorgt dafür, dass alle noch in der Liste folgenden Schuss-Objekte um einen Index nach vorne verschoben werden.
+\item Die Operation \texttt{erhoehenPunkte(pPunkte:GZ):GZ} der Klasse Score erhöht den
+aktuellen Score um \texttt{pPunkte} und gibt den neuen Punktestand zurück.
+\item 
+Die Operation \texttt{anpassenAliens()} der Klasse Steuerung passt sowohl die vertikale
+Geschwindigkeit als auch das Schussintervall aller noch aktiven Aliens an. Die von der
+Operation ausgehenden Botschaften müssen in der Losung nicht dargestellt werden.
+\end{itemize}
+
+
+
+
+
+
+
+\end{aufgabe}
+
+
+
+
+
+\begin{aufgabe}
+\noindent
+Das Computerspiel \enquote{Alien Invasion} kann von einem Spieler mehrfach hintereinander
+gespielt werden. Aus diesem Grund wird in der Klasse Score neben den Punkten des
+aktuellen Spiels auch der derzeitige Highscore des Spielers gespeichert.
+
+Ist das Spiel zu Ende und startet der Spieler ein neues Spiel, so wird durch Aufruf der
+Operation \texttt{updateScore} zunächst überprüft, ob es sich bei den Punkten des letzten
+Spiels (Attribut \texttt{punkte}) um einen neuen Highscore handelt. Ist dies der Fall, wird dieser
+Punktestand als neuer Highscore gespeichert. Anschließend wird der Punktestand für
+das neue Spiel auf 0 gesetzt.
+
+Entwickeln Sie den Algorithmus der Operation \texttt{updateScore()} der Klasse Score als Pseudocode oder Java-Code
+ wie oben beschrieben.
+\end{aufgabe}
+
+\begin{aufgabe}
+Schreibe Pseudocode oder Java-Code für die Methode \emph{getAnzahlAktiverAliens(): GZ} der Klasse \texttt{Steuerung}. Diese gibt die Anzahl der noch aktiven Aliens zurück!
+\end{aufgabe}
+
+\begin{aufgabe}
+Die vertikale Geschwindigkeit und das Schussintervall sind bei allen aktiven Aliens zu
+jedem Zeitpunkt gleich.
+
+Optimieren Sie die Klasse \texttt{Alien} so, dass diese Informationen jeweils nur einmal in der
+Klasse und nicht bei jedem \texttt{Alien}-Objekt abgespeichert werden und von dem
+\texttt{Steuerung}-Objekt gelesen und verändert werden können. Stellen Sie in Ihrer Losung
+nur den Ausschnitt der Klasse \texttt{Alien} (als Klassendiagramm) dar, der diese neuen Anforderungen beschreibt.
+
+\hinweis{Schau nochmal in das Infomaterial zu Klassendiagrammen}
+\end{aufgabe}
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{kd_vorlage.pdf}
+
+
+\end{figure}
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[  width=0.5\linewidth]{sequenzdiagramm_vorlage}
+
+
+\end{figure}
+
+
+\end{document}

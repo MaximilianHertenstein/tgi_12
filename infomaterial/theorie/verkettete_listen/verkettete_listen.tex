@@ -1,0 +1,179 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+%\usepackage[simplified]{pgf
+%-umlcd}
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig,
+%module={ohne}
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Verkettete Listen}
+\begin{document}
+\section*{Einleitung}
+Verkettete Listen sind eine Möglichkeit selbst eine Listen-Klasse zu implementieren. 
+Eine verkettete Liste besteht aus Knoten. Jeder Knoten hat einen Inhalt und einen Pfeil auf den nächsten Knoten.
+Der letzte Knoten zeigt auf \mintinline{java}|null|. 
+
+
+\begin{center}
+\begin{tikzpicture}[
+    node/.style={
+        rectangle,
+        draw,
+        minimum width=2cm,
+        minimum height=1cm
+    },
+    arrow/.style={->, thick}
+]
+
+\node[] (n0) {\mintinline{java}|first|};
+\node[node,  right=1.5cm of n0] (n1) {\mintinline{java}|"Stefan"|};
+\node[node, right=1.5cm of n1] (n2) {\mintinline{java}|"Artur"|};
+\node[node, right=1.5cm of n2] (n3) {\mintinline{java}|"Tobias"|};
+\node[right=1.5cm of n3] (null) {\mintinline{java}|null|};
+
+
+\draw[arrow] (n0) -- (n1);
+\draw[arrow] (n1) -- (n2);
+\draw[arrow] (n2) -- (n3);
+\draw[arrow] (n3) -- (null);
+
+\end{tikzpicture}
+\end{center}
+
+
+
+\mintinline{java}|first| zeigt auf den ersten Knoten oder bei der leeren Liste auf \mintinline{java}|null|.
+\begin{center}
+\begin{tikzpicture}[
+    node/.style={
+        rectangle,
+        draw,
+        minimum width=2cm,
+        minimum height=1cm
+    },
+    arrow/.style={->, thick}
+]
+
+\node[] (n0) {\mintinline{java}|first|};
+
+\node[right=1.5cm of n0] (null) {\mintinline{java}|null|};
+
+
+\draw[arrow] (n0) -- (null);
+
+\end{tikzpicture}
+\end{center}
+
+\section*{Implementierung}
+
+Die Knoten einer verketteten Liste \footnote{zunächst implementieren wir nur verkettete Listen aus Strings} können wir folgendermaßen als Klasse implementieren:
+
+
+\begin{minted}{java}
+record Node(String content, Node next){}
+\end{minted}
+
+Knoten können entweder einen Verweis auf den Nachfolgeknoten oder \texttt{null} enthalten. 
+
+\begin{minted}{java}
+var lastNode = new Node("Tobias", null)
+var secondLastNode = new Node("Artur", new Node("Tobias", null))
+\end{minted}
+
+Eine Klasse für verkette Listen kann dann folgendermaßen definiert werden:
+
+\begin{minted}{java}
+record LinkedList(Node first){}
+\end{minted}
+
+Bei der leeren Liste hat \texttt{first} den Wert \mintinline{java}|null|. 
+
+
+\begin{minted}{java}
+var empty = new LinkedList(null)
+\end{minted}
+
+Die Liste oben können wir jetzt folgendermaßen darstellen:
+
+
+\begin{minted}{java}
+var xs = new LinkedList(new Node("Stefan", new Node("Artur", new Node("Tobias", null))))
+\end{minted}
+\pagebreak
+\section*{Iteration}
+
+
+Um über die Knoten einer verketteten Liste zu iterieren, muss man eine \mintinline{java}|while|-Schleife verwenden.
+
+Die folgende Methode der Klasse \mintinline{java}|LinkedList| iteriert über alle Knoten und gibt die Inhalte der Knoten an der Konsole aus.
+
+\begin{minted}{java}
+public void printContents() {
+    var current = first;
+    while (current != null) {
+        println(current.content());
+        current = current.nextNode();
+    }
+}
+\end{minted}
+
+Bei anderen Methoden  die über die komplette Liste iterieren kommen die Schleife und der Sprung zum nächsten Knoten auch vor.
+
+
+\begin{minted}{java}
+    // eventuell Anlegen von Variablen
+    var current = first;
+    while (current != null) {
+         // tue etwas
+        current = current.nextNode();
+    }
+\end{minted}
+\end{document}

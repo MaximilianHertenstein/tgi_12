@@ -1,0 +1,154 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+
+\date{}
+
+\title{Sequenzdiagramme}
+\begin{document}
+
+
+\begin{aufgabe}
+Stelle die Methode \texttt{showToDo} der Klasse \texttt{View} in einem Sequenzdiagramm dar!
+
+
+
+
+
+\end{aufgabe}
+
+\begin{minted}[escapeinside=||]{java}
+class View {
+    |\vdots|
+    public String showToDo(ToDo toDo) {
+        var done = "X";
+        if (toDo.completed()) {
+            done = "C";
+        }
+        return done + " " + toDo.text() + " ID: " + toDo.id();
+    }
+    |\vdots|
+}
+\end{minted}
+
+
+\begin{aufgabe}
+	Stelle die Methode \texttt{getIDs} der Klasse \texttt{View} in einem Sequenzdiagramm dar!
+	
+	
+	
+	
+	
+\end{aufgabe}
+
+\begin{minted}[escapeinside=||]{java}
+public List<Integer> getIDs(List<ToDo> toDos) {
+    var ids = new ArrayList<Integer>();
+    for (var toDoItem : toDos) {
+        ids.add(toDoItem.id());
+    }
+    return ids;
+}
+\end{minted}
+
+
+\begin{aufgabe}
+	Stelle die Methode \texttt{getToDosCompleted} der Klasse \texttt{Model} in einem Sequenzdiagramm dar!
+	
+	
+	
+	
+	
+\end{aufgabe}
+
+\begin{minted}[escapeinside=||]{java}
+class Model {
+    private ArrayList<ToDo> toDos;
+    private String selectedFilter = "All";
+	
+    public List<ToDo> getToDosCompleted(boolean status) {
+        var acc = new ArrayList<ToDo>();
+        for (var item : toDos) {
+            if (item.completed() == status) {
+                acc.add(item);
+            }
+        }
+        return acc;
+    }
+}
+
+\end{minted}
+%
+%\begin{aufgabe}
+%	\begin{teilaufgaben}
+%		\teilaufgabe Schreibe den Code für die Methode \texttt{getIds} der Klasse \texttt{View}!
+%		\teilaufgabe Stelle die Methode in einem Sequenzdiagramm dar!
+%	\end{teilaufgaben}
+%\end{aufgabe}
+%
+%
+%\begin{aufgabe}
+%	\begin{teilaufgaben}
+%		\teilaufgabe Schreibe den Code für die Methode \texttt{getToDosCompleted} der Klasse \texttt{Model}!
+%		\teilaufgabe Stelle die Methode in einem Sequenzdiagramm dar!
+%	\end{teilaufgaben}
+%\end{aufgabe}
+%
+%
+%
+%\begin{aufgabe}
+%	\begin{teilaufgaben}
+%		\teilaufgabe Schreibe den Code für die Methode \texttt{idToIndex} der Klasse \texttt{Model}!
+%		\teilaufgabe Stelle die Methode in einem Sequenzdiagramm dar!
+%	\end{teilaufgaben}
+%	
+%	
+%\end{aufgabe}
+\end{document}

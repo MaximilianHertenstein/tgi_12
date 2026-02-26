@@ -1,0 +1,65 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+!theme plain
+top to bottom direction
+
+class Model {
+	- selectedFilter: String
+	+ Model()
+	+ Model(toDos: List<ToDo>, filter: String): 
+	+ toggle(id: int): 
+	- showCountOfActiveToDoItems(): String
+	+ getFilteredToDos(): List<ToDo>
+	+ add(text: String): 
+	- idToIndex(id: int): int
+	+ removeFinishedToDoItems()
+	+ setFilter(newFilter: String)
+	+ getToDoItem(id: int): ToDo
+	- nextId(): int
+	- getToDosCompleted(completed: boolean): List<ToDo>
+	+ getUIState(): UIState
+	+ delete(id: int)
+	+ updateText(id: int, newText: String):
+}
+class ToDo {
+	- completed: boolean
+	- id: int
+	- text: String
+	+ ToDo(id: int, text: String, boolean): 
+	+ ToDo(id: int,text:  String): 
+	+ toggle(): ToDo
+	+ id(): int
+	+ updateText(newText: String): ToDo
+	+ completed(): boolean
+	+ text(): String
+}
+class UIState {
+	- selectedFilter: String
+	- selectedToDos: List<ToDo>
+	- displayOfActiveToDos: String
+	+ UIState(selectedFilter: String , selectedToDos: List<ToDo>, displayOfActiveToDos: String)
+	+ selectedFilter(): String
+	+ selectedToDos(): List<ToDo>
+	+ displayOfActiveToDos(): String
+}
+
+class View  {
+	+ View()
+	- getIDs(List<ToDo> toDos): List<Int>
+	+ askForNewToDo(): String
+	- askUntilElementInList(List<Integer> ids, String question): int
+	+ askUntilInputIsSmallerOrEqual(upper: int): int
+	- numbersFromOneTo(until: int): List<Integer>
+	+ showMainMenuAskForOption(uiState: UIState): int
+	+ askForFilter(): String
+	+ askForUpdateOperation(): int
+	+ askForNewText(): String
+	+ askUntilInputIsId(toDos: List<ToDo>): int
+	- showToDo(toDo: ToDo): String
+	- numberToFilter(number: int): String
+	- printToDos(toDos: List<ToDo>): 
+}
+
+Model   "toDos " -[plain]-> "\t*" ToDo    
+@enduml

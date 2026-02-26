@@ -1,0 +1,43 @@
+Die Kursstufen-App bietet verschiedene Auswertungsméglichkeiten der vier
+Halbjahre, der Kursstufe und der Priifungsfacher. Die Auswertung, ob eine
+Schilerin oder ein Schiler im Profilfach in der Abiturpriifung besser als in den
+vier Kurshalbjahren (Durchschnitt der vier Halbjahresnoten) abgeschnitten hat,
+wird durch die Botschaft auswertenProfil() an ein Schueler-Objekt gestartet
+und liefert entweder den Text ,Abipriifung schlechter als Halbjahre“ oder
+»Abipriifung besser als Halbjahre“ zuriick.
+
+Auf dem Arbeitsblatt 2 ist der Beginn des Szenarios ,Auswertung der
+Leistungen von Yvonne Leiser in den vier Kurshalbjahren und in der
+Abiturprifung IT“ dargestellt. Yvonne Leiser (Objekt schueler[17]) hatte in IT in
+den vier Halbjahren die Notenpunkte 10, 12, 12 und 15 und in der
+Abiturpriifung 12 Notenpunkte erreicht.
+
+Entwickeln Sie das UML-Sequenzdiagramm auf dem Arbeitsblatt 2 wie oben
+beschrieben weiter. Verwenden Sie konkrete Werte fur Parameter und
+Riickgabewerte.
+
+Hilfestellungen:
+
+e Das Profilfach wird fiir jedes Schueler-Objekt im Objekt fach[0] der
+Klasse Fach verwaltet.
+e Das Profilfach wird von allen Schilern vier Halbjahre besucht.
+e Die Operation auswertenFach( ):Text der Klasse Fach liefert fir
+o ein Fach, in dem keine Abiturpriifung geschrieben wurde, die
+Durchschnittsnote der belegten Kurshalbjahre als Text und
+o fur ein Fach, in dem eine Abiturpriifung geschrieben wurde, den
+Text ,Abipriifung schlechter als Halbjahre“ oder ,Abipriifung
+besser als Halbjahre“
+zuriick.
+
+e Die Operation vergleichMitHJ(hjDurchschnitt:FKZ):Text der Klasse
+Abipruefung vergleicht die im Parameter Ubergebene Durchschnittsnote
+eines Fachs in den vier Kurshalbjahren mit der im Abitur erreichten
+Note, die im Abipruefung-Objekt gespeichert ist.
+
+Abhangig von der Ubergebenen Durchschnittsnote der Halbjahre und
+der Abiturnote wird der Text ,Abiprifung schlechter als Halbjahre“ oder
+»Abipriifung besser als Halbjahre“ zurickgegeben.
+
+e In der Lésung kénnen die Texte ,Abipriifung schlechter als Halbjahre“
+und ,Abipriifung besser als Halbjahre“ nachvollziehbar abgekirzt
+werden.

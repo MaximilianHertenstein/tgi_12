@@ -1,0 +1,14 @@
+In der TODO-App gibt es die Méglichkeit, sich in einem bestimmten Zeitraum
+alle TG-Termine des Abteilungsleiters wie z.B. Probeabitur, Skitag etc.
+anzeigen zu lassen. Dabei werden die Termine mit Datum in Tabellenform
+dargestellt.
+
+Abbildung 3 zeigt die auf der Benutzeroberflache der TODO-App angezeigten
+TG-Termine vom 17.02.2025 bis 28.02.2025.
+
+TG-Termine
+
+18.02.2025 Probeabitur IT
+25.02.2025 Skitag
+
+Abbildung 3: TG-Termine vom 17.02.2025 bis 28.02.2025

@@ -1,0 +1,10 @@
+Erlautern Sie, welchen Zusammenhang es zwischen dem Schussintervall und der
+Anzahl der getoteten Aliens gibt.
+
+Die vertikale Geschwindigkeit und das Schussintervall sind bei allen aktiven Aliens zu
+jedem Zeitpunkt gleich.
+
+Optimieren Sie die Klasse Alien so, dass diese Informationen jeweils nur einmal in der
+Klasse und nicht bei jedem Alien-Objekt abgespeichert werden und von dem
+Steuerung-Objekt gelesen und verandert werden kénnen. Stellen Sie in Ihrer Losung
+nur den Ausschnitt der Klasse Alien dar, der diese neuen Anforderungen beschreibt.

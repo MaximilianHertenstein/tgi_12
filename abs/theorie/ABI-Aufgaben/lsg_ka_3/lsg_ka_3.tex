@@ -1,0 +1,133 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+\usepackage{monaspace-otf}
+\usepackage[default]{fontsetup}
+
+%\usepackage{fontspec}
+%\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+%\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+%\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+\usepackage{float}
+\usepackage{fancyvrb}
+\date{}
+
+\title{LSG Wortgitter}
+\begin{document}
+
+\section*{Aufgabe 1}
+
+\begin{itemize}
+\item In der Klasse \texttt{Steuerung} muss \texttt{+starten(zeilen: GZ, spalten: GZ, wörter: GZ)} ergänzt werden.
+\item In der Klasse \texttt{Wortgitter} muss der Konstruktor \texttt{+Wortgitter(zeilen: GZ, spalten: GZ)} ergänzt werden.
+
+\item In der Klasse \texttt{Suchwort} muss der Konstruktor \texttt{+Suchwort(wort: Text)} ergänzt werden.
+\item In der Klasse \texttt{Wortgitter} muss die Methode \texttt{+hinzufügenWort(wort: Text)} ergänzt werden.
+\item In der Klasse \texttt{Wortgitter} muss die Methode \texttt{+auffuellen()} ergänzt werden.
+\item In der Klasse \texttt{GUI} muss die Methode \texttt{+zeichne(wg: Wortgitter)} ergänzt werden.
+\end{itemize}
+
+\section*{Aufgabe 2}
+
+\begin{itemize}
+\item Es muss ein Pfeil von \texttt{GUI} zu \texttt{Steuerung} ergänzt werden. An dem Pfeil steht \texttt{dieSteuerung} und eine $1$.
+\item Es muss ein Pfeil von \texttt{Steuerung} zu \texttt{Wortgitter} ergänzt werden. An dem Pfeil steht \texttt{dasWortgitter} und eine $1$.
+\item Es muss ein Pfeil von \texttt{Steuerung} zu \texttt{Generator} ergänzt werden. An dem Pfeil steht \texttt{derGenerator} und eine $1$.
+\item Es muss ein Pfeil von \texttt{GUI} zu \texttt{Steuerung} ergänzt werden. An dem Pfeil steht \texttt{derGenerator} und eine $1$.
+\end{itemize}
+\section*{Aufgabe 3}
+
+Siehe Merkblatt zur Überladung.
+
+\section*{Aufgabe 4}
+
+\begin{minted}[]{java}
+void pruefeWort(wort: Text){
+    var gefunden = false
+    for (var sw in dasSuchwort){
+        if (sw.pruefeWort(wort)){
+            gefunden = true
+        }    
+    }
+    if (gefunden && alleWoerterGefunden()){
+        gui.zeigeHinweis("Alle Wörter gefunden")
+    if (gefunden && !alleWoerterGefunden()){
+        gui.zeigeHinweis("Richtiges Wort")}
+    if (!gefunden){
+        gui.zeigeHinweis("Wort nicht vorhanden")}
+    }
+}
+\end{minted}
+
+\section*{Aufgabe 5}
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{a4_ohne_break}
+\caption{}
+\label{fig:a4ohnebreak}
+\end{figure}
+
+\section*{Aufgabe 5 mit break}
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{a4}
+
+
+\end{figure}
+
+
+
+\section*{Aufgabe 6}
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{a6}
+
+
+\end{figure}
+\end{document}

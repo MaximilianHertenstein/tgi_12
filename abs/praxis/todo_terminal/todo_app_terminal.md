@@ -754,7 +754,7 @@ Model model = new Model();
 model.toDos;
 ```
 ```{.java .cb-nb line_numbers=false}
-model.toDos;
+model.selectedFilter;
 ```
 
 
@@ -768,6 +768,9 @@ Füge der Klasse `Model` einen Konstruktor hinzu, der eine bestehende Liste von 
 List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
 Model model = new Model(list, "Completed");
 model.toDos;
+```
+```{.java .cb-nb line_numbers=false}
+model.selectedFilter;
 ```
 
 \normalsize
@@ -808,6 +811,7 @@ model.getFilteredToDos();
 ```
 
 ```{.java .cb-nb line_numbers=false}
+model = new Model(list, "Completed");
 model.getFilteredToDos();
 ```
 
@@ -840,9 +844,9 @@ model.showCountOfActiveToDoItems();
 Ergänze die Klasse `Model` um die Methode `getUIState`.
 Die Methode gibt ein Objekt der Klasse `UIState` zurück. Diesen enthält den aktuellen Filter, die gefilterten To-dos und die Anzeige der Anzahl offener Aufgaben.
 
-\scriptsize
+\tiny
 ```{.java .cb-nb line_numbers=false}
-List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true), new ToDo(7, "Test3", false));
+List<ToDo> list = List.of(new ToDo(1, "Test1", false), new ToDo(3, "Test2", true));
 Model model = new Model(list, "Active");
 model.getUIState();
 ```
@@ -1048,7 +1052,7 @@ Schütze die Methoden `getToDosCompleted`, `idToIndex` und `nextId` durch einen 
 
 ## Aufgabe
 
-Erstelle eine Klasse `TerminalController`. Die Attribute der Klasse sind ein Objekt der Klasse `View` und ein Objekt der Klasse `Model`.
+Erstelle eine Klasse `TerminalController`. Die Attribute der Klasse sind ein Objekt der Klasse `View` und ein Objekt der Klasse `Model`. Erzeuge in den Zeilen in denen die Attribute definiert werden neue Objekte dieser beiden Klassen. 
 
 ## Aufgabe
 
@@ -1095,8 +1099,8 @@ Enter a number between 1 and 5
 5
 ```
 
-**Hinweis:** Nutze die Methoden `showMainMenuAskForOption`, `askForNewToDo` der Klasse `View` und die Methoden
-`getFilteredToDos`, `showCountOfActiveToDoItems` und `add` der Klasse `Model`.
+**Hinweis:** Nutze die Methoden  `showMainMenuAskForOption`, `askForNewToDo` und der Klasse `View` und die Methoden
+`getUIState` und `add` der Klasse `Model`.
 
 ## Aufgabe
 
@@ -1141,7 +1145,7 @@ What do you want to do?
 Enter a number between 1 and 5
 ```
 
-Nutze die Methode `askForFilter` der Klasse `View`!
+Nutze die Methode `askForFilter` und  der Klasse `View` und `setFilter` der Klasse `Model`!
 
 ## Aufgabe
 

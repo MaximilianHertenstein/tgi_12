@@ -1,0 +1,94 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+%\usepackage[simplified]{pgf
+%-umlcd}
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig,
+%module={ohne}
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Break in Sequenzdiagrammen}
+\begin{document}
+
+Beim Prgrammieren ist \mintinline{java}|break| ein Statement mit dem Schleifen abgebrochen werden.
+
+\begin{minted}[escapeinside=||]{java}
+record Subject(String name, int grade){};
+
+record Student(List<Subject> subjects) {
+    
+   String findSubjectWithUnderCourse(){
+        String subjectWithUnderCourse = "";
+        for (var subject: subjects){
+            if (subject.grade() < 5){
+                subjectWithUnderCourse= subject.name();
+                break;
+            }
+        }
+	|\vdots|
+
+\end{minted}
+
+
+In UML steht \mintinline{java}|break| in der Beschreibung eines Blocks. Dahinter wird angegeben, unter welcher Bedingung die Schleife abgebrochen wird.
+Im Block selbst werden die Nachrichten dargestellt, die vor dem Abbruch der Schleife noch ausgeführt werden.
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{break_uml}
+
+\label{fig:breakuml}
+\end{figure}
+\begin{center}
+$$\vdots$$
+\end{center}
+
+\end{document}

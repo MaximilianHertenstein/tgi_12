@@ -2,7 +2,9 @@
 autoactivate on 
 hide footbox
 actor Akteur
-  Akteur -> Student : greet
-  Student -> Student : getGreeting
+participant "student: Student" as Student
+
+  Akteur -> Student : greet()
+  Student -> Student : getGreeting()
   return greeting
 @enduml

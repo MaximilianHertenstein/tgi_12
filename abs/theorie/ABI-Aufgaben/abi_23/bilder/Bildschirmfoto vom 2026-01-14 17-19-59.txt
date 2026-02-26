@@ -1,0 +1,51 @@
+rut
+
+Sequenzdiagramm entwickeln
+
+Bewegt sich ein ,Geschoss i* des Raumschiffs nach oben, so kann es mit maximal
+einem Alien kollidieren. Ist dies der Fall, so werden folgende Aktionen ausgefihrt:
+
+Das Alien-Objekt und das Schuss-Objekt werden deaktiviert.
+Der Punktestand im Score wird um 20 erhoht.
+
+Der neue Punktestand wird auf der Oberflache angezeigt.
+
+Die Eigenschaften der noch aktiven Aliens werden angepasst.
+
+Entwickeln Sie das Sequenzdiagramm auf dem Arbeitsblatt 2 so weiter, dass nach der
+bereits eingetragenen Bewegung eines Geschosses (Operation bewegen( )) erst die
+Kollision des Geschosses mit allen Aliens Uberprtift wird und bei einem Treffer die oben
+beschriebenen Aktionen ausgefihrt werden.
+
+Hinweise:
+
+Die Operation checkKollision(pxX:GZ,pY:GZ,pBreite:GZ,pHoehe:GZ):Boolean der
+Klasse Alien Uberprift, ob ein Objekt an der Position (pX/pY) mit der Ausdehnung
+pBreite und pHoehe mit einem Alien kollidiert. Die Geschosse des Raumschiffs haben
+eine quadratische Ausdehnung.
+
+Die Operation deaktivierenRG( ) der Klasse Schuss entfernt das Schuss-Objekt aus
+dem Array dasRGeschoss und sorgt dafiir, dass alle noch im Array folgenden Schuss-
+Objekte um einen Index nach vorne verschoben werden.
+
+Die Operation erhoehenPunkte(pPunkte:GZ):GZ der Klasse Score erhdht den
+aktuellen Score um pPunkte und gibt den neuen Punktestand zurtick.
+
+Die Operation anpassenAliens( ) der Klasse Steuerung passt sowohl die vertikale
+Geschwindigkeit als auch das Schussintervall aller noch aktiven Aliens an. Die von der
+Operation ausgehenden Botschaften mussen in der Losung nicht dargestellt werden.
+
+Struktogramm entwickeln
+
+Das Computerspiel ,Alien Invasion“ kann von einem Spieler mehrfach hintereinander
+gespielt werden. Aus diesem Grund wird in der Klasse Score neben den Punkten des
+aktuellen Spiels auch der derzeitige Highscore des Spielers gespeichert.
+
+Ist das Spiel zu Ende und startet der Spieler ein neues Spiel, so wird durch Aufruf der
+Operation updateScore zunachst Uberprtft, ob es sich bei den Punkten des letzten
+Spiels (Attribut punkte) um einen neuen Highscore handelt. Ist dies der Fall, wird dieser
+Punktestand als neuer Highscore gespeichert. Anschlie&end wird der Punktestand fiir
+das neue Spiel auf 0 gesetzt.
+
+Entwickeln Sie den Algorithmus der Operation updateScore( ) der Klasse Score in Form
+eines Struktogramms wie oben beschrieben.

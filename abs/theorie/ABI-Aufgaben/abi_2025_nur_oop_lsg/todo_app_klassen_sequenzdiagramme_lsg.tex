@@ -1,0 +1,140 @@
+\documentclass[a4paper, DIV = 13]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.25\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{ToDo-App: Klassen- und Sequenzdiagramme -- Lösung}
+\begin{document}
+
+\section*{A1 a}
+
+\begin{enumerate}
+	\item Die Methode \texttt{clickAnzeigenTODOs} wird auf einem Objekt der Klasse \texttt{GUI} aufgerufen. Die Methode hat die Parameter \texttt{name} und \texttt{datum}. Da bei der Klasse \texttt{GUI} keine Methode mit diesem Namen und zwei Parametern aufgeführt ist, müssen wir die Methode ergänzen. Wir müssen noch die Typen der Parameter bestimmen.
+		Namen werden als Strings gespeichert. Im Klassendiagramm wird \texttt{text} für \texttt{String} verwendet. Im Klassendiagramm kommt der Typ \texttt{Datum} vor. Es ist naheliegend, dass \texttt{datum} diesen Typ hat.
+	Die Methode ist öffentlich, da der Aufruf nicht von einem Objekt derselben Klasse ausgeht. Also muss \texttt{+ clickAnzeigenTODOs(name: text, datum: Datum)} in der Klasse \texttt{GUI} ergänzt werden.
+
+	\item Auf einem Objekt der Klasse \texttt{Steuerung} wird die Methode \texttt{anzeigenToDos} mit denselben Parametern wie gerade eben aufgerufen. Die Methode ist öffentlich, da der Aufruf nicht von einem Objekt derselben Klasse ausgeht. Da die Methode in der Klasse \texttt{Steuerung} nicht aufgeführt ist, muss \texttt{+ anzeigenToDos(name: text, datum: Datum)} in der Klasse \texttt{Steuerung} ergänzt werden.
+	\item Auf dem Objekt der Klasse \texttt{Steuerung} wird die Methode \texttt{gibTagID} mit einem Parameter \texttt{datum} ausgeführt. Die Methode ist in der Klasse schon aufgeführt.
+	\item Auf einem Objekt der Klasse \texttt{TGTermin} wird die Methode \texttt{gibTermin} ohne Parameter aufgerufen.  Die Methode ist in der Klasse schon aufgeführt. 
+	\item Auf einem Objekt der Klasse \texttt{Steuerung} wird die Methode \texttt{gibSchuelerID} mit einem Parameter \texttt{name} ausgeführt. Die Methode gibt \texttt{sid} zurück. Dieser Wert wird später als Index beim Zugriff auf die Elemente in der Liste \texttt{derSchueler} genutzt. Es muss also eine ganze Zahl sein. Die Methode wird nur in der Klasse \texttt{Steuerung} aufgerufen und kann daher privat sein. Da die Methode nicht in der Klasse \texttt{Steuerung} aufgeführt ist, muss \texttt{- gibSchuelerID(name: text): GZ} in der Klasse \texttt{Steuerung} ergänzt werden.
+	\item Die Methode \texttt{gibToDos} der Klasse \texttt{Schueler} wird mit einem Integer als Argument aufgerufen. Diese Methode ist schon vorhanden.
+	
+	\item Die Methode \texttt{gibTagID} der Klasse \texttt{ToDo} wird ohne Argumente aufgerufen. Die Methode gibt den Wert \texttt{tid\_todo} zurück. \texttt{tid\_todo} wird anschließend mit \texttt{tid} verglichen. Dies ist der Rückgabewert von \texttt{gibTagID}. Im Klassendiagramm sieht man, dass diese Methode eine ganze Zahl zurückgibt. Also muss auch \texttt{tid\_todo} eine ganze Zahl sein. Die Methode wird von außen aufgerufen und muss daher öffentlich sein. $\implies$ Wir müssen also \texttt{+ gibTagID(): GZ} in der Klasse \texttt{ToDo} ergänzen.
+	
+	\item Die Methode \texttt{gibDatenZurAnzeige} der Klasse \texttt{ToDo} wird ohne Argumente aufgerufen. Die Methode gibt den Wert \texttt{daten} zurück.
+	In den Texten steht, dass \texttt{daten} zu einer \texttt{Liste<text>} hinzugefügt wird.
+	Also muss auch \texttt{daten} vom Typ \texttt{text} sein. Die Methode wird von außen aufgerufen und muss daher öffentlich sein. $\implies$ Wir müssen also \texttt{+ gibDatenZurAnzeige(): text} in der Klasse \texttt{ToDo} ergänzen.
+	
+	\item Die Methode \texttt{anzeigenToDos} der Klasse \texttt{GUI} wird mit einer \texttt{Liste<text>} aufgerufen. Die Methode ist schon vorhanden.
+	
+\end{enumerate} 
+
+
+\section*{A1 b}
+\begin{itemize}
+
+
+	
+	\item \texttt{dieSteuerung} ruft auf \texttt{derSchueler[sid]} eine Methode auf. Die Klasse \texttt{Steuerung} muss also die Eigenschaft \texttt{derSchueler} haben, und diese Eigenschaft muss eine Liste von Schülern sein, da sonst ein Zugriff mit einem Index nicht möglich wäre. Wir müssen also von \texttt{Steuerung} zu \textbf{Schueler} einen Pfeil mit dem Namen \texttt{derSchueler} und einem \texttt{*} zeichnen.
+
+
+
+	\item \texttt{derSchueler[sid]} ruft auf \texttt{dasToDo[i]} eine Methode auf. Die Klasse \texttt{Schueler} muss also die Eigenschaft \texttt{dasToDo} haben, und diese Eigenschaft muss eine Liste von \texttt{ToDos} sein, da sonst ein Zugriff mit einem Index nicht möglich wäre. Wir müssen also von \texttt{Schueler} zu \textbf{dasToDo} einen Pfeil mit dem Namen \texttt{dasToDo} und einem \texttt{*} zeichnen.
+\end{itemize}
+
+
+
+\section*{A 2}
+Möglichkeit 1: Java-Code mit \texttt{<=}, um Datumsangaben zu vergleichen.
+
+\begin{minted}[]{java}
+public void anzeigenTGTermine(Datum von, Datum bis){
+    for (TGTermin tgTermin : derTGTermin) {
+        if (von <= tgTermin.gibDatum() && tgTermin.gibDatum() <= bis) {
+            gui.anzeigenTGTermin(tgTermin.gibDatum(), tgTermin.gibTermin());
+        }
+    }
+}
+\end{minted}
+
+
+In Java kann man nur primitive Typen mit \texttt{<=} vergleichen. Damit der Code wirklich funktioniert, müsste man das z.\,B. so schreiben. Im ABI ist das aber nicht nötig.
+
+\begin{minted}[]{java}
+public void anzeigenTGTermine(Datum von, Datum bis){
+    for (TGTermin tgTermin : derTGTermin) {
+        if (von.smallerOrEqual(tgTermin.gibDatum()) && tgTermin.gibDatum().smallerOrEqual(bis)) {
+            gui.anzeigenTGTermin(tgTermin.gibDatum(), tgTermin.gibTermin());
+        }
+    }
+}
+\end{minted}
+
+
+
+\section*{A 3}
+
+\begin{minted}[]{java}
+public void anzeigenTGTermine(Datum von, Datum bis){
+    dieSteuerung.anzeigenTGTermine(von, bis);
+}
+\end{minted}
+
+\section*{A 4}
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{lsg_sequenzdiagramm}
+
+\label{fig:lsgsequenzdiagramm}
+\end{figure}
+
+\end{document}

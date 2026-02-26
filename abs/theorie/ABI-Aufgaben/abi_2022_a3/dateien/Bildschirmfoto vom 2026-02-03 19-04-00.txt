@@ -1,0 +1,49 @@
+Klassendiagramm
+
++ GUI(pSteuerung:Steuerung) <<constructor>>
++ clickFindeLeihe(pVon:Datum, pBis:Datum)
+
++ clickFindeLeihe(pNr:GZ)
+
+Steuerung
+
+- aAnzahliLeihen:GZ
+
++ findeLeihe(pVon:Datum, pBis:Datum)
++ aktualisiereOffeneLeihen()
+- sendeEMail(pMailAdresse: Text)
+
+diePerson[]
+
+- alSBN:Text
+- aTitel:Text
+
+- aBeginn:Datum
+- aEnde:Datum
+- aMahnstatus :GZ { 0 <= aMahnstatus <= 3}
+
++ gibDasBuch():Buch
++ giblnfo():Text
+
++ offen():Boolen
+
++ aktualisiereMahnstatus()
+
++ gibMahnstatus():GZ
+
++ ermittleMahnGebuehren():FKZ
+
+Person
+
+- aKundenNr:GZ
+
+- aName:Text
+
+- aEmailAdresse:Text
+- aFreieKundenNr:GZ
+
++ Person(pName:Text,pMail:Text)<<constructor>>
+
++ gibEmailAdresse():Text
+- erzeugeKundenNr()
+

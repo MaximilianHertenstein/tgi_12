@@ -1,0 +1,22 @@
+@startuml
+participant Actor
+Actor -> Schueler : hat100PunktelmAbi
+activate Schueler
+loop fach
+Schueler -> Fach : istPruefungsFach
+activate Fach
+Fach --> Schueler
+deactivate Fach
+alt f.istPruefungsFach()
+Schueler -> Fach : abipruefung
+activate Fach
+Fach --> Schueler
+deactivate Fach
+Schueler -> Abipruefung : note
+activate Abipruefung
+Abipruefung --> Schueler
+deactivate Abipruefung
+end
+end
+return
+@enduml

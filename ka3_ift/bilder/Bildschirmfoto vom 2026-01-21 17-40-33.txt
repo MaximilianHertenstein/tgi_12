@@ -1,0 +1,37 @@
++zeigeHinweis(pHinweis: Text)
+
+Gu
++GUI pST: Steuerung ) «constructor» «user
+
+—
+Steuerung
+
+- aAnzWoerter: GZ
+
+~ Steuerung() «constructor»
++ pruefeWort(pWort: Text)
+- alleWoerterGefunden() ; Boolean
+
+dasSuchWort[ }
+
+Generator
+
++ Generator( ) «constructor»
+
++ erzeugeWoerter(pAnzahl : GZ) : Text{]
+- erzeugeWort() : Text
+
+- erzeugeWort(pLaenge: GZ) :Text
+
+Wortgitter
+aAnzZeilen: GZ
+- aAnzSpalten : GZ
+- aBuchstaben : Zeichen|]}
+SuchWort
+
+[+ >= aWort : Text
+
+- aGefunden : Boolean = true
+
++ pruefeWort( pWort :Text) : Boolean
+

@@ -1,0 +1,19 @@
+@startuml
+
+
+autoactivate on 
+hide footbox
+actor Akteur
+participant "model: Model" as Model
+participant "toDo: ToDo" as ToDo
+
+
+Akteur -> Model : getToDosCompleted(status)
+
+
+loop für todo in toDos
+Model -> ToDo : completed()
+return completed
+
+end
+@enduml

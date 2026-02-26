@@ -1,0 +1,47 @@
+A1 /1
+
+A2 /2
+
+A3 /1
+
+A4 /2
+
+A5 /3
+  
+A6 /4
+
+Sprung zu nextNode fehlt -3
+return first  -2
+
+
+A7 /7
+-3 es werden keine OutOfBoundsExceptions geworfen sondern nur NullPointerErrors.
+Wenn current null ist soll eine Fehlermeldung geworfen werden und nicht null zurückgegeben werden. -2
+-2 wenn der Index zu groß istes werden keine OutOfBoundsExceptions geworfen sondern nur NullPointerErrors.
+
+A8 /2
+
+A9 /2
+
+A10 /2
+
+A11 /1
+
+A12 /2
+
+A13 /1
+
+A14 /2
+
+A15 /1
+
+A16 /1
+
+A17 /1
+
+A19 /7 -2 erstes Element fehlt immer
+       -3 Index Error bei jedem aufruf
+       -5 Koordinaten ändern sich nicht
+       -1 fehler Schleifenkopf
+
+

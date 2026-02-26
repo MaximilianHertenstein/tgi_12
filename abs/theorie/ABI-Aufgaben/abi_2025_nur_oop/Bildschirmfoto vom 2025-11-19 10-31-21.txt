@@ -1,0 +1,32 @@
+TODO-App
+An die TODO-App werden im Wettbewerb folgende Anforderungen gestellt:
+
+e Der TG-Abteilungsleiter soll pro Tag einen TG-Termin wie z.B. Skitag,
+Badminton-Turnier oder Sommerferien eintragen kénnen.
+
+e Jeder Schiler soll flr sich beliebig viele persénliche TODOs pro Tag
+hinzufigen k6nnen.
+
+Das UML-Sequenzdiagramm in Abbildung 2 zeigt das Szenario , TODOs eines
+Schilers von einem Tag anzeigen“. Neben den personlichen TODOs des
+Schilers wird auch der TG-Termin des Abteilungsleiters des Tages auf der
+Benutzeroberflache angezeigt.
+
+Auf dem Arbeitsblatt 1 liegt bereits ein unvollstandiges UML-Klassendiagramm
+fur die TODO-App vor.
+
+UML-Klassendiagramm
+
+a)
+
+b)
+
+Stellen Sie im UML-Klassendiagramm auf dem Arbeitsblatt 1 die fehlenden
+Operationen mit vollstandiger Signatur, RUckgabetyp und Sichtbarkeit dar,
+die im UML-Sequenzdiagramm in Abbildung 2 verwendet wurden. Die
+Sichtbarkeit 6ffentlich darf nur verwendet werden, wenn dies notwendig ist.
+Stellen Sie im UML-Klassendiagramm auf dem Arbeitsblatt 1 alle noch
+fehlenden Assoziationen mit Rollennamen, Multiplizitat und
+Navigationsrichtung dar, die sich aus dem Szenario in Abbildung 2 ableiten
+lassen. Beachten Sie, dass nach der Inbetriebnahme des Programms noch
+keine Schuler im System vorhanden sind.

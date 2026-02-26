@@ -1,0 +1,122 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Objektdiagramm Map}
+\begin{document}
+
+
+Im folgenden Klassendiagramm der Klassen \texttt{SimpleEntry} und \texttt{SimpleMap} sind nur die Bestandteile zu sehen, die für die folgenden Aufgaben wichtig sind.
+
+\begin{center}
+	\begin {tikzpicture}
+	\begin{class}[text width =7 cm]{SimpleEntry}{0 ,0}
+		\attribute {- key: String}
+		\attribute {- value: int}
+		\operation{+ SimpleEntry(key: String, value: int)}
+		\operation{$\vdots$}
+	\end{class}
+	
+	
+	\begin{class}[text width =5 cm]{SimpleMap}{10 ,0}
+		\attribute {}
+		
+
+		\operation{+ SimpleMap()}
+		\operation{+ put(key: String, value: Int)}
+	\end{class}
+	\unidirectionalAssociation{SimpleMap}{entryList}{*}{SimpleEntry}
+\end{tikzpicture}
+\end{center}
+
+	
+Die Methode \texttt{put} prüft zuerst, ob der übergebene Schlüssel schon in der \texttt{entryList} vorhanden ist. Falls er \textbf{nicht} vorhanden ist, wird ein neuer \texttt{SimpleEntry} mit den übergebenen  Werten hinzugefügt. Falls der Schlüssel schon vorhanden ist, wird der Eintrag mit dem Schlüssel durch einen neuen Eintrag mit dem übergeben Wert ersetzt.
+
+
+
+
+\begin{aufgabe}
+
+
+Schreibe Pseudo/Java-Code mit dem ein Objekt der Klasse \texttt{SimpleMap}  erstellt und in der Variable \texttt{myMap} gespeichert wird und anschließend die folgenden Einträge mit der \texttt{put}-Methode eingefügt werden. 
+
+\begin{center}
+\begin{tabular}{|c|c|}
+	\hline
+	\textbf{Schlüssel} & \textbf{Wert}\\
+	\hline
+	A& 1  \\
+	\hline
+	B& 2 \\
+	\hline
+	C& 3 \\
+	\hline
+
+\end{tabular}	
+\end{center}
+
+\end{aufgabe}
+
+\begin{aufgabe}
+Stelle den Zustand nach dem Ausführen des Codes aus Aufgabe 1 als Objektdiagramm dar.
+\end{aufgabe}
+
+\begin{aufgabe}
+Anschließend wird der folgende Code ausgeführt.
+\begin{Verbatim}
+myMap.put("D", 5);
+myMap.put("B", 3);
+\end{Verbatim}
+Zeichne ein weiteres Objektdiagramm, das den Zustand nach der Ausführung darstellt.
+\end{aufgabe}
+
+\end{document}

@@ -1,0 +1,9 @@
+@startuml
+skinparam classAttributeIconSize 0
+!theme plain
+object Controller {
+}
+object  GUI {
+}
+Controller "1" <--> "gui"  GUI
+@enduml

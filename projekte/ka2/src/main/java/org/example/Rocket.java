@@ -1,4 +1,4 @@
 package org.example;
 
-public class Rocket {
+public record Rocket(V2 pos) {
 }

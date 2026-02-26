@@ -1,0 +1,19 @@
+@startuml
+
+object "<u>:Zusatzpruefung" as z {
+  note = 9
+}
+
+object "<u>fach[2]: Fach" as f {
+  name = "Deutsch"
+  anzKurse = 4
+}
+
+object "<u>:Abipruefung" as a {
+  pruefungsfachNr = 3
+  note = 3
+}
+
+f --> z : zusatzpruefung
+f --> a : abipruefung
+@enduml

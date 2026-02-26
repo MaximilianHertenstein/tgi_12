@@ -2,10 +2,7 @@
 title: Sequenzdiagramme
 codebraid:
   jupyter: true
-plantuml:
-  # preamble: plantuml.txt
-  executable: /home/max/Downloads/plantuml.jar
-  
+
 ---
 
 
@@ -27,12 +24,12 @@ record Student(String name, int age) {
 ```java
 record Student(String name, int age) {
     void greet(){
-        var greeting = getGreeting();
-        println(greeting);
+        println(getGreeting());
     }
 
     String getGreeting() {
-        return ("Hello, my name is " + name + ", I am " + age + " years old");
+        var greeting = "Hello, my name is " + name + ", I am " + age + " years old"
+        return greeting;
     }
 }
 ```

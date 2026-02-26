@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.*;
 
-public class SimpleMap {
+public class SimpleMap  {
     ArrayList<SimpleEntry> entryList;
 
     SimpleMap() {
@@ -25,9 +25,12 @@ public class SimpleMap {
         return size() == 0;
     }
 
+
+
     public void clear() {
         entryList = new ArrayList<SimpleEntry>();
     }
+
     public List<String> keySet() {
         return Utils.keySet(entryList);
     }
@@ -36,6 +39,8 @@ public class SimpleMap {
         return Utils.values(entryList);
     }
 
+
+
     public boolean containsKey(String key) {
         return keySet().contains(key);
     }
@@ -43,7 +48,8 @@ public class SimpleMap {
     public boolean containsValue(int value) {
         return values().contains(value);
     }
-    public Integer keyToIndex(String key) {
+
+    public int keyToIndex(String key) {
         for (int i = 0; i < entryList.size(); i++) {
             if (entryList.get(i).key().equals(key)) {
                 return i;
@@ -55,22 +61,30 @@ public class SimpleMap {
     public Integer get(String key) {
         var index = keyToIndex(key);
         if (index == -1) {
-            return -1;
+            return null;
         }
         return entryList.get(index).value();
+    }
+    public Integer put(String key, int value) {
+        var index = keyToIndex(key);
+        var res = get(key);
+        SimpleEntry newEntry = new SimpleEntry(key, value);
+        if (index != -1) {
+            entryList.set(index, newEntry);
+        }
+        else {
+            entryList.add(newEntry);
+        }
+        return res;
     }
 
     public Integer remove(String key) {
         var res = get(key);
-        entryList = Utils.remove(entryList, key);
+        entryList.remove(keyToIndex(key));
         return res;
     }
 
-    public int put(String key, int value) {
-        var res = get(key);
-        entryList = Utils.put(entryList, key, value);
-        return res;
-    }
+
 
     public void putAll(SimpleMap other) {
         for (var entry : other.entryList) {

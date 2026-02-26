@@ -1,0 +1,7 @@
+@startuml s1
+  actor Akteur
+  participant "student: Student" as Student
+  Akteur -> Student : greet()
+  activate Student
+  deactivate Student
+@enduml

@@ -4,7 +4,29 @@ codebraid:
   jupyter: true
 ---
 
+# Motivation
 
+Mit `records` lassen sich Klassen sehr einfach definieren. 
+<!-- Bei der Verwendung von `record` wird vieles automatisch festgelegt. Vieles davon ist fast immer sinnvoll, z.B. der automatisch definierte Konstruktor. -->
+
+Eine starke Einschränkung von `records` ist aber, dass deren Eigenschaften nach dem Erzeugen nicht mehr geändert werden können. 
+
+
+```{.java .cb-nb first_number=1}
+record Student(String name, int age){}
+```
+```{.java .cb-nb first_number=1}
+var pana = new Student("Pana" , 17);
+```
+
+Der `Student` `pana` hat das Alter `17`. Dies kann nicht geändert werden. Man kann lediglich einen neuen `Student` mit einem anderen Alter erzuegen und den alten `Student` überchreiben.
+
+```{.java .cb-nb first_number=1}
+var pana = new Student("Pana" , 18);
+```
+
+
+Bei größeren Objekten mit vielen Eigenschaften ist das jedoch sehr ineffizient.
 
 # Klassen mit class definieren
 
@@ -39,7 +61,7 @@ class MutableStudent{
 # Konstruktoren definieren
 
 
-Alle Konstruktoren muss selbst geschrieben werden. Konstruktoren werden ähnlich wie Methoden definiert. Der Name des Konstruktors stimmt immer mit dem Namen der Klasse überein.
+Alle Konstruktoren müssen selbst geschrieben werden. Konstruktoren werden ähnlich wie Methoden definiert. Der Name des Konstruktors stimmt immer mit dem Namen der Klasse überein.
 Ein Rückgabetyp wird nicht angebenden. 
 
 
@@ -57,6 +79,11 @@ class MutableStudent{
 
 Zwischen den geschweiften Klammern kann jeder beliebige Java-Code stehen. In der Regel werden aber nur Werte für die Eigenschaften der Klasse gesetzt.
 
+Hier wird 
+
+
+- die Eigenschaft `name` auf den übergebenen Wert `pName` gesetzt 
+- die Eigenschaft `age` auf den übergebenen Wert `pAge` gesetzt
 
 
 Wenn die Argumente des Konstruktors dieselben Namen wie die Eigenschaften der Klasse haben,
@@ -92,6 +119,8 @@ class MutableStudent{
   }
 }
 ```
+
+Die Methode `getOlder` erhöht das Alter eines `MutableStudent`. Dabei wird **kein** neues Objekt erzeugt.
 
 
 
@@ -193,7 +222,7 @@ matti.setAge(-3);
 matti.getAge();
 ```
 
-Wir können das verhindern, wenn wir eine Fehlermeldung werfen, wenn dem Setter ein ungültiger wert übergeben wird.
+Wir können das verhindern, wenn wir eine Fehlermeldung werfen, wenn dem Setter ein ungültiger Wert übergeben wird.
 
 ```java
 ...
@@ -205,7 +234,7 @@ Wir können das verhindern, wenn wir eine Fehlermeldung werfen, wenn dem Setter 
 }
 ```
 
-Leider ist es immer noch möglich mit dem Konstruktor Objekte mit ungültigen Eigenschaften zu erzeugen.
+Leider ist es immer noch möglich, mit dem Konstruktor Objekte mit ungültigen Eigenschaften zu erzeugen.
 
 ```{.java .cb-nb first_number=1}
 var matti = new MutableStudent("Matti", -17);

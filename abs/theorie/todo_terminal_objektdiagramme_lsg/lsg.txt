@@ -1,0 +1,25 @@
+@startuml
+object "model: Model" as model
+
+object "<u>:ToDo" as t0 {
+  id = 1
+  text = "IFT-Hausaufgaben"
+  completed = false
+}
+
+object "<u>:ToDo" as t1 {
+  id = 2
+  text = "Weltherrschaft übernehmen"
+  completed = false
+}
+
+object "<u>:ToDo" as t2 {
+  id = 3
+  text = "App programmieren"
+  completed = false
+}
+
+model -- t0 : todos[0]
+model -- t1 : todos[1]
+model -- t2 : todos[2]
+@enduml

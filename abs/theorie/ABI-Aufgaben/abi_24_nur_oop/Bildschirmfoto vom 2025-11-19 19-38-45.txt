@@ -1,0 +1,29 @@
+In einer App zur Verwaltung der Kursstufe werden die Kurswahlen und
+Leistungen aller Schilerinnen und Schuler der Kursstufe gespeichert. Die
+Daten kénnen z.B. dazu genutzt werden, das Bestehen des Abiturs eines
+Schilers zu kontrollieren oder die Abiturnote einer Schilerin zu berechnen.
+
+UML-Klassendiagramm
+
+Das Sequenzdiagramm in Abbildung 1 auf Seite 2 zeigt das Szenario ,Yvonne
+Leiser wird als Schilerin im Profil Informationstechnik der Kursstufen-App
+angelegt*. Sie wird im Objekt schueler[17] gespeichert. Da sie das Profilfach
+Informationstechnik (IT) gewahlt hat, muss sie 4 Kurse IT belegen und ihr
+erstes Prifungsfach ist IT.
+
+Auf dem Arbeitsblatt 1 liegt bereits ein UML-Klassendiagramm fir die
+Kursstufen-App vor.
+
+Stellen Sie im UML-Klassendiagramm auf dem Arbeitsblatt 1 die fehlenden
+Operationen und Konstruktoren mit vollstandiger Signatur, RUckgabetyp und
+Sichtbarkeit dar, die im UML-Sequenzdiagramm in Abbildung 1 auf Seite 2
+verwendet wurden.
+
+Bestimmen Sie die Multiplizitaten der Assoziationen mit den Rollennamen
+abipruefung und hj und stellen Sie diese im UML-Klassendiagramm auf dem
+Arbeitsblatt 1 dar.
+
+In den Halbjahren und in den Abiturprifungen kénnen als Note nur
+Notenpunkte zwischen O und 15 erreicht werden. Erweitern Sie das UML-
+Klassendiagramm auf dem Arbeitsblatt 1 in der Klasse Abipruefung
+exemplarisch so, dass dies sichergestellt wird.

@@ -1,0 +1,292 @@
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig,
+%module={ohne}
+]{schule}
+\hypersetup{hidelinks}
+
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+\usepackage[]{float}
+\usepackage{microtype}	
+
+
+\date{}
+
+\title{Sequenzdiagramme}
+\begin{document}
+
+\section{Grundlagen}
+Mit Hilfe von Sequenzdiagrammen werden Methoden und Methodenaufrufe dargestellt. Wir schauen uns zunächst ein sehr einfaches Codebeispiel an und stellen dieses als Sequenzdiagramm dar.
+
+Mit dem folgenden Code wird eine Klasse \texttt{Student} mit einer Methode \texttt{greet} definiert.
+
+\begin{minted}{java}
+record Student(String name, int age) {
+    
+    public void greet() {
+        println ("Hello, my name is " + name + ", I am " + age + " years old");
+    }
+    
+}
+\end{minted}
+Diese Methode kann dann in der \texttt{main}-Funktion auf einem Objekt \texttt{student} der Klasse \texttt{Student} folgendermaßen aufgerufen  werden.
+
+
+\begin{minted}[escapeinside=||]{java}
+void main(){
+    |$\vdots$|
+    student.greet()
+    |$\vdots$|
+}
+\end{minted}
+
+
+Der Aufruf der Methode kann folgendermaßen als Sequenzdiagramm dargestellt werden. 
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\linewidth]{s1}
+	%\caption{}
+	\label{fig:s1}
+\end{figure}
+
+
+\begin{itemize}
+	\item Akteur steht für den Benutzer des Programms
+	\item  \texttt{student: Student} steht für ein Objekt der Klasse \texttt{Student} mit dem Namen \texttt{student} 
+	\item die gestrichelten senkrechten Linien nennt man Lebenslinien
+	\item die Verbindung von der Lebenslinie des Akteurs zu der Lebenslinie des Objekts \texttt{student} mit dem Text \texttt{greet()} steht für den Aufruf dieser Methode
+	\item das Rechteck auf der Lebenslinie des Objekts \texttt{student} zeigt an, dass das Objekt aktiv ist, bis es die Methode zu Ende ausgeführt hat.
+\end{itemize}
+
+
+\section{Selbstdelegation}
+
+
+Im folgenden Codebeispiel ruft die Methode \texttt{greet} die Methode \texttt{getGreeting} auf.
+
+\begin{minted}{java}
+record Student(String name, int age) {
+	
+    void greet(){
+        var greeting = getGreeting()
+        println(greeting);
+    }
+	
+    private String getGreeting() {
+        return "Hello, my name is " + name + ", I am " + age + " years old"
+    }
+    
+}
+\end{minted}
+
+Im entsprechenden Sequenzdiagramm sind jetzt zusätzlich der Aufrufe der Methode \texttt{getGreeting} eingezeichnet. Der dritte Pfeil steht für den Abschluss der Methode \texttt{getGreeting}. Der Text \texttt{greeting} über dem Pfeil, gibt an, dass ein Wert  zurückgegeben wird und unter dem Namen \texttt{greeting} verwendet werden kann. Der Pfeil wird auch gezeichnet,  wenn nichts zurückgeben wird. Dann stellt der Pfeil einfach dar, dass der Kontrollfluss wieder zurück an eine andere Methode/Klasse geht.
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{s2}
+	%\caption{}
+	\label{fig:s2}
+\end{figure}
+
+\section{Aufruf von Methoden anderer Objekte}
+
+
+Im folgenden Codebeispiel hat die Klasse \texttt{Student} eine Eigenschaft \texttt{mainSubject} vom Typ \texttt{Subject}. Deshalb kann sie die öffentlichen Methoden dieser Klasse aufrufen.
+
+\begin{minted}[escapeinside=||]{java}
+record Subject(String name, int hoursPerWeek) {}
+
+record Student(|\dots| Subject mainSubject) {
+	
+    public void printNameOfMainSubject() {
+        println("My mainsubject is " + mainSubject.name());
+    }
+
+}
+\end{minted}
+
+In einem Sequenzdiagramm wird das folgendermaßen dargestellt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{s3}
+	%\caption{}
+	\label{fig:s3}
+\end{figure}
+\pagebreak
+\section{Aufruf von Konstruktoren}
+
+Die Methode \texttt{implementSnakeAndPlay} ruft den Konstruktor der Klasse \texttt{Game} auf. Dabei wird das Objekt \texttt{snakeGame} erzeugt.
+
+
+
+\begin{minted}[escapeinside=||]{java}
+record Student(|\dots|) {
+    public void implementSnakeAndPlay() {
+        Game snakeGame = new Game("Snake");
+        snakeGame.play();
+    }
+}
+
+record Game(String title) {
+   public void play() {
+      println("Playing " + title +  "!");
+   }
+}
+\end{minted}
+
+Der Aufruf dieses Konstruktors wird als Pfeil zu dem Rechteck des erzeugten Objekts dargestellt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{s4}
+	%\caption{}
+	\label{fig:s4}
+\end{figure}
+Über dem Pfeil steht der Code für den Aufruf des Konstruktors aber kein \texttt{new}.
+
+
+\pagebreak
+\section{Fallunterscheidungen}
+
+In der folgenden Methode wird eine Fallunterscheidung verwendet!
+\begin{minted}[escapeinside=||]{java}
+record Student(|\dots|) {
+    void sayHelloOrMainSubject(int weirdnessLevel) {
+        if (weirdnessLevel > 3) {
+            printNameOfMainSubject();
+        }
+        else {
+            greet();
+        }
+    }
+}
+\end{minted}
+
+In Sequenzdiagrammen werden Fallunterscheidungen mit Hilfe von Blöcken dargestellt. In dem Block mit dem Text \texttt{alt} sind alle Methodenaufrufe dargestellt, die ausgeführt werden, wenn die Bedingung erfüllt ist.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{s6}
+	%\caption{}
+	\label{fig:s6}
+\end{figure}
+
+In dem Block mit dem Text \texttt{else} sind alle  Methodenaufrufe dargestellt, die ausgeführt werden, wenn die Bedingung \textbf{nicht} erfüllt ist. Dieser Block kann natürlich auch weggelassen werden.
+
+
+
+\section{Schleifen über Kollektionen}
+
+Im der Methode \texttt{printSubjects} wird über eine Liste von Objekten der Klasse \texttt{Subject} iteriert.
+
+
+
+\begin{minted}[escapeinside=||]{java}
+record Subject(String name |\dots|) {}
+
+record Student(|\dots| Subject mainSubject, List<Subject> subjects) {
+	
+    void printSubjects() {
+        for (var subject : subjects) {
+            String subjectName = subject.name();
+            println(subjectName);
+        }
+    }
+}
+\end{minted}
+
+In jedem Schleifendurchlauf ist ein anderes Objekt in der Laufvariable \texttt{subject} gespeichert. Auf diesem Objekt wird die Methode \texttt{name} aufgerufen. Diese gibt einen \texttt{String} zurück.
+
+Im Sequenzdiagramm taucht nur eine Lebenslinie mit der Überschrift \texttt{subject} auf.
+Der  Block mit der Überschrift \texttt{loop} zeigt an, dass es sich um eine Schleife handelt, in der \texttt{subject} alle Elemente in \texttt{subjects} durchläuft. Darunter ist der Schleifenkörper dargestellt.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{s7}
+	%\caption{}
+	\label{fig:s7}
+\end{figure}
+
+Der Aufruf von \texttt{print} wird im Sequenzdiagramm nicht dargestellt, da hierfür keine Methode eines anderen Objekts verwendet wird.
+
+\pagebreak
+
+\section{Zählerschleifen}
+
+Die selbe Methode kann auch mit einer Zählerschleife definiert werden.
+
+\begin{minted}[escapeinside=||]{java}
+|\vdots|
+void printSubjects() {
+    for (int i = 0; i < subjects.size(); i++) {
+        String subjectName = subjects.get(i).name();
+        println("Fach"  + i +  ": "  + subjectName);
+     }
+}
+|\vdots|
+\end{minted}
+
+Da \texttt{i} nach jedem Schleifendurchlauf geändert wird, ist \texttt{subjects.get(i)} in jedem Schleifendurchlauf ein anderes Objekt in der Liste \texttt{subjects}. Diese Laufvariable ist im Sequenzdiagramm als \texttt{subjects[i]} dargestellt.
+
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{s8}
+		%\caption{}
+		\label{fig:s8}
+	\end{figure}
+\pagebreak
+
+\section{While-Schleifen}
+
+Wenn statt einer \texttt{for}-Schleife eine \texttt{while}-Schleife verwendet wird, sieht der Code fast genau so aus.
+
+\begin{minted}[escapeinside=||]{java}
+|\vdots|
+void printSubjects() {
+    int i = 0;
+    while (i < subjects.size()) {
+        Subject subject = subjects.get(i);
+        String subjectName = subject.name();
+        println("Fach"  + i +  ": "  + subjectName);
+        i++;
+    }
+}
+|\vdots|
+\end{minted}
+
+Im Sequenzdiagramm tauchen jetzt der Anfangswert der Zählervariablen und die Schrittweite nicht mehr auf.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{s9}
+	%\caption{}
+	\label{fig:s9}
+\end{figure}
+\end{document}

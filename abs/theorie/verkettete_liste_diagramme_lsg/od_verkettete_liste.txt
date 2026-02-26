@@ -1,0 +1,22 @@
+@startuml
+object "<u>myList: LinkedList" as list {
+
+}
+
+object "<u>:Node" as n1 {
+  content = "Stefan"
+}
+
+object "<u>:Node" as n2 {
+  content = "Artur"
+}
+
+object "<u>:Node" as n3 {
+  content = "Tobias"
+  netNode = null
+}
+
+list --> n1 : first
+n1 --> n2 : nextNode
+n2 --> n3 : nextNode
+@enduml

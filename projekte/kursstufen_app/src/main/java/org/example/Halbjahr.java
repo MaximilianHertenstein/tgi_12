@@ -1,4 +1,4 @@
 package org.example;
 
-public record Halbjahr() {
+public record Halbjahr(int note) {
 }

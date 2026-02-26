@@ -1,0 +1,129 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.25\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{minted}
+\usepackage{microtype}	
+
+\setlength{\parindent}{20pt}
+\date{}
+
+\title{LSG Kursstufen-App}
+\begin{document}
+\section*{A1 a}
+
+\begin{enumerate}
+\item Auf einem Objekt der Klasse \texttt{Steuerung} wird die Methode \texttt{addSchueler} mit einem Vornamen, einem Nachnamen und einem Fach aufgerufen. Alle drei Werte sind Strings. Die Methode ist öffentlich, da sie von außen aufgerufen wird. Wir müssen also die Methode \texttt{addSchueler(vorname: String, nachname: String, fach: String)} in der Klasse \texttt{Steuerung} ergänzen.
+
+
+\item Der nächste Pfeil geht zum Rechteck des Objekts \texttt{schueler[17]}. Da die Eigenschaft \texttt{schueler} auf mehrere Objekte der Klasse \texttt{Schueler} verweist, handelt es sich auch bei \texttt{schueler[17]} um ein Objekt dieser Klasse. Dann steht dieser Pfeil für einen Aufruf des Konstruktors.
+Dem Konstruktor werden ein Vor- und ein Nachname übergeben.  Weil er nicht von einem anderen Objekt der Klasse \texttt{Schueler} aufgerufen wird, muss er öffentlich sein.
+
+Wir müssen also die Zeile \texttt{+ Schueler(vorname: String, nachname: String)} in der Klasse \texttt{Schueler} ergänzen.
+
+\item Auf einem Objekt der Klasse \texttt{Schueler} wird die Methode \texttt{addFach} aufgerufen. Die Parameter sind in dem Textfeld erklärt. Die Methode wird von dem Objekt der Klasse \texttt{Steuerung} aufgerufen. Wir müssen also die Zeile \texttt{+ addFach(name: String, anzahlKurse: Int, nrPruefungsfach: Int)} in der Klasse \texttt{Schueler} ergänzen.
+
+\item Wie im zweiten Punkt sehen wir, dass wir in der Klasse \texttt{Fach} die Zeile \texttt{+ Fach(name: String, anzahlKurse: Int, nrPruefungsfach: Int)} ergänzen müssen.
+
+\item Der Konstruktor \texttt{Halbjahr} wird mit einer ganzen Zahl aufgerufen. Der Aufruf erfolgt von einem Objekt einer anderen Klasse (\texttt{Fach}). Wir müssen also in der Klasse \texttt{Halbjahr} die Zeile \texttt{+ Halbjahr(nr: Int)} ergänzen.
+
+Wie im letzten Punkt sehen wir, dass wir in der Klasse \texttt{Abipruefung} die Zeile \texttt{+ Abipruefung(nr: Int)} ergänzen müssen.
+\end{enumerate}
+
+
+\section*{A1 b}
+
+\begin{enumerate}
+\item In jedem Fach findet entweder eine oder keine ABI-Prüfung statt. An dem Pfeil von \texttt{Fach} zu \texttt{ABIPruefung} steht also \texttt{0..1}.
+\item Jedes Fach belegt man mindestens in einem und höchstens in vier Halbjahren. Man muss also \texttt{1..4} ergänzen.
+\end{enumerate}
+
+\section*{2}
+
+Um auszudrücken, dass alle Noten zwischen $0$ und $15$ Punkten sind, muss man bei den Noten hinter dem Typ $\mathtt{\{0\leq note \leq 15\}}$ ergänzen.
+
+\section*{A3}
+Hier kommen konkrete Werte vor, weil diese bekannt sind (z.B. $12$ Punkte).
+Der Pfeil zurück zum Akteur wird manchmal auch weggelassen.
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{a3}
+
+\label{fig:lsgkurstufenapp}
+\end{figure}
+
+
+
+\section*{A4}
+
+$4\cdot (12 + 7 + 3 + 6 +2) = 120$
+
+Yvonne hat also die $100$ Punkte erreicht.
+
+\section*{A5}
+\begin{minted}{java}
+boolean hat100PunkteImAbi(){
+    var summe = 0;
+    for (var f : fach){
+        if (f.istPruefungsFach()) {
+            summe += f.gibAbiNote();
+        }
+    }
+    return summe * 4 >= 100;
+}
+\end{minted}
+
+\section*{A6}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{a6}
+
+
+\end{figure}
+
+
+\section*{A7}
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{od_deutsch}
+
+\label{fig:oddeutsch}
+\end{figure}
+
+
+
+
+\end{document}

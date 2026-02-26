@@ -1,0 +1,52 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+!theme plain
+top to bottom direction
+
+class InvertedEntry  {
+  + InvertedEntry(key: int, values: List<String>)
+  - key: int
+  - value: List<String>
+  + key(): int
+  + value(): List<String>
+}
+class SimpleEntry  {
+  + SimpleEntry(key: String):
+  + SimpleEntry(key: String, value: int)
+  - value: int
+  - key: String
+  + value(): int
+  + setValue(newValue: int): SimpleEntry
+  + key(): String
+}
+class SimpleMap {
+  + SimpleMap(entries: List<SimpleEntry>)
+  + SimpleMap(): 
+  + put(key: String , value: int): Int
+  + keySet(): List<String>
+  + containsKey(key: String): boolean
+  + values(): List<Int>
+  + remove(key String): Int
+  - keyToIndex(key: String): int
+  + containsValue(value: int): boolean
+  + clear(): 
+  + invertedEntries(): List<InvertedEntry>
+  + putAll(other: SimpleMap):
+  + isEmpty(): boolean
+  + size(): int
+  + entryList(): List<SimpleEntry>
+  + get(key: String): Int
+}
+class Utils {
+  + Utils(): 
+  + {static} invertedEntries(List<SimpleEntry>): List<InvertedEntry>
+  + {static} dedup(xs: List<T>): List<T>
+  + {static} getKeys(entries: List<SimpleEntry> , value: Int): List<String>
+  + {static} values(entries: List<SimpleEntry>): List<Int>
+  + {static} keySet(entries: List<SimpleEntry>): List<String>
+}
+
+
+SimpleMap     " " -[#595959,plain]-> "entryList\n*" SimpleEntry
+@enduml

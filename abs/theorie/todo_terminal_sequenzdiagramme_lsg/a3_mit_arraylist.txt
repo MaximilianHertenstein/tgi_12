@@ -1,0 +1,28 @@
+@startuml
+
+
+autoactivate on 
+hide footbox
+actor Akteur
+participant "model: Model" as Model
+participant "toDo: ToDo" as ToDo
+participant "acc: ArrayList<ToDo>" as ArrayList
+
+Akteur -> Model : getToDosCompleted(status)
+
+create ArrayList
+Model -> ArrayList : ArrayList()
+
+ArrayList --> Model
+
+loop für todo in toDos
+Model -> ToDo : completed()
+return completed
+
+alt item.completed() == status
+Model -> ArrayList : add
+
+ArrayList --> Model
+end
+end
+@enduml

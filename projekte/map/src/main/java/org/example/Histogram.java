@@ -9,6 +9,7 @@ public class Histogram {
     List<SimpleEntry> getEntries() {
         return map.entryList;
     }
+
     public void count(String s){
         if (map.containsKey(s)){
             map.put(s, map.get(s)+1);
@@ -18,7 +19,7 @@ public class Histogram {
         }
     }
 
-    public static Histogram fromStringList(List<String> list){
+    public static Histogram of(List<String> list){
         Histogram histogram = new Histogram();
         for (String s : list){
             histogram.count(s);

@@ -1,0 +1,383 @@
+
+# Aufgabe
+
+Erstelle ein `record` `BasicGameObject`! 
+Die Eigenschaften sind
+
+- die Position als `V2`
+- der `displayString` als `String`
+
+```{.java .cb-nb line_numbers=false}
+new BasicGameObject(new V2(3, 4), "X");
+```
+<!-- 
+<!-- ```{.java .cb-nb line_numbers=false}
+new BasicGameObject(new V2(10, 5), "{@@}\n/\"\"\\");
+``` -->
+
+
+
+# Hinweis
+
+Du kannst die Methoden `lines` und `toList` nutzen, um einen String an den Zeilenumbrüchen (`\n`) aufzuteilen.
+
+<!-- ```{.java .cb-nb line_numbers=false}
+"{@@}\n/\"\"\\".lines().toList()
+``` -->
+
+# Aufgabe
+
+Erweitere `BasicGameObject` um eine Methode `show`{.java}.  
+Sie gibt eine `List<StringWithLocation>` zurück.  
+Jede Zeile des `displayString` wird in ein `StringWithLocation` umgewandelt.  
+Die erste Zeile beginnt an der Position des Objekts, jede weitere Zeile eine Zeile darunter.
+
+\tiny
+
+```{.java .cb-nb line_numbers=false}
+new BasicGameObject(new V2(3, 4), "X").show();
+```
+
+<!-- ```{.java .cb-nb line_numbers=false}
+new BasicGameObject(new V2(10, 5), "{@@}\n/\"\"\\").show();
+``` -->
+\normalsize
+
+
+# Aufgabe
+
+Erweitere `BasicGameObject` um eine Methode `hitBox`{.java}.  
+Sie gibt eine `List<V2>` zurück, die alle Zellen enthält, auf denen das Objekt gezeichnet wird.  
+Jedes Zeichen des `displayString` (Zeile für Zeile) belegt genau eine Zelle.
+
+\tiny
+
+```{.java .cb-nb line_numbers=false}
+new BasicGameObject(new V2(3, 4), "X").hitBox();
+```
+
+<!-- ```{.java .cb-nb line_numbers=false}
+new BasicGameObject(new V2(10, 5), "{@@}\n/\"\"\\").hitBox();
+``` -->
+
+```{.java .cb-nb line_numbers=false}
+new BasicGameObject(new V2(3, 4), "abc\ndefg").hitBox();
+```
+\normalsize
+
+
+
+
+
+# Aufgabe
+
+Lege das `record` `MovableGameObject` in `MovableGameObject.java` an. Es kapselt ein `BasicGameObject` und implementiert `IBasicGameObject`.
+
+\```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(5, 7), "[]");
+\```
+
+
+# Aufgabe
+
+Schreibe einen zusätzlichen Konstruktor für `MovableGameObject(V2 pos, String displayString)`{.java}, der intern ein `BasicGameObject` erzeugt.
+
+<!-- \```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(3, 4), "X\nY");
+\``` -->
+
+
+# Aufgabe
+
+Implementiere `pos`{.java} in `MovableGameObject`. Es gibt die Position des gekapselten `BasicGameObject` zurück.
+
+\```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(3, 4), "X").pos();
+\```
+
+
+# Aufgabe
+
+Implementiere `move(V2 dir)`{.java} in `MovableGameObject`. Es gibt ein neues `MovableGameObject` mit verschobener Position zurück.
+
+\```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(3, 4), "[]").move(new V2(2, 0));
+\```
+
+
+# Aufgabe
+
+Implementiere `show`{.java} in `MovableGameObject` als Delegation an das gekapselte `BasicGameObject`.
+
+\```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(10, 5), "{@@}\n/\"\"\\").show();
+\```
+
+
+# Aufgabe
+
+Implementiere `hitBox`{.java} in `MovableGameObject` als Delegation an das gekapselte `BasicGameObject`.
+
+\```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(10, 5), "XX").hitBox();
+\```
+
+
+# Aufgabe
+
+Implementiere `touchesLeftBorder`{.java} in `MovableGameObject`. Es gibt `true` zurück, wenn eine Zelle der Hitbox `x == 0` hat.
+
+\```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(0, 3), "X").touchesLeftBorder();
+\```
+
+
+# Aufgabe
+
+Implementiere `touchesRightBorder(int width)`{.java} in `MovableGameObject`. Es gibt `true` zurück, wenn eine Zelle der Hitbox `x == width - 1` hat.
+
+\```{.java .cb-nb line_numbers=false}
+new MovableGameObject(new V2(9, 3), "X").touchesRightBorder(10);
+\```
+
+
+
+# Aufgabe
+
+Lege das `record` `Alien` in `Alien.java` an. Es kapselt ein `MovableGameObject` und implementiert `IBasicGameObject` sowie `Shooting`.
+
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(12, 8), "{@@}\n/\"\"\\");
+\```
+
+
+# Aufgabe
+
+Schreibe einen Konstruktor `Alien(V2 pos, String displayString)`{.java}, der ein `MovableGameObject` mit diesen Werten anlegt.
+
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(20, 4), "/MM\\\n\\~~/");
+\```
+
+
+# Aufgabe
+
+Implementiere `move(V2 dir)`{.java} in `Alien`. Es gibt ein neues `Alien` mit verschobener Position zurück.
+
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(5, 6), "{OO}\n/VV\\").move(new V2(1, 0));
+\```
+
+
+# Aufgabe
+
+Implementiere die Delegationsmethoden `pos`{.java}, `show`{.java} und `hitBox`{.java} in `Alien` an das gekapselte `MovableGameObject`.
+
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(5, 6), "{OO}\n/VV\\").pos();
+\```
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(5, 6), "{OO}\n/VV\\").show();
+\```
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(5, 6), "{OO}\n/VV\\").hitBox();
+\```
+
+
+# Aufgabe
+
+Implementiere `shoot`{.java} in `Alien`. Es gibt eine `AlienRocket` zurück, die zwei Zeilen unter der aktuellen Position startet.
+
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(10, 3), "{@@}\n/\"\"\\").shoot();
+\```
+
+
+# Aufgabe
+
+Implementiere die statische Hilfsfunktion `rowToAlienStrings(int i)`{.java} in `Alien`. Für `i` in \{2, 1, 0\} werden die drei unterschiedlichen Alien\-Darstellungen zurückgegeben.
+
+\```{.java .cb-nb line_numbers=false}
+Alien.rowToAlienStrings(2);
+\```
+\```{.java .cb-nb line_numbers=false}
+Alien.rowToAlienStrings(0);
+\```
+
+
+# Aufgabe
+
+Implementiere `createAliens`{.java} in `Alien`. Erzeuge 3 Reihen à 10 Aliens, mit passender X\-Abstandswahl und Y\-Versatz.
+
+\```{.java .cb-nb line_numbers=false}
+Alien.createAliens();
+\```
+
+
+# Aufgabe
+
+Implementiere `touchesLeftBorder`{.java} und `touchesRightBorder(int width)`{.java} in `Alien` als Delegation an das `MovableGameObject`.
+
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(0, 5), "{OO}\n/VV\\").touchesLeftBorder();
+\```
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(9, 5), "{OO}\n/VV\\").touchesRightBorder(10);
+\```
+
+
+# Aufgabe
+
+Implementiere `isInLastLine(int height)`{.java} in `Alien`. Es gibt `true` zurück, wenn eine Zelle der Hitbox die letzte bespielbare Zeile erreicht.
+
+\```{.java .cb-nb line_numbers=false}
+new Alien(new V2(3, 8), "{@@}\n/\"\"\\").isInLastLine(10);
+\```
+
+
+# Aufgabe
+
+Lege das `record` `CountDown` in `CountDown.java` an. Es kapselt `start`{.java} und `current`{.java} als `int`.
+
+\```{.java .cb-nb line_numbers=false}
+new CountDown(5, 3);
+\```
+
+
+# Aufgabe
+
+Schreibe einen zusätzlichen Konstruktor `CountDown(int start)`{.java}, der `current` auf `start` setzt.
+
+\```{.java .cb-nb line_numbers=false}
+new CountDown(7).current();
+\```
+
+
+# Aufgabe
+
+Implementiere `countDown()`{.java}. Wenn `current > 0`, dekrementiere `current` um `1`. Andernfalls setze auf einen neuen `CountDown(start)` zurück.
+
+\```{.java .cb-nb line_numbers=false}
+new CountDown(3, 2).countDown().current();
+\```
+\```{.java .cb-nb line_numbers=false}
+new CountDown(3, 0).countDown().current();
+\```
+\```{.java .cb-nb line_numbers=false}
+new CountDown(2).countDown().countDown().countDown().current();
+\```
+
+
+# Aufgabe
+
+Implementiere `finished()`{.java}. Sie gibt `true` zurück, wenn `current == 0`.
+
+\```{.java .cb-nb line_numbers=false}
+new CountDown(4, 0).finished();
+\```
+\```{.java .cb-nb line_numbers=false}
+new CountDown(4, 1).finished();
+\```
+
+
+
+# Aufgabe
+
+Lege das `record` `AlienSwarm` in `AlienSwarm.java` an mit den Eigenschaften `aliensDirection`{.java} als `V2`, `aliens`{.java} als `List<Alien>` und `alienRocketCountdown`{.java} als `CountDown`.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm(new V2(1, 0), Alien.createAliens(), new CountDown(100));
+\```
+
+
+# Aufgabe
+
+Schreibe einen parameterlosen Konstruktor für `AlienSwarm()`{.java}. Starte nach rechts, nutze `Alien.createAliens()` und einen `CountDown`.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm();
+\```
+
+
+# Aufgabe
+
+Implementiere `noAliensLeft`{.java}. Es gibt `true` zurück, wenn die Liste leer ist.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().noAliensLeft();
+\```
+
+
+# Aufgabe
+
+Implementiere `aliensAreInLastLine(int height)`{.java}. Es gibt `true` zurück, sobald ein Alien in der letzten Zeile ist.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().aliensAreInLastLine(30);
+\```
+
+
+# Aufgabe
+
+Implementiere `move()`{.java}. Bewege alle Aliens um `aliensDirection` und zähle den `alienRocketCountdown` herunter.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().move();
+\```
+
+
+# Aufgabe
+
+Implementiere die privaten Hilfsmethoden `touchesLeftBorder()`{.java} und `touchesRightBorder(int width)`{.java}. Sie testen, ob mindestens ein Alien seine jeweilige Grenze berührt.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().move().move().move();
+\```
+
+
+# Aufgabe
+
+Implementiere die private Methode `computeNextAlienDirection(int width)`{.java}. Logik:
+- Bewegt sich der Schwarm horizontal und berührt eine Seite → nach unten.
+- Bewegt er sich unten rechts → nach links.
+- Bewegt er sich unten links → nach rechts.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().move().move();
+\```
+
+
+# Aufgabe
+
+Implementiere `reactToBorder(int width)`{.java}. Ersetzt die Richtung mittels `computeNextAlienDirection`.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().move().reactToBorder(80);
+\```
+
+
+# Aufgabe
+
+Implementiere `moveBounded(int width)`{.java}. Bewege und reagiere dann auf den Rand.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().moveBounded(80);
+\```
+
+
+# Aufgabe
+
+Implementiere `countDownFinished`{.java}. Es gibt `true` zurück, wenn der `CountDown` abgelaufen ist.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().countDownFinished();
+\```
+
+
+# Aufgabe
+
+Implementiere `getLowestAliens()`{.java}. Gib alle Aliens in der untersten Zeile zurück.
+
+\```{.java .cb-nb line_numbers=false}
+new AlienSwarm().getLowestAliens();
+\``` -->

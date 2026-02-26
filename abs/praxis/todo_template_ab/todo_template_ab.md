@@ -129,7 +129,7 @@ Der Pfand zu den Templates ist `src/main/jte/web`.
 
 # Aufgabe
 
-Ergänze die Klasse `templateRenderer` um eine Methode `renderToString`. Dieser wird ein `ToDo` und der Name eines Templates übergeben.
+Ergänze die Klasse `TemplateRenderer` um eine Methode `renderToString`. Dieser wird ein `ToDo` und der Name eines Templates übergeben.
 Sie gibt das gerenderte Template als String zurück. 
 
 ```java

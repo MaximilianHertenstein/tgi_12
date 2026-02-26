@@ -1,0 +1,23 @@
+
+
+@startuml
+autoactivate on 
+hide footbox
+actor Akteur
+participant "view: View" as View
+participant "toDo: ToDo" as ToDo
+participant "ids: ArrayList" as ArrayList
+
+
+
+Akteur -> View : getIDs()
+create ArrayList
+View -> ArrayList : new
+ArrayList --> View
+loop toDos
+View -> ToDo : id()
+return id
+View -> ArrayList : add(id)
+return 
+end
+@enduml

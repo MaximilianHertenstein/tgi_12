@@ -1,0 +1,19 @@
+@startuml s8
+actor Akteur
+participant "student: Student" as Student
+participant "subject[i]: Subject" as Subject
+
+autoactivate on 
+hide footbox
+
+Akteur -> Student : printSubjects()
+
+group loop [für i:=0 bis subjects.gibLaenge() - 1, Schritt 1]
+    
+    Student -> Subject : name()
+    return subjectName
+    end
+    
+
+
+@enduml

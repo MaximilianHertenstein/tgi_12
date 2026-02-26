@@ -1,0 +1,96 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Objektdiagramm ToDo-App}
+\begin{document}
+
+
+Im folgenden Klassendiagramm der Klassen \texttt{ToDo} und \texttt{Model} sind nur die Bestandteile zu sehen, die für die folgenden Aufgaben wichtig sind.
+
+\begin{center}
+	\begin {tikzpicture}
+	\begin{class}[text width =7 cm]{ToDo}{0 ,0}
+		\attribute {- id: Int}
+		\attribute {- text: String}
+		\attribute {- completed: Boolean}
+		\operation{$\vdots$}
+	%	\operation{+ ToDo(id: Int, text: String, completed: Boolean )}
+	%	\operation{+ ToDo(id: Int, text: String)}
+	%			\operation{$\vdots$}
+	\end{class}
+	
+	
+	\begin{class}[text width =5 cm]{Model}{9 ,0}
+		\attribute {}
+		
+		
+		\operation{+ SimpleMap()}
+		\operation{+ add(text: String)}
+				\operation{$\vdots$}
+	\end{class}
+	\unidirectionalAssociation{Model}{toDos}{*}{ToDo}
+\end{tikzpicture}
+\end{center}
+
+Der Konstruktor der Klasse \texttt{Model} erzeugt ein Objekt dieser Klasse, bei dem die Liste \texttt{toDos} leer ist. Die Methode \texttt{add} fügt ein \texttt{ToDo} zu dieser Liste hinzu. Das hinzugefügte \texttt{ToDo} ist noch nicht erledigt. Die \texttt{id} des \texttt{toDos} ist um $1$ höher als die bisher höchste \texttt{id} eines \texttt{todos}.
+
+
+\begin{aufgabe}
+Schreibe Pseudo/Java-Code mit dem ein Objekt der Klasse \texttt{Model} erstellt und in der Variable \texttt{model} gespeichert wird. Anschließend werden die ToDos \emph{IFT-Hausaufgaben}, \emph{Weltherrschaft übernehmen} und \emph{App programmieren} in die Liste der ToDos hinzugefügt.
+\end{aufgabe}
+
+\begin{aufgabe}
+Stelle den Zustand nach dem Ausführen des Codes aus Aufgabe 1 als Objektdiagramm dar.
+\end{aufgabe}
+
+\end{document}

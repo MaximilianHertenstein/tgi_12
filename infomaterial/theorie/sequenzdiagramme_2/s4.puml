@@ -1,6 +1,6 @@
 @startuml s4
 actor Akteur
-participant Student
+participant "student: Student" as  Student
 participant "snakeGame: Game" as Game
 autoactivate on 
 hide footbox

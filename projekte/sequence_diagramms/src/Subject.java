@@ -1,6 +1,3 @@
-record Subject(String name, int grade) {
+record Subject(String name, int hoursPerWeek, int points) {
 
-    boolean isPassed() {
-        return grade >= 5;
-    }
 }

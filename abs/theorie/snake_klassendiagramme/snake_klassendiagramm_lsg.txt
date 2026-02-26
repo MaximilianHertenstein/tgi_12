@@ -1,0 +1,68 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+!theme plain
+top to bottom direction
+
+class Model {
+  + Model(cols: int , rows: int)
+  + Model(cols: int, rows: int, snake: Snake, snakeDirection: V2, applePosition: V2)
+  - snake: Snake
+  - cols: int
+  - direction: V2
+  - rows: int
+  - applePosition: V2
+  - snakeIsAlive(): boolean
+  + getUIState(): UIState
+  + setDirection(char)
+  - boardIsFull(): boolean
+  + moveSnake()
+  + gameOngoing(): boolean
+  + getEndMessage(): String
+}
+class Snake  {
+  + Snake(head: V2)
+  + Snake(head: V2, tail: List<V2>, digesting: boolean)
+  - digesting: boolean
+  + tail(): List<V2>
+  + move(direction: V2, applePosition: V2): Snake
+  - computeNewTail(): List<V2>
+  + getCoordinates(): List<V2>
+  + tailBitten(): boolean
+  + head(): V2
+  + digesting(): boolean
+}
+
+class UIState  {
+  + UIState(anakeHead: V2, snakeTai: List<V2>, applePosition: V2)
+  - snakeTail: List<V2>
+  - snakeHead: V2
+  - applePosition: V2
+  + snakeTail(): List<V2>
+  + snakeHead(): V2
+  + applePosition(): V2
+}
+class Utils {
+  + Utils()
+  + {static} dropLast(xs: List<T>): List<T>
+  + {static} isOnBoard(v: V2, cols: int,rows: int): boolean
+  + {static} keyToV2(key: char): V2
+  + {static} computeNewDirection(currDir: V2, lastKey: char): V2
+  + {static} generateRandomFreeCoordinates(blockedCells: List<V2>, cols: int, rows: int): V2
+}
+class V2 {
+  + V2(int, int): 
+  - y: int
+  - x: int
+  + y(): int
+  + plus(other: V2): V2
+  + times(other: V2): int
+  + x(): int
+}
+
+Model   " " -[#595959,plain]-> "snake\n1" Snake   
+Model   " " -[#595959,plain]-> "direction\n1" V2      
+Snake   " " -[#595959,plain]-> "head\n1" V2      
+Snake   " " -[#595959,plain]-> "tail\n*" V2      
+UIState " " -[#595959,plain]-> "snakeHead\n1" V2
+@enduml

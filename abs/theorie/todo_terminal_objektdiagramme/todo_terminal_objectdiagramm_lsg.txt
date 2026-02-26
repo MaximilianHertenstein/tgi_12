@@ -1,0 +1,32 @@
+@startuml
+
+object "model: Model" as model {
+  name = "Dummy"
+  id = 123
+}
+
+
+object  "" as ift {
+  id = 1
+  
+  text = "IFT-Hausaufgaben"
+  completed = false
+}
+
+object  "" as w {
+  id = 2
+  text = "Weltherrschaft übernehmen"
+  completed = false
+}
+
+object  "" as app {
+  id = 3
+  text = "App programmieren"
+  completed = false
+}
+
+model  --> ift : todos[0]
+model  --> w : todos[1]
+model  --> app : todos[2]
+
+@enduml

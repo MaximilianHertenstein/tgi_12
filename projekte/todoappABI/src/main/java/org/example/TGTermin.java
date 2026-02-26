@@ -1,4 +1,4 @@
 package org.example;
 
-public record TGTermin() {
+public record TGTermin(String tgTermin, Datum datum) {
 }

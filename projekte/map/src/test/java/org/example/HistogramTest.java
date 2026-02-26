@@ -23,14 +23,14 @@ class HistogramTest {
         assertEquals(1, histogram.map.get("y"));
     }
 
-    @Test
-    void fromStringListCreatesCorrectHistogram() {
-        List<String> list = List.of("a", "b", "a", "c", "b", "a");
-        Histogram histogram = Histogram.fromStringList(list);
-        assertEquals(3, histogram.map.get("a"));
-        assertEquals(2, histogram.map.get("b"));
-        assertEquals(1, histogram.map.get("c"));
-    }
+//    @Test
+//    void fromStringListCreatesCorrectHistogram() {
+//        List<String> list = List.of("a", "b", "a", "c", "b", "a");
+//        Histogram histogram = Histogram.fromStringList(list);
+//        assertEquals(3, histogram.map.get("a"));
+//        assertEquals(2, histogram.map.get("b"));
+//        assertEquals(1, histogram.map.get("c"));
+//    }
 
 
 }

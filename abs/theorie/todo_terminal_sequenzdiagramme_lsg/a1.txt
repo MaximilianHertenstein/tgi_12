@@ -1,0 +1,20 @@
+@startuml
+autoactivate on 
+hide footbox
+actor Akteur
+participant "view: View" as View
+participant "toDo: ToDo" as ToDo
+
+
+
+Akteur -> View : showToDo
+View -> ToDo : completed()
+return completed
+
+
+View -> ToDo : text()
+return text
+View -> ToDo : id()
+return id
+
+@enduml

@@ -1,4 +1,6 @@
 package org.example;
 
-public record Rocket() {
+public interface Rocket extends IBasicGameObject {
+    Rocket move();
+    boolean isPlayerRocket();
 }

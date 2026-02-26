@@ -1,0 +1,212 @@
+\documentclass[a4paper,DIV =14]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={kl},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.15\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{IFT KA3 TGI12}
+\begin{document}
+
+\punktuebersicht
+
+Wortgitter, auch Buchstabengitter genannt, sind Wörterrätsel bei denen Begriffe in
+einer Buchstabentabelle gefunden und markiert werden sollen. Die einzelnen
+Buchstaben eines gefundenen Begriffs können eingekreist oder unterstrichen werden.
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\linewidth]{rätsel_bild}
+%\caption{}
+\label{fig:ratselbild}
+\end{figure}
+
+
+
+Das folgende Sequenzdiagramm zeigt das Szenario \enquote{Starten des Spiels}. Dabei wird
+ein Wortgitter mit $10$ Zeilen und $20$ Spalten erzeugt, in dem $5$ Wörter versteckt sind.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.9\linewidth]{sequenzdiagramm_vorgegeben}
+
+\label{fig:sequenzdiagrammvorgegeben}
+\end{figure}
+
+\hinweis{Die von der Operation \texttt{erzeugeWoerter} der Klasse Generator ausgehenden
+Botschaften sind im Sequenzdiagramm   nicht dargestellt.}
+
+
+Ein unvollständiges Klassendiagramm liegt bereits vor (Seite 2).
+\begin{aufgabe}[points=12]
+Ergänzen Sie im Klassendiagramm die fehlenden Operationen mit vollständiger
+Signatur, dem Rückgabetyp und der Sichtbarkeit, die im Sequenzdiagramm 
+benötigt werden. Von außen dürfen nur die Operationen sichtbar sein, die für die
+Kommunikation zwischen den Objekten benötigt werden.
+\end{aufgabe}
+
+% TODO: \usepackage{graphicx} required
+
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{"kd_vorgegeben 1"}
+
+\label{fig:kdvorgegeben-1}
+\end{figure}
+
+
+\begin{aufgabe}[points=8]
+Ergänzen Sie im Klassendiagramm  alle Assoziationen, die sich
+aus dem Sequenzdiagramm  ergeben. Tragen Sie für jede Assoziation ihre
+Richtung, Multiplizität sowie ihren Rollennamen ein.
+\end{aufgabe}
+
+
+\begin{aufgabe}[points=2]
+Die Klasse Generator besitzt zwei gleichnamige Operationen. Begründenden Sie warum dies kein Fehler ist.
+\end{aufgabe}
+
+\begin{aufgabe}[points=8]
+
+
+Das Bild unten zeigt wie ein Benutzer auf der Oberfläche angibt, dass er das Wort \enquote{Auto} im
+Wortgitter gefunden hat. Durch das Drücken des Schalters  \enquote{Prüfen} wird überprüft, ob
+sich das Wort tatsächlich im Wortgitter befindet und eine entsprechende Nachricht am
+Bildschirm ausgegeben.
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\linewidth]{wort_gefunden}
+
+\label{fig:wortgefunden}
+\end{figure}
+
+
+
+Schreibe Java-Code für die Methode \texttt{pruefeWort} der Klasse Steuerung. Diese funktioniert folgendermaßen:
+
+\begin{enumerate}
+\item Als Erstes wird das gefundene Wort mit \textbf{allen} Suchwörtern verglichen. Dazu
+wird die Operation \texttt{pruefeWort(..): Boolean} der Klasse \texttt{SuchWort} verwendet.
+Falls das gefundene Wort und das Suchwort gleich sind, gibt diese Operation
+\texttt{true} zurück, ansonsten \texttt{false}.
+
+\item Falls das gefundene Wort im Gitter versteckt war (ein Suchwort ist gleich wie
+das gefundene Wort), wird mit Hilfe der Operation \texttt{alleWoerterGefunden():
+Boolean} der Klasse \texttt{Steuerung} geprüft, ob alle Wörter gefunden wurden.
+
+\item Je nach Ergebnis der Prüfung wird folgender Hinweis auf der GUI ausgegeben: \begin{enumerate}
+\item Das gefundene Wort gibt es im Wortgitter und es gibt noch weitere
+Worter, die nicht gefunden wurden: \enquote{Richtiges Wort}
+\item Das gefunden Wort gibt es im Wortgitter und alle Wörter wurden
+gefunden: \enquote{Alle Wörter gefunden}
+\item Das gefunden Wort gibt es nicht im Wortgitter: \enquote{Wort nicht vorhanden}
+\end{enumerate}
+\end{enumerate}
+
+\hinweis{\texttt{print} und \texttt{println} dürfen nicht verwendet werden. Nutze stattdessen eine Methode aus dem Klassendiagramm!}
+ 
+\end{aufgabe}
+
+
+\begin{aufgabe}[points=8]
+Der Beginn des Sequenzdiagramms für die Methode \texttt{pruefeWort} ist in dem zweiten Sequenzdiagramm dargestellt.
+
+Entwickeln Sie das Sequenzdiagramm entsprechend der obigen  Beschreibung
+weiter.
+
+Hinweis: Botschaften, die von der Operation \texttt{alleWoerterGefunden()} gesendet
+werden, müssen nicht dargestellt werden.
+\end{aufgabe}
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{sequenzdiagramm_unvollständig}
+\label{fig:sequenzdiagrammunvollstandig}
+\end{figure}
+
+\begin{aufgabe}[points=5]
+
+\begin{minipage}{0.7\linewidth}
+\begin{minted}[fontsize=\scriptsize]{java}
+record Student(String name, int age){}
+
+record Node(Student content, Node next ){}
+
+record LinkedList(Node first){
+    public static LinkedList of(Student s1, Student s2){
+        return new LinkedList(new Node(s1, new Node(s2, null)));
+    }
+}
+
+void main() {
+    var pana = new Student("Pana", 17);
+    var alex = new Student("Alex", 18);
+    var xs = LinkedList.of(pana, alex);
+}
+\end{minted}
+\end{minipage}
+\begin{minipage}{0.3\linewidth}
+Stelle die Variable \texttt{xs} in einem Objektdiagramm dar!
+\end{minipage}
+
+
+
+\end{aufgabe}
+
+
+
+\end{document}

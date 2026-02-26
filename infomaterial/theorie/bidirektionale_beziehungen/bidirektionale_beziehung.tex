@@ -1,0 +1,170 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+%\usepackage[simplified]{pgf
+%-umlcd}
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig,
+%module={ohne}
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+\usepackage{plantuml}
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Bidirektionale Beziehungen}
+\begin{document}
+
+% =========================================================
+\section*{Bidirektionale Beziehungen zwischen Objekten in Java}
+% =========================================================
+
+\subsection*{Ausgangssituation}
+
+In objektorientierten Programmen kommt es h\"aufig vor, dass zwei Objekte
+\emph{gegenseitig} aufeinander verweisen m\"ussen -- zum Beispiel eine
+grafische Benutzeroberfl\"ache (\texttt{GUI}) und die Steuerlogik
+(\texttt{Controller}), die eng zusammenarbeiten.
+
+Im einfachsten Fall besitzt jede Klasse ein Attribut vom Typ der anderen
+Klasse:
+
+\begin{minted}{java}
+public class GUI {
+    Controller controller; // GUI kennt ihren Controller
+}
+
+public class Controller {
+    GUI gui;               // Controller kennt seine GUI
+}
+\end{minted}
+
+% =========================================================
+\subsection*{Darstellung im Klassendiagramm}
+
+Eine solche \emph{bidirektionale Assoziation} l\"asst sich im Klassendiagramm
+durch zwei gerichtete Pfeile darstellen -- je einen pro Richtung:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\linewidth]{2_pfeile}
+\label{fig:2pfeile}
+\end{figure}
+
+Weil dies schnell un\"ubersichtlich wird, ist es in der Praxis
+\"ublich, beide Richtungen mit einem einzigen Pfeil darzustellen.
+Die Rollenbezeichnungen und Multiplizit\"aten werden an beiden Enden
+notiert:
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{class}[text width=3cm]{GUI}{0,0}
+  \end{class}
+  \begin{class}[text width=3.5cm,]{Controller}{0,3}
+  \end{class}
+  \association{GUI}{controller}{1}{Controller}{gui}{1}
+\end{tikzpicture}
+\end{center}
+
+% =========================================================
+\subsection*{Das Henne-Ei-Problem}
+
+Beim Anlegen der Objekte entsteht ein klassisches Henne-Ei-Problem:
+\texttt{GUI} braucht einen \texttt{Controller}, und \texttt{Controller}
+braucht eine \texttt{GUI}. 
+
+
+Die L\"osung besteht funktioniert folgendermaßen:
+\begin{enumerate}
+    \item \texttt{GUI} wird \emph{zuerst} erzeugt und kennt anfangs
+          noch keinen Controller (\texttt{controller = null}).
+    \item \texttt{Controller} erh\"alt die fertige \texttt{GUI}-Instanz
+          als Konstruktorargument, speichert die Referenz und tr\"agt
+          sich anschlie{\ss}end selbst bei der GUI ein.
+\end{enumerate}
+
+% =========================================================
+\subsection*{Implementierung}
+
+\begin{minted}{java}
+public class GUI {
+    private Controller controller;
+
+    public GUI() {
+        this.controller = null;
+    }
+
+    /** Wird vom Controller aufgerufen, um sich selbst einzutragen. */
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+}
+\end{minted}
+
+\begin{minted}{java}
+public class Controller {
+    private GUI gui;
+
+    public Controller(GUI gui) {
+        this.gui = gui;           // (1) GUI-Referenz speichern
+        gui.setController(this);  // (2) sich selbst bei GUI eintragen
+    }
+}
+\end{minted}
+
+\begin{minted}{java}
+public class Main {
+    public static void main(String[] args) {
+        GUI gui = new GUI();                   // GUI zuerst erzeugen
+        Controller ctrl = new Controller(gui); // Controller stellt Verbindung her
+        // Ab hier kennen sich beide Objekte gegenseitig.
+    }
+}
+\end{minted}
+
+% =========================================================
+
+\end{document}

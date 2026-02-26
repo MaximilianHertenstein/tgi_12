@@ -1,0 +1,13 @@
+Entwickeln Sie wie oben beschrieben fur das Szenario ,Alle TG-Termine in
+einem vorgegebenen Zeitraum anzeigen“ das UML-Sequenzdiagramm.
+Verwenden Sie dazu die Vorlage auf dem Arbeitsblatt 2.
+
+Hinweis:
+
+Der betrachtete Zeitraum fiir die Termine wird in den Parametern von und bis
+angegeben. Dabei werden alle Tage mit dem Datum d betrachtet, fiir die gilt:
+
+von <d < bis
+
+Die Datumsangaben konnen mit den Vergleichsoperatoren <, <=, ... verglichen
+werden.

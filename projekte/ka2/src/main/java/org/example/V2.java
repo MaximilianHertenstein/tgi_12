@@ -1,4 +1,5 @@
 package org.example;
 
-public class V2 {
-}
+public record V2(int x ,int y) {
+
+};

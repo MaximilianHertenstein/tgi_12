@@ -1,0 +1,238 @@
+\documentclass[a4paper, DIV = 13]{scrartcl}
+%\usepackage{tikz}
+\usepackage[
+typ={ab},
+fach=Informatik,
+farbig
+]{schule}
+\hypersetup{hidelinks}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage{fontspec}
+\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\usepackage{cascadiamono-otf}
+%\setmonofont{CascadiaMono-SemiLight}[]
+\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.25\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Kursstufenverwaltung Klassen und Sequenzdiagramme}
+\begin{document}
+
+
+In einer App zur Verwaltung der Kursstufe werden die Kurswahlen und
+Leistungen aller Schülerinnen und Schüler der Kursstufe gespeichert. Die
+Daten kennen z.B. dazu genutzt werden, das Bestehen des Abiturs eines
+Schülers zu kontrollieren oder die Abiturnote einer Schülerin zu berechnen.
+
+
+
+Das folgende Sequenzdiagramm zeigt das Szenario \enquote{Yvonne
+Leiser wird als Schülerin im Profil Informationstechnik der Kursstufen-App
+angelegt}. Sie wird im Objekt \texttt{schueler[17]} gespeichert. Da sie das Profilfach
+Informationstechnik (IT) gewählt hat, muss sie $4$ Kurse IT belegen und ihr
+erstes Prüfungsfach ist IT.
+
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle = 180, width=0.5\linewidth]{yvonne}
+
+\end{figure}
+
+\begin{aufgabe}
+\begin{teilaufgaben}
+	\teilaufgabe Stellen Sie im UML-Klassendiagramm  die fehlenden
+	Operationen und Konstruktoren mit vollständiger Signatur, Rückgabetyp und
+	Sichtbarkeit dar, die im UML-Sequenzdiagramm 
+	verwendet wurden.
+	\teilaufgabe Bestimmen Sie die Multiplizitäten der Assoziationen mit den Rollennamen
+	\texttt{abipruefung} und \texttt{hj} und stellen Sie diese im UML-Klassendiagramm   dar.
+\end{teilaufgaben}
+\end{aufgabe}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.95\linewidth]{kd_kursstufenverwaltung}
+
+\end{figure}
+
+\pagebreak
+
+
+%\vskip 30pt
+
+\begin{aufgabe}
+Sämtliche Noten in der Oberstufe sind ganze Zahlen zwischen $0$ und $15$. Stelle diese Einschränkung im Klassendiagramm dar.
+\end{aufgabe}
+
+
+
+\begin{aufgabe}
+
+
+Die Kursstufen-App bietet verschiedene Auswertungsmöglichkeiten der vier
+Halbjahre, der Kursstufe und der Prüfungsfächer. Die Auswertung, ob eine
+Schülerin oder ein Schüler im Profilfach in der Abiturprüfung besser als in den
+vier Kurshalbjahren (Durchschnitt der vier Halbjahresnoten) abgeschnitten hat,
+wird durch die Botschaft \texttt{auswertenProfil}() an ein \texttt{Schueler}-Objekt gestartet
+und liefert entweder den Text \enquote{Abiprüfung schlechter als Halbjahre}“ oder
+\enquote{Abiprüfung besser als Halbjahre} zurück.
+
+In dem Sequenzdiagramm auf der nächsten Seite ist der Beginn des Szenarios \enquote{Auswertung der
+Leistungen von Yvonne Leiser in den vier Kurshalbjahren und in der
+Abiturprüfung IT}“ dargestellt. Yvonne Leiser (Objekt \texttt{schueler[17]}) hatte in IT in den vier Halbjahren die Notenpunkte $10$, $12$, $12$ und $15$ und in der
+Abiturprüfung $12$ Notenpunkte erreicht.
+
+Entwickeln Sie das UML-Sequenzdiagramm auf der nächsten Seite wie oben
+beschrieben weiter. Verwenden Sie konkrete Werte für Parameter und
+Rückgabewerte.
+
+Hilfestellungen:
+
+\begin{itemize}
+	\item Das Profilfach wird für jedes \texttt{Schueler}-Objekt im Objekt \texttt{fach[0]} der
+	Klasse Fach verwaltet.
+	\item 	Das Profilfach wird von allen Schülern vier Halbjahre besucht.
+	\item Die Operation \texttt{auswertenFach():Text} der Klasse \texttt{Fach} liefert für \begin{itemize}
+		\item ein Fach, in dem keine Abiturprüfung geschrieben wurde, die
+		Durchschnittsnote der belegten Kurshalbjahre als Text und
+		\item für ein Fach, in dem eine Abiturprüfung geschrieben wurde, den
+		Text \texttt{Abiprüfung schlechter als Halbjahre}“ oder \enquote{Abiprüfung
+		besser als Halbjahre}
+		zurück.
+	\end{itemize}
+	\item  Die Operation \texttt{vergleichMitHJ(hjDurchschnitt: FKZ): Text} der Klasse
+	\texttt{Abipruefung} vergleicht die im Parameter übergebene Durchschnittsnote
+	eines Fachs in den vier Kurshalbjahren mit der im Abitur erreichten
+	Note, die im \texttt{Abipruefung}-Objekt gespeichert ist.
+	\item Abhängig von der Übergebenen Durchschnittsnote der Halbjahre und
+	der Abiturnote wird der Text \enquote{Abiprüfung schlechter als Halbjahre} oder
+	\enquote{Abiprüfung besser als Halbjahre} zurückgegeben.
+	\item  In der Lösung können die Texte \enquote{Abiprüfung schlechter als Halbjahre}
+	
+	und \enquote{Abiprüfung besser als Halbjahre} nachvollziehbar abgekürzt
+	werden.
+	
+\end{itemize}
+\end{aufgabe}
+% TODO: \usepackage{graphicx} required
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth, angle = 180]{sequenzdiagramm_vorlage}
+
+\end{figure}
+
+
+
+
+\pagebreak
+
+
+Das Abitur wird u.a. nur dann bestanden, falls in den fünf Prüfungsfächern
+insgesamt mindestens $100$ Punkte erreicht werden ($100$-Punkte-Regel). Dabei
+muss jede einzelne Note in den Abiturprüfungsfächern vierfach gezahlt
+werden. Weitere Bestehensvoraussetzungen werden in dieser Aufgabe nicht
+berücksichtigt.
+
+Yvonne Leiser hat in ihren Prüfungsfächern
+\begin{itemize}
+	\item IFT  12 Punkte,
+	\item Mathe 7 Punkte,
+	\item Deutsch 3 Punkte,
+	\item Chemie 6 Punkte und
+	\item Katholische Religion 2 Punkte
+\end{itemize}
+erreicht.
+
+\begin{aufgabe}
+Erläutern Sie mit Hilfe einer Rechnung, ob Yvonne Leiser nach der $100$-
+Punkte-Regel die Abiturprüfung bestanden hat.
+\end{aufgabe}
+
+\begin{aufgabe}
+Entwickeln Sie die Operation \texttt{hat100PunktelmAbi(): Boolean} der Klasse
+\texttt{Schueler} in Pseudocode oder in der im Unterricht eingeführten
+Programmiersprache. Wird die $100$-Punkte-Regel eingehalten, so liefert die
+Operation \texttt{true} ansonsten \texttt{false} zurück.
+
+Beachten Sie, dass zur Überprüfung der 100-Punkte-Regel unter allen
+Fächern eines Schülers nur die Prüfungsfächer berücksichtigt werden.
+\end{aufgabe}
+
+\begin{aufgabe}
+Stelle die Operation \texttt{hat100PunktelmAbi(): Boolean} der Klasse
+\texttt{Schueler} als Sequenzdiagramm dar!
+\end{aufgabe}
+
+
+\vskip 40pt
+
+Ist eine schriftliche Abiturprüfung in einem Fach zu schlecht ausgefallen, so
+kann in diesem Fach eine freiwillige mündliche Zusatzprüfung absolviert
+werden, um die Abitur-Endnote in diesem Fach zu verbessern.
+
+Yvonne Leiser hat im 3. Prüfungsfach Deutsch in der schriftliche Abiturprüfung
+leider nur 3 Punkte erreicht. Um ihre Abiturnote Deutsch zu verbessern, ist sie
+im Fach Deutsch in die mündliche Zusatzprüfung gegangen und hat dort 9
+Notenpunkte erzielt.
+\begin{aufgabe}
+
+Leiten Sie aus der Beschreibung oben über Yvonne Leiser das UML-Objektdiagramm für das Fach Deutsch, das im Objekt \texttt{fach[2}] gespeichert ist,
+mit der Abiturprüfung und der Zusatzprüfung ab. Alle anderen Objekte des
+Szenarios sind nicht gefordert.
+\end{aufgabe}
+
+
+
+
+
+
+
+%In den Halbjahren und in den Abiturprüfungen können als Note nur
+%Notenpunkte zwischen O und 15 erreicht werden. Erweitern Sie das Klassendiagramm auf dem Arbeitsblatt 1 in der Klasse \texttt{Abipruefung}
+%exemplarisch so, dass dies sichergestellt wird.
+
+
+
+
+
+
+
+\end{document}

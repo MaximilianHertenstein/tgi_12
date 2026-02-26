@@ -1,0 +1,29 @@
+
+
+Struktogramm
+
+Struktogramm aus Sequenzdiagramm erstellen
+
+Erstellen Sie mit Hilfe der Informationen aus dem Sequenzdiagramm in Abbildung 1
+ein Struktogramm fiir die Operationen findeLeihe(pNr:GZ) der Klasse Steuerung.
+
+Struktogramm entwickeln
+
+Wird eine Leihe nicht innerhalb einer bestimmten Zeit zuruckgegeben, so wird die
+ausleihende Person mit einer Gebihr angemahnt. Die Operation
+ermittleMahnGebuehren():FKZ der Klasse Leihe berechnet die Mahngebihren. Dabei
+gelten folgende Regeln:
+
+e Wenn eine Leihe alter als 28 Tage ist, werden 4 € Mahngebihr fallig.
+e Wenn eine Leihe alter als 42 Tage ist, werden 9 € Mahngebihr fallig.
+e Wenn eine Leihe alter als 49 Tage ist, werden 11 € Mahngebihr fallig.
+
+Hinweise:
+e Die Operation System.gibAktuellesDatum():Datum liefert das aktuelle Datum.
+e Die Differenz in Tagen zwischen zwei Daten kann durch die Operation ,,-“
+
+(Minus) berechnet werden.
+Bsp. ,,8.4.2022" — ,,1.4.2022" = 7
+
+Entwerfen Sie ein Struktogramm, das den Algorithmus der Operation
+ermittleMahnGebuehren():FKZ darstellt.
