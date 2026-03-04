@@ -145,6 +145,16 @@ public class MutableList<T>   {
         }
     }
 
+    public void addAll(MutableList<T> other) {
+        if (first == null) {
+            first = other.first;
+        }
+        else {
+            var last = getLastNode();
+            last.setNextNode(other.first);
+        }
+    }
+
     public void add(int index, T newElem){
         if (index == 0) {
             addFirst(newElem);
@@ -295,7 +305,7 @@ Die Klasse besitzt ein Attribut:
 - `first` vom Typ `MutableNode<T>`
 
 
-<!-- # Aufgabe
+# Aufgabe
 
 Implementiere einen Konstruktor, der eine `MutableNode` als Start der Liste entgegennimmt.
 
@@ -303,7 +313,7 @@ Implementiere einen Konstruktor, der eine `MutableNode` als Start der Liste entg
 var firstNode = new MutableNode<>("a", null);
 var xs = new MutableList(firstNode);
 println(xs.first.content());
-``` -->
+```
 
 # Aufgabe
 
@@ -317,7 +327,8 @@ println(emptyList.first == null)
 
 # Aufgabe
 
-Setze die Eigenschaft `first` der Klasse `MutableList` auf `private`.
+Setze die Eigenschaft `first` der Klasse `MutableList` auf `private`. Setze auch den Konstruktor, der eine `MutableNode` übergeben bekommt, auf `private`.
+
 
 
 
@@ -410,6 +421,28 @@ println(list.toArrayList());
 var list = MutableList.of();
 list.add("x");
 println(list.toArrayList());
+```
+
+
+**Hinweis:** Nutze `getLastNode` und `setNextNode`!
+
+
+# Aufgabe
+
+Implementiere die Methode `addAll(MutableList<T> other)`. Sie hängt die übergebene Liste an das Ende der Liste an!
+
+```{.java .cb-nb line_numbers=false}
+var list1 = MutableList.of("a", "b", "c");
+var list2 = MutableList.of("d", "e", "f");
+list1.addAll(list2);
+println(list1.toArrayList());
+```
+
+```{.java .cb-nb line_numbers=false}
+MutableList<String> list1 = MutableList.of();
+var list2 = MutableList.of("d", "e", "f");
+list1.addAll(list2);
+println(list1.toArrayList());
 ```
 
 Wenn es kein Element mit diesem Index gibt, wird eine `IndexOutOfBoundsException` geworfen!

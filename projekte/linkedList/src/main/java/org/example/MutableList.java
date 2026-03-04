@@ -1,12 +1,11 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class MutableList<T>   {
-    MutableNode<T>  first;
+    private MutableNode<T>  first;
 
     public MutableList(MutableNode<T>  first) {
         this.first = first;
@@ -148,6 +147,17 @@ this.first  = null; }
         nodeBefore.setNextNode(new MutableNode<>(newElem,nodeAfter));
     }
 
+    public void addAll(MutableList<T> other) {
+        if (first == null) {
+            first = other.first;
+        }
+        else {
+            var last = getLastNode();
+            last.setNextNode(other.first);
+        }
+    }
+
+
     public T removeFirst(){
         if (first == null) {
             throw new NoSuchElementException();
@@ -184,9 +194,6 @@ this.first  = null; }
         nodeBefore.setNextNode(nodeToDelete.nextNode());
         return nodeToDelete.content();
     }
-
-
-
 
 
 

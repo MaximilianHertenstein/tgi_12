@@ -95,3 +95,7 @@ pana.gameOver();
 nino.gameOver();
 println(Student.getCount());
 ```
+Statische Eigenschaften werden wie statische Methoden im Klassendiagramm unterstrichen.
+
+
+![](./kd_student.png){ width=30%}

@@ -9,12 +9,10 @@ import static java.lang.IO.println;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-        var xs = ImmutableLinkedList.of(1,2,3);
-        //println(xs.getNode(3));
-
-        var ys = new ArrayList<>();//List.of(1,2,3));
-        ys.add(0,1);
-
+        MutableList<String> list1 = MutableList.of();
+        var list2 = MutableList.of("d", "e", "f");
+        list1.addAll(list2);
+        println(list1.toArrayList());
 
     }
 }

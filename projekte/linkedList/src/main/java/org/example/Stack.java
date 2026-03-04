@@ -17,7 +17,7 @@ public class Stack<T> {
         return first == null;
     }
 
-    public T getFirst() {
+    public T top() {
         if (first == null) {
             throw new EmptyStackException();
         }

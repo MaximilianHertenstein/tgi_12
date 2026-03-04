@@ -9,7 +9,7 @@ codebraid:
 <dependency>
     <groupId>gg.jte</groupId>
     <artifactId>jte</artifactId>
-    <version>3.2.1</version>
+    <version>3.2.3</version>
 </dependency>
 ```
 
@@ -54,7 +54,7 @@ Die Syntax ist
 @param Typ parametername
 ```
 
-In dem Template können wir den Parameter mit ${parametername} verwenden. 
+In dem Template können wir den Parameter mit `${parametername}` verwenden. 
 Zwischen den geschweiften Klammern können wir beliebige Java-Ausdrücke verwenden.
 
 Z.B.
@@ -89,7 +89,7 @@ Dafür müssen wir die folgende Zeile im Dependency-Block in `build.gradle` einf
 
 
 ```
-implementation("gg.jte:jte:3.2.1")
+implementation("gg.jte:jte:3.2.3")
 ```
 
 oder in `pom.xml` die folgende Abhängigkeit ergänzen:
@@ -98,7 +98,7 @@ oder in `pom.xml` die folgende Abhängigkeit ergänzen:
 <dependency>
     <groupId>gg.jte</groupId>
     <artifactId>jte</artifactId>
-    <version>3.2.1</version>
+    <version>3.2.3</version>
 </dependency>
 ```
 

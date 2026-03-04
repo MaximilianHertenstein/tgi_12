@@ -1081,7 +1081,7 @@ new Player(new MovableGameObject(new V2(3,2), "xy"));
 
 ## Aufgabe
 
-Implementiere einen zusätzlichen Konstruktor. Dem Konstruktor wird eine Position `V2` übergeben . Er soll intern ein neues `MovableGameObject` mit dieser Position und dem Display-String `_\/MM\_\nqWAAWp` erzeugen und setzen.
+Implementiere einen zusätzlichen Konstruktor. Dem Konstruktor wird eine Position `V2` übergeben . Er soll intern ein neues `MovableGameObject` mit dieser Position und dem Display-String `"_\/MM\_\nqWAAWp"` erzeugen und setzen.
 
 \tiny
 
@@ -1383,10 +1383,11 @@ new CountDown(4, 1).finished();
 
 Erstelle ein Record `AlienSwarm`. Die Eigenschaften sind `aliensDirection` vom Typ `V2`, `aliens` vom Typ `List<Alien>` und `alienRocketCountdown` vom Typ `CountDown`.
 
+\tiny
 ```{.java .cb-nb line_numbers=false}
 new AlienSwarm(new V2(1,0), List.of(), new CountDown(5));
 ```
-
+\normalsize
 
 ## Aufgabe
 

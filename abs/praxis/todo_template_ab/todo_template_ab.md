@@ -32,28 +32,28 @@ Definiere in einer neuen Datei `Utils.java` eine Klasse namens `Utils`.
 
 
 # Aufgabe
-Ergänze die Klasse `Utils` um eine statische Methode `statusToCompleted`. Dieser wird ein Boolean übergeben. Sie gibt einen String zurück. Wenn der Boolean-Wert `true` ist, wird "completed" zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
+Ergänze die Klasse `Utils` um eine statische Methode `statusToCompleted`. Dieser wird ein Boolean übergeben. Sie gibt einen String zurück. Wenn der Boolean-Wert `true` ist, wird `"completed"` zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 Utils.statusToCompleted(true)
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 Utils.statusToCompleted(false)
 ```
 
 # Aufgabe
-Ergänze die Klasse `Utils` um eine statische Methode `computeFilterClass`. Dieser werden zwei Strings übergeben. Sie gibt einen String zurück. Wenn beide Strings gleich sind, wird "selected" zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
+Ergänze die Klasse `Utils` um eine statische Methode `computeFilterClass`. Dieser werden zwei Strings übergeben. Sie gibt einen String zurück. Wenn beide Strings gleich sind, wird `"selected"` zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
 
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 Utils.computeFilterClass("all", "all")
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 Utils.computeFilterClass("active", "completed")
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 Utils.computeFilterClass("completed", "completed")
 ```
-```{.java .cb-nb first_number=1}
+```{.java .cb-nb line_numbers=false}
 Utils.computeFilterClass("all", "active")
 ```
 
@@ -64,7 +64,7 @@ Utils.computeFilterClass("all", "active")
 # Aufgabe
 
 
-- Füge die Abhängigkeit `jte` wie auf dem Infoblatt `Template-Engines` zum Projekt hinzu (`implementation("gg.jte:jte:3.2.1")`).
+- Füge die Abhängigkeit `jte` wie auf dem Infoblatt `Template-Engines` zum Projekt hinzu (`implementation("gg.jte:jte:3.2.3")`).
 - Lege ein Ordner `src/main/jte/web` für die Templates an!
 - Erstelle in diesem Ordner eine leere `.jte`-Datei!
 - Erstelle ein Template, rendere es und gib das Ergebnis an der Konsole aus.
@@ -74,7 +74,7 @@ Utils.computeFilterClass("all", "active")
 
 Erstelle ein Template `toDo.jte`, mit dem ein einzelnes To-do gerendert wird.
 
-
+\small
 ```java
 var learnJava = new ToDo(1, "Learn Java", false);
 DirectoryCodeResolver htmlCodeResolver = new DirectoryCodeResolver(Path.of("src/main/jte/web"));
@@ -100,7 +100,7 @@ DirectoryCodeResolver htmlCodeResolver = new DirectoryCodeResolver(Path.of("src/
 TemplateEngine htmlTemplateEngine = TemplateEngine.create(htmlCodeResolver, ContentType.Html);
 StringOutput stringOutput = new StringOutput();
 htmlTemplateEngine.render("toDo.jte", learnUML, stringOutput);
-System.out.println(stringOutput);
+println(stringOutput);
 ```
 
 
@@ -114,6 +114,7 @@ System.out.println(stringOutput);
 </li>
 ``` 
 
+\normalsize
 
 # Aufgabe
 
@@ -135,7 +136,7 @@ Sie gibt das gerenderte Template als String zurück.
 ```java
 var learnJava = new ToDo(1, "Learn Java", false);
 var templateRenderer = new TemplateRenderer();
-System.out.println(templateRenderer.renderToString(learnJava, "toDo"));
+println(templateRenderer.renderToString(learnJava, "toDo"));
 ```
 
 ```html
@@ -151,7 +152,7 @@ System.out.println(templateRenderer.renderToString(learnJava, "toDo"));
 ```java
 var learnUML = new ToDo(7, "Learn UML", true);
 var templateRenderer = new TemplateRenderer();
-System.out.println(templateRenderer.renderToString(learnUML, "toDo"));
+println(templateRenderer.renderToString(learnUML, "toDo"));
 ```
 
 
@@ -186,7 +187,7 @@ var uiState = new UIState("All", List.of(
         new ToDo(1, "Learn Java", false),
         new ToDo(2, "Learn Javalin", true)
 ), "1 item left");
-System.out.println(templateRenderer.renderToString(uiState, "app"));
+println(templateRenderer.renderToString(uiState, "app"));
 ```
 
 
@@ -255,15 +256,15 @@ System.out.println(templateRenderer.renderToString(uiState, "app"));
 ```java
 var templateRenderer = new TemplateRenderer();
 var uiState = new UIState("Completed", List.of(), "0 items left");
-System.out.println(templateRenderer.renderToString(uiState, "app"));
+println(templateRenderer.renderToString(uiState, "app"));
 ```
 
 
 ```html
     <header class="header">
         <h1>todos</h1>
-        <form href="/todos/new"
-            action="post"
+        <form action="/todos/new"
+            method="post"
             >
             <input 
                 class="new-todo"
@@ -326,7 +327,7 @@ Dem Template wird ein Objekt der Klasse `UIState` übergeben.  Es wird ein HTML-
 ```java
 var templateRenderer = new TemplateRenderer();
 var uiState = new UIState("Completed", List.of(), "0 items left");
-System.out.println(templateRenderer.renderToString(uiState, "mainPage"));
+println(templateRenderer.renderToString(uiState, "mainPage"));
 ```
 
 
@@ -359,7 +360,7 @@ Ansonsten wird `mainPage.jte` verwendet.
 ```java
 var templateRenderer = new TemplateRenderer();
 var uiState = new UIState("Completed", List.of(), "0 items left");
-System.out.println(templateRenderer.renderAppToString(uiState, true));
+println(templateRenderer.renderAppToString(uiState, true));
 ```
 ```html
 <header class="header">
@@ -370,7 +371,7 @@ System.out.println(templateRenderer.renderAppToString(uiState, true));
 ```java
 var templateRenderer = new TemplateRenderer();
 var uiState = new UIState("Completed", List.of(), "0 items left");
-System.out.println(templateRenderer.renderAppToString(uiState, false));
+println(templateRenderer.renderAppToString(uiState, false));
 ```
 ```html
 <!DOCTYPE html>
@@ -417,7 +418,7 @@ println(templateRenderer.renderToString(learnJava, "editingForm"));
 
 ## Aufgabe 
 Ergänze die Klasse `TemplateRenderer` um eine Methode `renderToDoToString`. 
-Dieser wird ein `ToDO` und ein Boolean `editing` übergeben. Wenn `editing` `true` ist, wird  `editingForm.jte` genutzt, um den das To-do darzustellen.
+Dieser wird ein `ToDo` und ein Boolean `editing` übergeben. Wenn `editing` `true` ist, wird  `editingForm.jte` genutzt, um den das To-do darzustellen.
 Ansonsten wird `toDo.jte` verwendet.
 
 ```java

@@ -30,7 +30,7 @@ public class SimpleStack<T> {
         return first == null;
     }
 
-    public T getFirst() {
+    public T top() {
         if (first == null) {
             throw new EmptyStackException();
         }
@@ -101,13 +101,13 @@ println(stack.isEmpty());
 
 # Aufgabe
 
-Implementiere die Methode `getFirst()`.  
+Implementiere die Methode `top()`.  
 Sie gibt das erste Element des `SimpleStack` zurück.
 
 ```{.java .cb-nb line_numbers=false}
 var node = new Node<String>("a", null);
 var stack = new SimpleStack<String>(node);
-println(stack.getFirst());
+println(stack.top());
 ```
 
 Wenn der SimpleStack leer ist, soll eine `EmptyStackException` geworfen werden!
@@ -129,11 +129,11 @@ Sie fügt ein Element am Anfang des `SimpleStack` hinzu.
 ```{.java .cb-nb line_numbers=false}
 var stack = new SimpleStack<String>();
 stack.push("a");
-println(stack.getFirst());
+println(stack.top());
 ```
 ```{.java .cb-nb line_numbers=false}
 stack.push("b");
-println(stack.getFirst());
+println(stack.top());
 ```
 
 **Hinweis:** Nutze den Konstruktor von `Node`!
