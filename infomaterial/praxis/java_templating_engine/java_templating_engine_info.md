@@ -1,5 +1,5 @@
 ---
-title: ToDo-App
+title: Java-Templating-Engine
 codebraid:
   jupyter: true
 ---
@@ -18,10 +18,10 @@ codebraid:
 # Templating-Engines
 
 
-Eine Templating-Engine ist ein Programm, dass aus eine Vorlage (Template) und einem Wert eine Ausgabe erzeugt.
+Eine Templating-Engine ist ein Programm, das aus einer Vorlage (Template) und einem Wert eine Ausgabe erzeugt.
 
 
-Z.B. wird aus dem Template
+Z. B. wird aus dem Template
 
 ```.html
 @param String username
@@ -43,21 +43,21 @@ die Ausgabe
 
 erzeugt. Dieser Prozess wird *rendern* genannt.
 
-Wir werden im Unterricht die Java-Templating-Engine(<https://jte.gg/>) verwenden.
+Wir werden im Unterricht die Java-Templating-Engine (<https://jte.gg/>) verwenden.
 
 # Parameter und Ausdrücke
 
-Wie wir oben gesehen haben werden die Parameter eines Templates ganz oben definiert. 
-Die Syntax ist 
+Wie wir oben gesehen haben, werden die Parameter eines Templates ganz oben definiert.
+Die Syntax lautet:
 
 ```
 @param Typ parametername
 ```
 
-In dem Template können wir den Parameter mit `${parametername}` verwenden. 
+In dem Template können wir den Parameter mit `${parametername}` verwenden.
 Zwischen den geschweiften Klammern können wir beliebige Java-Ausdrücke verwenden.
 
-Z.B.
+Z. B.
 ```.html
 @param String username
 
@@ -70,9 +70,9 @@ Z.B.
 # Templates rendern
 
 Um in einem Programm Templates zu rendern, müssen wir zunächst das Template in einer Datei speichern.
-Dafür bietet es sich an in dem Ordner `src/main` einen neuen Ordner mit dem Namen `jte` zu erstellen.
-Dort müssen wir eine leere Datei mit dem Namen `.jteroot` anlegen.
-Außerdem speichern wir den Template-Code von oben
+Dafür bietet es sich an, im Ordner `src/main` einen neuen Ordner mit dem Namen `jte` zu erstellen.
+<!-- Dort müssen wir eine leere Datei mit dem Namen `.jteroot` anlegen. -->
+Dort speichern wir den Template-Code von oben
 
 ```.html
 @param String username
@@ -80,7 +80,7 @@ Außerdem speichern wir den Template-Code von oben
 <p> Hallo ${username + ". Wie geht es dir?"} </p>
 ```
 
-unter dem Namen `greetUser.jte` ab. 
+unter dem Namen `greetUser.jte` ab.
 
 
 Anschließend importieren wir die Bibliothek `jte`.
@@ -103,7 +103,7 @@ oder in `pom.xml` die folgende Abhängigkeit ergänzen:
 ```
 
 
-In der `java` Datei, in der wir die `Template-Engine` nutzen wollen, müssen wir die folgenden Importe einfügen.
+In der Java-Datei, in der wir die `TemplateEngine` nutzen wollen, müssen wir die folgenden Importe einfügen.
 
 ```{.java .cb-nb line_numbers=false}
 import java.nio.file.Path;
@@ -115,7 +115,7 @@ import gg.jte.TemplateEngine;
 Dadurch werden die Klassen `Path`, `DirectoryCodeResolver`, `ContentType` und `TemplateEngine` importiert.
 
 
-Jetzt können wir mit dem folgenden Code eine Template-Engine erzeugen.
+Jetzt können wir mit dem folgenden Code eine `TemplateEngine` erzeugen.
 
 \small
 ```{.java .cb-nb line_numbers=false}
@@ -125,11 +125,11 @@ TemplateEngine htmlTemplateEngine = TemplateEngine.create(htmlCodeResolver, Cont
 
 \normalsize
 
-Diese sucht im eben erstellten Ordner `"src/main/jte"` nach `.jte`-Dateien. 
-Weil wir `ContentType.Html` verwendet haben, können mit dieser `TemplateEngine`  HTML-Templates gerendert werden.
+Diese sucht im eben erstellten Ordner `"src/main/jte"` nach `.jte`-Dateien.
+Weil wir `ContentType.Html` verwendet haben, können wir mit dieser `TemplateEngine` HTML-Templates rendern.
 
 
-Um gerenderte Templates abspeichern zu können, müssen wir die Klasse `StringOutput` importieren und ein Objekt der Klasse erzeugen.
+Um gerenderte Templates speichern zu können, müssen wir die Klasse `StringOutput` importieren und ein Objekt der Klasse erzeugen.
 
 ```{.java .cb-nb line_numbers=false}
 import gg.jte.output.StringOutput;
@@ -137,15 +137,15 @@ import gg.jte.output.StringOutput;
 StringOutput stringOutput = new StringOutput();
 ```
 
-Wir können die Template-Engine nun nutzen, um ein Template zu rendern und den Output in einem String zu speichern.
-Dafür übergeben wir der TemplateEngine-Methode `render` den Namen des Templates, einen Wert für den Parameter und einen 
+Wir können die `TemplateEngine` nun nutzen, um ein Template zu rendern und den Output in einem String zu speichern.
+Dafür übergeben wir der `TemplateEngine`-Methode `render` den Namen des Templates, einen Wert für den Parameter und einen
 `StringOutput`.
 
 ```java
 htmlTemplateEngine.render("greetUser.jte", "Alex", stringOutput);
 ``` 
 
-Den `output` können wir anschließend zu einem String konvertieren.
+Den `Output` können wir anschließend in einen String konvertieren.
 
 ```java
 stringOutput.toString()
@@ -155,7 +155,7 @@ stringOutput.toString()
 ```
 
 
-Der gesamte Code ist nochmal im folgenden Codeblock zu sehen.
+Der gesamte Code ist noch einmal im folgenden Codeblock zu sehen.
 
 \small
 ```java
@@ -180,13 +180,13 @@ void main() {
 # Boolesche Attribute
 
 
-Die meisten Attribute in HTML benötigen einen Wert. Z.B. wird dem Attribut `href` immer ein Link zugewiesen
+Die meisten Attribute in HTML benötigen einen Wert. Z. B. wird dem Attribut `href` immer ein Link zugewiesen.
 
 ```html
-<a href = "www.ghse.de">
+<a href = "https://www.ghse.de">
 ```
 
-Boolesche Attribute werden einfach nur angegeben
+Boolesche Attribute werden einfach nur angegeben.
 
 ```html
 <input type = "checkbox" checked>
@@ -205,7 +205,7 @@ In `jte`-Templates müssen wir booleschen Attributen einen Wahrheitswert zuweise
 <input type="checkbox" checked = "${true}">
 ```
 
-Wenn dieser Wert `true` ist, wird das Attribut angeben. Ansonsten wird es ausgelassen.
+Wenn dieser Wert `true` ist, wird das Attribut angegeben. Ansonsten wird es ausgelassen.
 
 # Templates in anderen Templates aufrufen
 
@@ -228,7 +228,7 @@ Mit `@template.templateName(parametername = wert)` können wir ein Template aus 
 # Kontrollstrukturen
 
 In `jte`-Templates können die aus Java bekannten Kontrollstrukturen genutzt werden.
-Im Folgenden sind für die in Templates wichtigsten Kontrollstrukturen Beispiele zu sehen.
+Im Folgenden sind Beispiele für die in Templates wichtigsten Kontrollstrukturen zu sehen.
 
 ## Zählerschleifen
 
