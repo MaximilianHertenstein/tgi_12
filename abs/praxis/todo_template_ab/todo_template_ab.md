@@ -32,7 +32,7 @@ Definiere in einer neuen Datei `Utils.java` eine Klasse namens `Utils`.
 
 
 # Aufgabe
-Ergänze die Klasse `Utils` um eine statische Methode `statusToCompleted`. Dieser wird ein Boolean übergeben. Sie gibt einen String zurück. Wenn der Boolean-Wert `true` ist, wird `"completed"` zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
+Ergänze die Klasse `Utils` um eine statische Methode `statusToCompleted`. Der Methode wird ein boolescher Wert übergeben. Sie gibt einen String zurück. Wenn der Wert `true` ist, wird `"completed"` zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
 
 ```{.java .cb-nb line_numbers=false}
 Utils.statusToCompleted(true)
@@ -42,7 +42,7 @@ Utils.statusToCompleted(false)
 ```
 
 # Aufgabe
-Ergänze die Klasse `Utils` um eine statische Methode `computeFilterClass`. Dieser werden zwei Strings übergeben. Sie gibt einen String zurück. Wenn beide Strings gleich sind, wird `"selected"` zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
+Ergänze die Klasse `Utils` um eine statische Methode `computeFilterClass`. Der Methode werden zwei Strings übergeben. Sie gibt einen String zurück. Wenn beide Strings gleich sind, wird `"selected"` zurückgegeben. Ansonsten wird ein leerer String zurückgegeben.
 
 ```{.java .cb-nb line_numbers=false}
 Utils.computeFilterClass("all", "all")
@@ -65,14 +65,15 @@ Utils.computeFilterClass("all", "active")
 
 
 - Füge die Abhängigkeit `jte` wie auf dem Infoblatt `Template-Engines` zum Projekt hinzu.
-- Lege ein Ordner `src/main/jte/web` für die Templates an!
-- Erstelle in diesem Ordner eine leere `.jte`-Datei!
-- Erstelle ein Template, rendere es und gib das Ergebnis an der Konsole aus.
+- Lege einen Ordner `src/main/jte/web` für die Templates an.
+- Erstelle ein Template, rendere es und gib das Ergebnis in der Konsole aus.
+
+<!-- - Erstelle in diesem Ordner eine leere `.jte`-Datei! -->
 
 # Aufgabe
 
 
-Erstelle ein Template `toDo.jte`, mit dem ein einzelnes To-do gerendert wird.
+Erstelle ein Template `toDo.jte`, mit dem ein einzelnes To-do gerendert werden kann.
 
 \small
 ```java
@@ -124,13 +125,13 @@ Definiere in einer neuen Datei `TemplateRenderer.java` eine Klasse `TemplateRend
 
 # Aufgabe
 
-Ergänze die Klasse `TemplateRenderer` um einen Konstruktor. Dieser initialisiert das Attribut `htmlTemplateEngine`. 
-Der Pfand zu den Templates ist `src/main/jte/web`.
+Ergänze die Klasse `TemplateRenderer` um einen Konstruktor. Der Konstruktor initialisiert das Attribut `htmlTemplateEngine`.
+Der Pfad zu den Templates ist `src/main/jte/web`.
 
 
 # Aufgabe
 
-Ergänze die Klasse `TemplateRenderer` um eine Methode `renderToString`. Dieser wird ein `ToDo` und der Name eines Templates übergeben.
+Ergänze die Klasse `TemplateRenderer` um eine Methode `renderToString`. Der Methode werden ein `ToDo` und der Name eines Templates übergeben.
 Sie gibt das gerenderte Template als String zurück. 
 
 ```java
@@ -169,7 +170,7 @@ println(templateRenderer.renderToString(learnUML, "toDo"));
 **Hinweis:** Nutze die Methode `statusToCompleted` der Klasse `Utils`.
 
 
-# Aufgabe 
+# Aufgabe
 
 Passe `renderToString` so an, dass für den ersten Parameter ein beliebiges Objekt übergeben werden kann. 
 
@@ -178,7 +179,7 @@ Passe `renderToString` so an, dass für den ersten Parameter ein beliebiges Obje
 # Aufgabe
 
 
-Erstelle ein Template `app.jte`, mit dem der Hauptteil der ToDo-App gerendert werden.
+Erstelle ein Template `app.jte`, mit dem der Hauptteil der ToDo-App gerendert werden kann.
 Dem Template wird ein Objekt der Klasse `UIState` übergeben.
 
 ```java
@@ -320,8 +321,8 @@ println(templateRenderer.renderToString(uiState, "app"));
 
 
 # Aufgabe
-Erstelle ein Template `mainPage.jte`, mit dem die komplette ToDo-App gerendert werden.
-Dem Template wird ein Objekt der Klasse `UIState` übergeben.  Es wird ein HTML-Grundgerüst und `section`-Element erzeugt. In der `section`, steht der Inhalt von `app.jte`.
+Erstelle ein Template `mainPage.jte`, mit dem die komplette ToDo-App gerendert werden kann.
+Dem Template wird ein Objekt der Klasse `UIState` übergeben. Es werden ein HTML-Grundgerüst und ein `section`-Element erzeugt. In der `section` steht der Inhalt von `app.jte`.
 
 
 ```java
@@ -351,9 +352,9 @@ println(templateRenderer.renderToString(uiState, "mainPage"));
 **Hinweis:** Nutze das bereits definierte Template `app.jte`.
 
 
-# Aufgabe 
-Ergänze die Klasse `TemplateRenderer` um eine Methode `renderAppToString`. 
-Dieser wird der `UIState` und ein Boolean `partial` übergeben. Wenn `partial` `true` ist, wird  `app.jte` genutzt, um den UI-State darzustellen.
+# Aufgabe
+Ergänze die Klasse `TemplateRenderer` um eine Methode `renderAppToString`.
+Der Methode werden der `UIState` und ein Boolean `partial` übergeben. Wenn `partial` `true` ist, wird `app.jte` genutzt, um den UI-State darzustellen.
 Ansonsten wird `mainPage.jte` verwendet.
 
 
@@ -382,8 +383,8 @@ println(templateRenderer.renderAppToString(uiState, false));
 
 # Aufgabe
 
-Erstelle ein Template `editingForm.jte`, mit diesem wird ein Formular gerendert wird, mit dem der Text eines To-dos geändert werden kann.
-Dem Template wird das To-do übergeben. Das Formular wird in einem Listenelement dargestellt.
+Erstelle ein Template `editingForm.jte`, mit dem ein Formular gerendert wird, mit dem der Text eines To-dos geändert werden kann.
+Dem Template wird ein To-do übergeben. Das Formular wird in einem Listenelement dargestellt.
 
 
 ```java
@@ -416,9 +417,9 @@ println(templateRenderer.renderToString(learnJava, "editingForm"));
 </li>
 ```
 
-## Aufgabe 
-Ergänze die Klasse `TemplateRenderer` um eine Methode `renderToDoToString`. 
-Dieser wird ein `ToDo` und ein Boolean `editing` übergeben. Wenn `editing` `true` ist, wird  `editingForm.jte` genutzt, um den das To-do darzustellen.
+# Aufgabe
+Ergänze die Klasse `TemplateRenderer` um eine Methode `renderToDoToString`.
+Der Methode werden ein `ToDo` und ein Boolean `editing` übergeben. Wenn `editing` `true` ist, wird `editingForm.jte` genutzt, um das To-do darzustellen.
 Ansonsten wird `toDo.jte` verwendet.
 
 ```java
@@ -454,4 +455,4 @@ println(templateRenderer.renderToDoToString(learnJava, false));
 
 # Aufgabe
 
-Schütze die Methode `renderToString` durch einen Zugriff von außen.
+Schütze die Methode `renderToString` vor Zugriff von außen.
