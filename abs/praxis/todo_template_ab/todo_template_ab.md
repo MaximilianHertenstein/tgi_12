@@ -64,7 +64,7 @@ Utils.computeFilterClass("all", "active")
 # Aufgabe
 
 
-- Füge die Abhängigkeit `jte` wie auf dem Infoblatt `Template-Engines` zum Projekt hinzu (`implementation("gg.jte:jte:3.2.3")`).
+- Füge die Abhängigkeit `jte` wie auf dem Infoblatt `Template-Engines` zum Projekt hinzu.
 - Lege ein Ordner `src/main/jte/web` für die Templates an!
 - Erstelle in diesem Ordner eine leere `.jte`-Datei!
 - Erstelle ein Template, rendere es und gib das Ergebnis an der Konsole aus.
@@ -81,7 +81,7 @@ DirectoryCodeResolver htmlCodeResolver = new DirectoryCodeResolver(Path.of("src/
 TemplateEngine htmlTemplateEngine = TemplateEngine.create(htmlCodeResolver, ContentType.Html);
 StringOutput stringOutput = new StringOutput();
 htmlTemplateEngine.render("toDo.jte", learnJava, stringOutput);
-System.out.println(stringOutput);
+println(stringOutput);
 ```
 
 ```html

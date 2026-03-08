@@ -105,7 +105,7 @@ oder in `pom.xml` die folgende Abhängigkeit ergänzen:
 
 In der `java` Datei, in der wir die `Template-Engine` nutzen wollen, müssen wir die folgenden Importe einfügen.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 import java.nio.file.Path;
 import gg.jte.resolve.DirectoryCodeResolver;
 import gg.jte.ContentType;
@@ -117,10 +117,13 @@ Dadurch werden die Klassen `Path`, `DirectoryCodeResolver`, `ContentType` und `T
 
 Jetzt können wir mit dem folgenden Code eine Template-Engine erzeugen.
 
-```{.java .cb-nb}
+\small
+```{.java .cb-nb line_numbers=false}
 DirectoryCodeResolver htmlCodeResolver = new DirectoryCodeResolver(Path.of("src/main/jte"));
 TemplateEngine htmlTemplateEngine = TemplateEngine.create(htmlCodeResolver, ContentType.Html);
 ```
+
+\normalsize
 
 Diese sucht im eben erstellten Ordner `"src/main/jte"` nach `.jte`-Dateien. 
 Weil wir `ContentType.Html` verwendet haben, können mit dieser `TemplateEngine`  HTML-Templates gerendert werden.
@@ -128,11 +131,10 @@ Weil wir `ContentType.Html` verwendet haben, können mit dieser `TemplateEngine`
 
 Um gerenderte Templates abspeichern zu können, müssen wir die Klasse `StringOutput` importieren und ein Objekt der Klasse erzeugen.
 
-```{.java .cb-nb}
+```{.java .cb-nb line_numbers=false}
 import gg.jte.output.StringOutput;
 
 StringOutput stringOutput = new StringOutput();
-
 ```
 
 Wir können die Template-Engine nun nutzen, um ein Template zu rendern und den Output in einem String zu speichern.
@@ -155,7 +157,7 @@ stringOutput.toString()
 
 Der gesamte Code ist nochmal im folgenden Codeblock zu sehen.
 
-
+\small
 ```java
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
@@ -172,9 +174,8 @@ void main() {
     htmlTemplateEngine.render("greetUser.jte", "Alex", stringOutput);
     System.out.println(stringOutput);
 }
-
 ```
-
+\normalsize
 
 # Boolesche Attribute
 

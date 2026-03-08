@@ -21,11 +21,28 @@ Definiere in einer neuen Datei `ServerView.java` eine Klasse namens `ServerView`
 
 # Aufgabe
 
-Füge die folgende Abhängigkeit in `build.gradle` hinzu.
+Füge, wenn du `gradle` benutzt, die folgende Abhängigkeit in `build.gradle` hinzu.
 
 ```kotlin
-implementation("io.javalin:javalin:6.7.0")
+implementation("io.javalin:javalin:7.0.1")
 ```
+
+Füge, wenn du `Maven` benutzt, die folgende Abhängigkeit in `pom.xml` hinzu.
+
+
+```xml
+<dependency>
+    <groupId>io.javalin</groupId>
+    <artifactId>javalin</artifactId>
+    <version>7.0.1</version>
+</dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>2.0.17</version>
+</dependency>
+```
+
 
 
 # Aufgabe
@@ -55,13 +72,32 @@ Sie sendet eine HTML-Darstellung des aktuellen Zustands als Antwort auf die Abfr
 
 **Hinweis:** Nutze die Methode `showApp` der Klasse `ServerView` und die Methode `getUIState` der Klasse `Model`.
 
+# Aufgabe
 
-```java
+Definiere in einer neuen Datei `JavalinConfigurator.java` eine Klasse namens `JavalinConfigurator`. 
+
+
+# Aufgabe 
+
+Ergänze die Klasse `JavalinConfigurator` um eine statische Methode `configureJavalin`. Dieser wird ein Objekt vom Typ `JavalinConfig` übergeben. Die Methode erzeugt zunächst ein Objekt der Klasse `Servercontroller`.
+
+
+ Aunschließend wird auf der Eigenschaft `routes` des  Parameters die Methode `get` so aufgerufen,
+dass alle Abfragen an den Pfad `/todos` mit der Methode `showApp` der Klasse `serverController` beantwortet werden.
+
+# Aufgabe
+
+Erzeuge in der `main`-Methode ein, mit `JavalinConfigurator::configureJavalin` konfigurierten Javalin-Server. Starte diesen anschließend.
+
+
+
+
+<!-- ```java
 // in main
 Javalin app =  Javalin.create();
 ServerController serverController = new ServerController();
 app.get("/todos", serverController::showApp);
-```
+``` -->
 
 
  ![](showApp.png){ width=50% }
@@ -74,26 +110,33 @@ Die Aufrufe der `Javalin`-Methoden `get` und `post` werden in den nächsten Aufg
 # Aufgabe
 
 Wir wollen in unserem Projekt Frontend-Bibliotheken nutzen können.
-Definiere dafür in der Klasse `Utils` eine statische Methode `configureJavalin`. Dieser wird ein Objekt der Klasse `JavalinConfig` übergeben.
-Sie ruft auf dem Attribut `staticFiles` die Methode `enableWebJars` auf. 
+Ergänze dafür in `configureJavalin` einen Aufruf der Methode `enableWebJars` auf dem Attribut `staticFiles` der Klasse `JavalinConfigurator`. 
 
-Übergib die Methode `configureJavalin` der Methode `create` beim Erzeugen des `Javalin`-Objekts.
 
 # Aufgabe
 Zunächst binden wir eine CSS-Bibliothek ein, um das Aussehen unserer App zu verbessern.
 
-Füge dafür die folgende Abhängigkeit in `build.gradle` hinzu.
+Füge dafür die folgende Abhängigkeit in `build.gradle` .
 
 ```kotlin
-runtimeOnly("org.webjars.npm:todomvc-app-css:2.4.1")
+runtimeOnly("org.webjars.npm:todomvc-app-css:2.4.3")
 ```
 
+oder in `pom.xml` hinzu.
+
+```xml
+<dependency>
+    <groupId>org.webjars.npm</groupId>
+    <artifactId>todomvc-app-css</artifactId>
+    <version>2.4.3</version>
+</dependency>
+```
 
 Ergänze im `head`-Tag in `mainPage.jte` die folgende Zeile um den CSS-Code zu importieren.
 
 
 ```html
-<link rel="stylesheet" href="/webjars/todomvc-app-css/2.4.1/index.css" type="text/css">
+<link rel="stylesheet" href="/webjars/todomvc-app-css/2.4.3/index.css" type="text/css">
 ```
 
 Starte deine App und lade die Seite erneut.
@@ -111,8 +154,10 @@ Anschließend sendet sie eine HTML-Darstellung des neuen Zustands Antwort auf di
 
 **Hinweis:** Nutze die Methode `showApp` und die Methode `add` der Klasse `Model`.
 
-**Hinweis 2:** Verwende die Methode in einem Aufruf der Javalin-Methode `post`!
+# Aufgabe
 
+Beantworte POST-Abfragen an `addToDo` mit der Methode `ServerController::addToDo`. Ergänze hierfür die Methode 
+`JavalinConfigurator::configureJavalin`
 
  ![](addToDo.png){ width=100% }
 
@@ -129,11 +174,18 @@ Ergänze in `build.gradle` die Abhängigkeit HTMX:
 ```kotlin
 runtimeOnly("org.webjars.npm:htmx.org:2.0.6")
 ```
+```xml
+<dependency>
+    <groupId>org.webjars.npm</groupId>
+    <artifactId>htmx.org</artifactId>
+    <version>2.0.8</version>
+</dependency>
+```
 
 Ergänze im `head`-Tag in `mainPage.jte` die folgende Zeile um die Bibliothek in den Templates verwenden zu können.
 
 ```html
-<script src="/webjars/htmx.org/2.0.6/dist/htmx.min.js"></script>
+<script src="/webjars/htmx.org/2.0.8/dist/htmx.min.js"></script>
 ```
 
 # Aufgabe
@@ -143,7 +195,7 @@ In unserer App erfolgen alle Anfragen nach dem ersten Laden der Seite mit HTMX. 
 - Wenn er `null` ist, wird die komplette Website geschickt. 
 - Wenn er nicht `null` ist, wird nur der Teil im `section`-Tag geschickt.
 
-**Hinweis:** Die Methode `showApp` der Klasse `ServerView` hat bereits einen Parameter, der angibt, ob nur ein Teil der Website gerendert werden soll.
+**Hinweis:** Die Methode `showApp` der Klasse `TemplateRenderer` hat bereits einen Parameter, der angibt, ob nur ein Teil der Website gerendert werden soll.
 
 
 # Aufgabe 
@@ -158,7 +210,11 @@ Ergänze die Klasse `ServerController` um eine Methode `deleteToDo`. Dieser wird
 Sie reagiert auf Anfragen, die durch das Drücken des linken Buttons in einem To-do geschickt wurden. Dabei löscht sie das To-do mit der entsprechenden ID.
 
 **Hinweis:** Nutze die Methode `showApp` und die Methode `delete` der Klasse `Model`.
-**Hinweis:** Starte die Methode wie die Methode `addToDo`. Der Pfad muss natürlich angepasst werden.
+
+
+
+# Aufgabe 
+Nutze die Methode `Controller::deleteToDo` um auf POST-Abfragen zu reagieren.
 
 
 
@@ -174,7 +230,8 @@ Sie reagiert auf Anfragen, die durch das Drücken des rechten Buttons in einem T
 
 **Hinweis:** Nutze die Methode `showApp` und die Methode `toggle` der Klasse `Model`.
 
-
+# Aufgabe 
+Nutze die Methode `Controller::toggleStatus` um auf POST-Abfragen zu reagieren.
 
 
 # Aufgabe 
@@ -188,6 +245,10 @@ Sie reagiert auf Anfragen, die durch das Drücken des Buttons am Ende des Footer
 **Hinweis:** Nutze die Methode `showApp` und die Methode `removeFinishedToDoItems` der Klasse `Model`.
 
 
+# Aufgabe 
+Nutze die Methode `Controller::clearCompletedToDos` um auf POST-Abfragen zu reagieren.
+
+
 
 
 # Aufgabe 
@@ -195,11 +256,17 @@ Sie reagiert auf Anfragen, die durch das Drücken des Buttons am Ende des Footer
 Ergänze das Template `app.jte`. Bei einem Klick auf einen der Filter-Links in der Mitte des Footers, soll eine `POST`-Abfragen gesendet werden. Mit diesen wird ein neuer Filter ausgewählt.
 Z.B. sendet ein Klick auf den Link mit dem Text `All` eine POST-Abfrage an `/todos/setFilter/All`
 
+
 # Aufgabe
 Ergänze die Klasse `ServerController` um eine Methode `setFilter`. Dieser wird der `Context` einer Abfrage übergeben. 
 Sie reagiert auf Anfragen, die durch das Drücken Filter-Links in der Mitte des Footers geschickt werden.
 
-**Hinweis:** Nutze die Methode `showApp` und die Methode `removeFinishedToDoItems` der Klasse `Model`.
+**Hinweis:** Nutze die Methode `showApp` und die Methode `setFilter` der Klasse `Model`.
+
+# Aufgabe 
+Nutze die Methode `Controller::setFilter` um auf POST-Abfragen zu reagieren.
+
+
 
 
 # Aufgabe 
@@ -231,6 +298,11 @@ Sie sendet ein Formular als Antwort auf die Anfrage durch einen Klick auf den Te
 
  <!-- ![](editToDo.png){ width=100% } -->
 
+# Aufgabe 
+
+
+Nutze die Methode `Controller::showEditForm` um auf GET-Abfragen zu reagieren.
+
 
 # Aufgabe
 
@@ -245,6 +317,13 @@ Ergänze die Klasse `ServerController` um eine Methode `updateTextOfToDo`. Diese
 Sie reagiert auf Anfragen, die von dem Input-Element in `editingForm` geschickt wurden. Dabei wird der Text des To-dos durch den eingegebene Text ersetzt.
 
 **Hinweis:** Nutze die Methode `showToDo` und die Methode `updateText` der Klasse `Model`.
+
+# Aufgabe 
+
+
+Nutze die Methode `Controller::updateTextOfToDo` um auf GET-Abfragen zu reagieren.
+
+
 
 #
 
