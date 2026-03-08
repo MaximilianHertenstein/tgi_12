@@ -15,7 +15,7 @@ codebraid:
 
 # Aufgabe
 
-Definiere in einer neuen Datei `ServerView.java` eine Klasse namens `ServerView`. Die Klasse hat ein Attribut vom Typ `TemplateRenderer`. Initialisiere das Attribut im Klassenkoerper.
+Definiere in einer neuen Datei `ServerView.java` eine Klasse namens `ServerView`. Die Klasse hat ein Attribut vom Typ `TemplateRenderer`. Initialisiere das Attribut direkt in der Klasse.
 
 
 
@@ -53,7 +53,7 @@ Ergänze die Klasse `ServerView` um eine private Methode `setContentTypeAndSend`
 
 # Aufgabe
 Ergänze die Klasse `ServerView` um eine Methode `showApp`. Der Methode werden der `Context` einer Anfrage und ein Objekt der Klasse `UIState` uebergeben. 
-Sie rendert einen String aus dem `UIState`. Bei dem String handelt es sich um ein vollständiges HTML-Dokument. Der String wird anschließend mit der Methode `setContentTypeAndSend` zurück geschickt.
+Sie rendert aus dem `UIState` einen String. Dieser String ist ein vollstaendiges HTML-Dokument und wird anschliessend mit der Methode `setContentTypeAndSend` zurueckgeschickt.
 
 
 **Hinweis:** Nutze die Methode `setContentTypeAndSend` und die Methode `renderAppToString` der Klasse `TemplateRenderer`. 
@@ -62,11 +62,11 @@ Sie rendert einen String aus dem `UIState`. Bei dem String handelt es sich um ei
 # Aufgabe
 
 Definiere in einer neuen Datei `ServerController.java` eine Klasse namens `ServerController`. 
-Die Klasse hat ein Attribut vom Typ `Model` und ein Attribut vom Typ `ServerView`. Initialisiere beide Attribute im Klassenkoerper.
+Die Klasse hat ein Attribut vom Typ `Model` und ein Attribut vom Typ `ServerView`. Initialisiere beide Attribute direkt in der Klasse.
 
 
 # Aufgabe
-Ergänze die Klasse `ServerController` um eine Methode `showApp`. Dieser wird der `Context` einer Anfrage uebergeben. 
+Ergänze die Klasse `ServerController` um eine Methode `showApp`. Der Methode wird der `Context` einer Anfrage uebergeben. 
 Sie sendet eine HTML-Darstellung des aktuellen Zustands als Antwort auf die Anfrage.
 
 
@@ -79,15 +79,15 @@ Definiere in einer neuen Datei `JavalinConfigurator.java` eine Klasse namens `Ja
 
 # Aufgabe 
 
-Ergänze die Klasse `JavalinConfigurator` um eine statische Methode `configureJavalin`. Dieser wird ein Objekt vom Typ `JavalinConfig` uebergeben. Die Methode erzeugt zunaechst ein Objekt der Klasse `ServerController`.
+Ergänze die Klasse `JavalinConfigurator` um eine statische Methode `configureJavalin`. Der Methode wird ein Objekt vom Typ `JavalinConfig` uebergeben. Die Methode erzeugt zunaechst ein Objekt der Klasse `ServerController`.
 
 
- Anschliessend wird auf der Eigenschaft `routes` des Parameters die Methode `get` so aufgerufen,
-dass alle Anfragen an den Pfad `/todos` mit der Methode `showApp` der Klasse `ServerController` beantwortet werden.
+Anschliessend wird auf der Eigenschaft `routes` des Parameters die Methode `get` so aufgerufen,
+dass Anfragen an den Pfad `/todos` mit der Methode `showApp` der Klasse `ServerController` beantwortet werden.
 
 # Aufgabe
 
-Erzeuge in der `main`-Methode ein, mit `JavalinConfigurator::configureJavalin` konfigurierten Javalin-Server. Starte diesen anschließend.
+Erzeuge in der `main`-Methode einen Javalin-Server, der mit `JavalinConfigurator::configureJavalin` konfiguriert ist. Starte ihn anschliessend.
 
 
 
@@ -109,8 +109,8 @@ Die Aufrufe der `Javalin`-Methoden `get` und `post` werden in den naechsten Aufg
 
 # Aufgabe
 
-Wir wollen in unserem Projekt Frontend-Bibliotheken nutzen können.
-Ergaenze dafuer in `configureJavalin` einen Aufruf der Methode `enableWebJars` auf dem Attribut `staticFiles` des Objekts `JavalinConfig`. 
+Wir wollen in unserem Projekt Frontend-Bibliotheken nutzen koennen.
+Ergaenze dafuer in `configureJavalin` einen Aufruf der Methode `enableWebJars` auf `javalinConfig.staticFiles`.
 
 
 # Aufgabe
@@ -146,7 +146,7 @@ Starte deine App und lade die Seite erneut.
 
 
 # Aufgabe
-Ergaenze die Klasse `ServerController` um eine Methode `addToDo`. Dieser wird der `Context` einer Anfrage uebergeben. 
+Ergaenze die Klasse `ServerController` um eine Methode `addToDo`. Der Methode wird der `Context` einer Anfrage uebergeben. 
 Sie soll auf Eingaben über das Formular in `mainPage.jte` reagieren. Sie fügt die eingegebene Aufgabe dem `Model` hinzu.
 
 Anschliessend sendet sie eine HTML-Darstellung des neuen Zustands als Antwort auf die Anfrage.
@@ -190,7 +190,7 @@ Ergaenze im `head`-Tag in `mainPage.jte` die folgende Zeile, um die Bibliothek i
 
 # Aufgabe
 
-Wenn nach dem ersten Laden der App nochmal der HTML-Code der gesamten App angefragt wird, muss nicht nochmal das gesamte HTML-Dokument mit `header` und `body`-Tag geschickt werden.
+Nach dem ersten Laden der App muss bei weiteren Anfragen nicht mehr das komplette HTML-Dokument mit `header`- und `body`-Tag gesendet werden.
 In unserer App erfolgen alle Anfragen nach dem ersten Laden der Seite mit HTMX. Solche Anfragen haben den Header `HX-Request`. Ergaenze die Methode `showApp` in `ServerView` so, dass geprueft wird, ob dieser Header `null` ist. 
 - Wenn er `null` ist, wird die komplette Website geschickt. 
 - Wenn er nicht `null` ist, wird nur der Teil im `section`-Tag geschickt.
@@ -206,7 +206,7 @@ Z.B. sendet der linke Button in dem To-do mit der ID $5$ eine POST-Anfrage an `t
 
 
 # Aufgabe
-Ergaenze die Klasse `ServerController` um eine Methode `deleteToDo`. Dieser wird der `Context` einer Anfrage uebergeben. 
+Ergaenze die Klasse `ServerController` um eine Methode `deleteToDo`. Der Methode wird der `Context` einer Anfrage uebergeben. 
 Sie reagiert auf Anfragen, die durch das Drücken des linken Buttons in einem To-do geschickt wurden. Dabei löscht sie das To-do mit der entsprechenden ID.
 
 **Hinweis:** Nutze die Methode `showApp` und die Methode `delete` der Klasse `Model`.
@@ -225,7 +225,7 @@ Z.B. sendet das To-do mit der ID $5$ eine POST-Anfrage an `todos/5/toggle`.
 
 
 # Aufgabe
-Ergaenze die Klasse `ServerController` um eine Methode `toggleStatus`. Dieser wird der `Context` einer Anfrage uebergeben. 
+Ergaenze die Klasse `ServerController` um eine Methode `toggleStatus`. Der Methode wird der `Context` einer Anfrage uebergeben. 
 Sie reagiert auf Anfragen, die durch das Drücken des rechten Buttons in einem To-do geschickt wurden, indem sie den Zustand des To-dos mit der entsprechenden ID ändert.
 
 **Hinweis:** Nutze die Methode `showApp` und die Methode `toggle` der Klasse `Model`.
@@ -239,7 +239,7 @@ Nutze die Methode `ServerController::toggleStatus`, um auf POST-Abfragen zu reag
 Ergaenze in `app.jte` die Moeglichkeit, per Klick auf den Button am Ende des Footers `POST`-Anfragen an `todos/clearCompletedToDos` zu senden. 
 
 # Aufgabe
-Ergaenze die Klasse `ServerController` um eine Methode `clearCompletedToDos`. Dieser wird der `Context` einer Anfrage uebergeben. 
+Ergaenze die Klasse `ServerController` um eine Methode `clearCompletedToDos`. Der Methode wird der `Context` einer Anfrage uebergeben. 
 Sie reagiert auf Anfragen, die durch das Drücken des Buttons am Ende des Footers geschickt werden, indem sie alle erledigten To-dos löscht.
 
 **Hinweis:** Nutze die Methode `showApp` und die Methode `removeFinishedToDoItems` der Klasse `Model`.
@@ -258,7 +258,7 @@ Z.B. sendet ein Klick auf den Link mit dem Text `All` eine POST-Abfrage an `/tod
 
 
 # Aufgabe
-Ergaenze die Klasse `ServerController` um eine Methode `setFilter`. Dieser wird der `Context` einer Anfrage uebergeben. 
+Ergaenze die Klasse `ServerController` um eine Methode `setFilter`. Der Methode wird der `Context` einer Anfrage uebergeben. 
 Sie reagiert auf Anfragen, die durch das Druecken der Filter-Links in der Mitte des Footers geschickt werden.
 
 **Hinweis:** Nutze die Methode `showApp` und die Methode `setFilter` der Klasse `Model`.
@@ -272,14 +272,14 @@ Nutze die Methode `ServerController::setFilter`, um auf POST-Abfragen zu reagier
 # Aufgabe 
 
 Ergaenze das Template `toDo.jte`. Bei einem Klick auf den Text eines To-dos wird eine `GET`-Abfrage gesendet. Diese fordert ein Formular an, mit dem der Text des To-dos geaendert werden kann. 
-Z.B. sendet ein Klick auf den Text des To-dos mit der ID 5 eine GET-Anfrage an `/todos/5/edit`. Das komplette Listenelement soll durch die Antwort ersetzt werden.
+Z.B. sendet ein Klick auf den Text des To-dos mit der ID 5 eine GET-Anfrage an `/todos/5/edit`. Das komplette Listenelement soll durch die Serverantwort ersetzt werden.
 
 
 
 
 
 # Aufgabe
-Ergaenze die Klasse `ServerView` um eine Methode `showToDo`. Dieser werden der `Context` einer Anfrage, ein `ToDo` und ein Boolean `editing` uebergeben.
+Ergaenze die Klasse `ServerView` um eine Methode `showToDo`. Der Methode werden der `Context` einer Anfrage, ein `ToDo` und ein Boolean `editing` uebergeben.
 Die Methode rendert das `ToDo` und schickt das Ergebnis als Antwort auf die Anfrage. Wenn `editing` `true` ist, wird fuer das `ToDo` das Formular gerendert, mit dem der Text des To-dos geaendert werden kann.
 Ansonsten werden der Status und der Text des To-dos angezeigt.
 
@@ -291,8 +291,8 @@ Ansonsten werden der Status und der Text des To-dos angezeigt.
 
 # Aufgabe
 
-Ergaenze die Klasse `ServerController` um eine Methode `showEditForm`. Dieser wird der `Context` einer Anfrage uebergeben. 
-Sie sendet ein Formular als Antwort auf die Anfrage durch einen Klick auf den Text eines To-dos. 
+Ergaenze die Klasse `ServerController` um eine Methode `showEditForm`. Der Methode wird der `Context` einer Anfrage uebergeben. 
+Sie sendet als Antwort auf die Anfrage ein Formular, das durch einen Klick auf den Text eines To-dos angefordert wurde. 
 
 **Hinweis:** Nutze die Methode `showToDo` und die Methode `getToDoItem` der Klasse `Model`.
 
@@ -313,7 +313,7 @@ Das komplette Listenelement soll durch die Antwort ersetzt werden.
 
 # Aufgabe
 
-Ergaenze die Klasse `ServerController` um eine Methode `updateTextOfToDo`. Dieser wird der `Context` einer Anfrage uebergeben. 
+Ergaenze die Klasse `ServerController` um eine Methode `updateTextOfToDo`. Der Methode wird der `Context` einer Anfrage uebergeben. 
 Sie reagiert auf Anfragen, die vom Input-Element in `editingForm` geschickt wurden. Dabei wird der Text des To-dos durch den eingegebenen Text ersetzt.
 
 **Hinweis:** Nutze die Methode `showToDo` und die Methode `updateText` der Klasse `Model`.
