@@ -11,8 +11,7 @@ public class Main {
     static void main() {
         MutableList<String> list1 = MutableList.of();
         var list2 = MutableList.of("d", "e", "f");
-        list1.addAll(list2);
-        println(list1.toArrayList());
+        println(list2.copy().toArrayList());
 
     }
 }

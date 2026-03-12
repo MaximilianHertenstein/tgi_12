@@ -197,7 +197,14 @@ this.first  = null; }
 
 
 
+    public  MutableList<T> copy() {
+        if (first != null) {
+            return new MutableList<T>(first.copyAll());
+        }
+        return new MutableList<T>();
 
+
+    }
 
 
 

@@ -24,7 +24,7 @@ codebraid:
 
 ## App erstellen und starten
 
-Das Framework `Javalin` ermöglicht es uns HTTP-Anfragen zu beantworten.
+Das Framework `Javalin` ermöglicht es uns, HTTP-Anfragen zu beantworten.
 Um es zu nutzen, müssen wir die folgenden Abhängigkeiten in der Datei `build.gradle` ergänzen.
 
 
@@ -66,12 +66,12 @@ Javalin app = Javalin.create();
 app.start(7000);
 ```
 
-Diese warten auf Anfragen an dem Port $7000$. -->
+Sie wartet auf Anfragen an Port $7000$. -->
 
-## Behandlung von HTTP-Abfragen definieren
+## Behandlung von HTTP-Anfragen definieren
 
 
-Im nächsten Schritt müssen wir definieren, wie wir Abfragen beantworten wollen.
+Im nächsten Schritt müssen wir definieren, wie wir Anfragen beantworten wollen.
 Dafür definieren wir in einer neuen Klasse eine Methode, die einen Parameter vom Typ `Context` hat.
 
 ```{.java .cb-nb line_numbers=false}
@@ -84,7 +84,7 @@ class Controller {
 }
 ```
 
-Der `Context` enthält alle Informationen und Methoden, die notwendig sind, um Abfragen zu beantworten.
+Der `Context` enthält alle Informationen und Methoden, die notwendig sind, um Anfragen zu beantworten.
 In diesem Beispiel wird nur die Methode `result` genutzt. Diese schickt den übergebenen String als Antwort auf eine Anfrage.
 
 
@@ -108,28 +108,30 @@ public class JavalinConfigurator {
 }
 ```
 
-Diese erzeugt einen Controller und ein Objekt `routes` der Klasse `RoutesConfig`. Diese Klasse hat eine Methode `get`.
-Ihr wird ein Pfad und eine Methode, die GET-Anfragen an diesen Pfad beantworten soll, übergeben.
+Diese Methode erzeugt einen Controller und ein Objekt `routes` der Klasse `RoutesConfig`. Diese Klasse hat unter anderem die Methode `get`.
+Dieser Methode werden ein Pfad und eine Methode übergeben, die GET-Anfragen an diesen Pfad beantworten soll.
 In diesem Beispiel wird jede HTTP-GET-Anfrage an die Adresse des Servers und den Pfad `/pathToHelloWorld`
 mit der Methode `respondHelloWorld` beantwortet. Die Syntax `controller::respondHelloWorld` sorgt dafür, dass die Methode `respondHelloWorld` an die Methode `get` übergeben wird. Sie wird nicht aufgerufen.
 
 
 
-Jetzt können wir in der `main`-Methode mit der statischen Methode `create` ein Objekt der Klasse `Javalin` erzeugen, das mit der eben definierten Methode `JavalinConfigurator.configure` eingestellt wird.
+Jetzt können wir in der `main`-Methode mit der statischen Methode `create` ein Objekt der Klasse `Javalin` erzeugen, das mit der eben definierten Methode `JavalinConfigurator.configure` konfiguriert wird.
 
 ```java
 import io.javalin.Javalin;
 import org.example.JavalinConfigurator;
 
-void main() {
-    Javalin app = Javalin.create(JavalinConfigurator::configure);
-    app.start(7070);
+public class Main {
+    public static void main(String[] args) {
+        Javalin app = Javalin.create(JavalinConfigurator::configure);
+        app.start(7070);
+    }
 }
 ```
 
 
 
-Zunächst läuft die Anwendung auf dem lokalen Server. Dieser hat den Domainnamen `localhost`. 
+Zunächst läuft die Anwendung auf dem lokalen Rechner. Dieser ist unter dem Hostnamen `localhost` erreichbar.
 Wir erreichen unsere Anwendung also unter: `http://localhost:7070/pathToHelloWorld`
  
 
@@ -163,15 +165,15 @@ ctx.result("<h1>Hello World</h1>");
 ![](html_browser.png){ width=50% }
 
 
-# Informationen über die Abfrage erhalten
+# Informationen über die Anfrage erhalten
 
-Die Methode `respondHelloWorld` beantwortet alle HTTP-Abfragen gleich. 
+Die Methode `respondHelloWorld` beantwortet alle HTTP-Anfragen gleich. 
 Das muss natürlich nicht so sein.
-Die Klasse `Context` stellt einige Methoden bereit, um Details über die HTTP-Abfrage zu erhalten.
+Die Klasse `Context` stellt einige Methoden bereit, um Details über die HTTP-Anfrage zu erhalten.
 
 ## Query-Parameter
 
-Mit der Methode `queryParam` können wir den Wert zu einem bestimmten Query-Parameter abfragen.
+Mit der Methode `queryParam` können wir den Wert eines bestimmten Query-Parameters abfragen.
 
 
 ```java
@@ -194,7 +196,7 @@ wird `Hello Nino` angezeigt.
 
 ## Path-Parameter
 
-Mithilfe der Methode `pathParam` können Teile des Pfads abgefragt werden.
+Mithilfe der Methode `pathParam` können Teile des Pfads ausgelesen werden.
 
 ```{.java .cb-nb line_numbers=false}
 public void greetUserPathParam(Context ctx){
@@ -207,10 +209,10 @@ Im Pfad müssen wir jetzt einen Parameter `userName` verwenden. Solche `Path-Par
  
 ```java
 // in JavalinConfigurator.configure
-routes.get("/{userName}/greetGreeting/", controller::greetUserPathParam);
+routes.get("/{userName}/getGreeting", controller::greetUserPathParam);
 ```
 
-Beim Aufruf von `http://localhost:7070/Pana/greetGreeting` wird `Hello Pana` angezeigt.
+Beim Aufruf von `http://localhost:7070/Pana/getGreeting` wird `Hello Pana` angezeigt.
 
 
 ## Form-Parameter
@@ -223,8 +225,8 @@ Das folgende Formular verschickt die Eingabe als POST-Request an die relative Ad
     <button type="submit" > Submit  </button>
 </form>
 ```
-Der eingegebene Benutzername wird nicht in der `URL` übermittelt, sondern im `RequestBody` der Abfrage.
-Bei der Eingabe des Namens `Frieda` steht im `RequestBody` `userName=Frieda`.
+Der eingegebene Benutzername wird nicht in der `URL` übermittelt, sondern im `Request-Body` der Anfrage.
+Bei der Eingabe des Namens `Frieda` steht im `Request-Body` `userName=Frieda`.
 
 Daten, die über einen POST-Request eines Formulars übermittelt wurden, können mit der Methode `formParam` abgefragt werden.
 
@@ -246,7 +248,7 @@ Da wir mit dieser Methode POST-Anfragen beantworten, müssen wir die Methode `po
 ## Header-Informationen abfragen
 
 
-Die Header einer HTTP-Abfrage können mit der `Context`-Methode `header` abgefragt werden.
+Die Header einer HTTP-Anfrage können mit der `Context`-Methode `header` abgefragt werden.
 
 
 ```java
@@ -257,10 +259,10 @@ String acceptHeader = ctx.header("Accept");
 
 # Webjars nutzen
 
-Webjars sind Frontend-Bibliotheken, die man in JVM-Programmen nutzen kann. 
-Um Webjars in Javalin-Anwendungen nutzen zu können, müssen wir in der Methode `JavalinConfigurator.configure` auf der Eigenschaft `staticFiles` des Parameters `javalinConfig` die Methode `enableWebjars` aufrufen.
+Webjars sind Frontend-Bibliotheken, die man in JVM-Programmen nutzen kann.
+Um Webjars in Javalin-Anwendungen nutzen zu können, müssen wir in der Methode `JavalinConfigurator.configure` auf der Eigenschaft `staticFiles` des Parameters `config` die Methode `enableWebjars` aufrufen.
 
 ```java
 // in JavalinConfigurator.configure
-javalinConfig.staticFiles.enableWebjars();
+config.staticFiles.enableWebjars();
 ```

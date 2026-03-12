@@ -30,4 +30,18 @@ public class MutableNode<T> {
     public void setNextNode(MutableNode<T> nextNode) {
         this.nextNode = nextNode;
     }
+
+    public MutableNode<T> copyAll() {
+        MutableNode<T> newFirst = new MutableNode<>(content);
+        var newCurrent = newFirst;
+        var current = nextNode();
+        while (current != null) {
+            MutableNode<T> newNode = new MutableNode<>(current.content());
+            newCurrent.setNextNode(newNode);
+            newCurrent = newNode;
+            current = current.nextNode();
+        }
+        return  newFirst;
+    }
+
 }

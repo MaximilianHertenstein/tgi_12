@@ -1,5 +1,4 @@
 \documentclass[a4paper]{scrartcl}
-%\usepackage{tikz}
 \usepackage[
 typ={ab},
 fach=Informatik,
@@ -7,66 +6,35 @@ farbig
 ]{schule}
 \hypersetup{hidelinks}
 
-
-%\usepackage{ctable}
-%
-%´\usepackage[default]{fontsetup}
-
-%\usepackage[default]{fontsetup}
-
 \usepackage{fourier-otf}
-%\setmonofont{FiraCode-Regular}[
-%Contextuals=Alternate % Activate the calt feature
-%]
-%\usepackage{newunicodechar}
-%\newunicodechar{^^^^2588}{█}
-%\newunicodechar{█}{█}
-%\setmonofont{Fira Code}
-%\usepackage{amsmath}
-%\usepackage{amssymb}
-%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
-%\usepackage{pmboxdraw}
-%\usepackage{cascadia-code}
-\usepackage[scale = 0.1]{jetbrainsmono-otf}
-%\usepackage{cascadiamono-otf}
-%\setmonofont{CascadiaMono-SemiLight}[]
-\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
-%\newunicodechar{2588}{█}
-%\newunicodechar{█}{\pmboxdrawuni{2588}}
+\usepackage[Scale=MatchLowercase]{monaspace-otf}
+%\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
 
 \usepackage{scrlayer-scrpage}
-\ifoot{% TODO: \usepackage{graphicx} required
-	
-	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
-	
+\ifoot{
+  \includegraphics[width=0.35\linewidth]{GHSE-Logo}
 }
-
-
 
 \usepackage{shellesc}
 \usepackage{minted}
+\usepackage{microtype}
 
-\usepackage{microtype}	
-
-\usepackage{fancyvrb}
 \date{}
-
-
+\title{Veränderliche verkette Liste}
 \usepackage{polyglossia}
 \setdefaultlanguage{german}
-\usepackage{tcolorbox}
-\tcbuselibrary{skins,breakable}
 
+\tcbuselibrary{skins,breakable}
 
 \usepackage{tikz}
 \usetikzlibrary{shapes.multipart, arrows.meta, positioning, calc}
-\usepackage{listings}
+
 \usepackage{xcolor}
-\usepackage{geometry}
-\geometry{margin=2.5cm}
+
 
 % -------------------------------------------------------
-%  TikZ-Stil für verkettete Listen
+%  TikZ-Stile für verkettete Listen
 % -------------------------------------------------------
 \tikzset{
   listnode/.style={
@@ -114,30 +82,86 @@ farbig
   }
 }
 
-% Hilfsmakro: einen Knoten zeichnen
-% #1 = node name, #2 = x-pos, #3 = y-pos, #4 = Inhalt
-\newcommand{\listNode}[4]{%
-  \node[listnode] (#1) at (#2,#3)
-    {\texttt{#4} \nodepart{two} \phantom{xx}};
+% -------------------------------------------------------
+%  Hilfsmakros für verkettete Listen
+% -------------------------------------------------------
+\newif\ifllhasitems
+
+% \drawlinkedlist{a,b,c}  – Standardliste mit first-Zeiger
+% \drawlinkedlist{}        – leere Liste
+\newcommand{\drawlinkedlist}[1]{%
+  \global\llhasitemsfalse
+  \gdef\llprev{first}%
+  \begin{center}
+  \begin{tikzpicture}[node distance=1.3cm]
+    \node[firstptr] (first) {\texttt{first}};
+    \foreach \llval [count=\lli] in {#1} {%
+      \node[listnode, right=of \llprev] (llnode\lli)
+          {\texttt{"\llval"} \nodepart{two} \phantom{xx}};
+      \ifnum\lli=1\relax
+        \draw[arrow] (first.east) -- (llnode1.west);
+      \else
+        \pgfmathtruncatemacro\llp{\lli-1}%
+        \draw[arrow] (llnode\llp.two east) -- (llnode\lli.west);
+      \fi
+      \xdef\llprev{llnode\lli}%
+      \global\llhasitemstrue
+    }%
+    \ifllhasitems
+      \node[nullnode, right=of \llprev] (llnull) {\texttt{null}};
+      \draw[arrow] (\llprev.two east) -- (llnull.west);
+    \else
+      \node[nullnode, right=2cm of first] (llnull) {\texttt{null}};
+      \draw[arrow] (first.east) -- (llnull.west);
+    \fi
+  \end{tikzpicture}
+  \end{center}%
 }
 
-% -------------------------------------------------------
-%  Listings-Stil für Java-Code
-% -------------------------------------------------------
-
+% \drawlinkedlistix{a,b,c} – wie \drawlinkedlist, aber mit Indexbeschriftung
+\newcommand{\drawlinkedlistix}[1]{%
+  \global\llhasitemsfalse
+  \gdef\llprev{first}%
+  \begin{center}
+  \begin{tikzpicture}[node distance=1.3cm]
+    \node[firstptr] (first) {\texttt{first}};
+    \foreach \llval [count=\lli] in {#1} {%
+      \node[listnode, right=of \llprev] (llnode\lli)
+          {\texttt{"\llval"} \nodepart{two} \phantom{xx}};
+      \ifnum\lli=1\relax
+        \draw[arrow] (first.east) -- (llnode1.west);
+      \else
+        \pgfmathtruncatemacro\llp{\lli-1}%
+        \draw[arrow] (llnode\llp.two east) -- (llnode\lli.west);
+      \fi
+      \pgfmathtruncatemacro\llidx{\lli-1}%
+      \node[below=0.3cm of llnode\lli, font=\small] {Index \llidx};
+      \xdef\llprev{llnode\lli}%
+      \global\llhasitemstrue
+    }%
+    \ifllhasitems
+      \node[nullnode, right=of \llprev] (llnull) {\texttt{null}};
+      \draw[arrow] (\llprev.two east) -- (llnull.west);
+    \else
+      \node[nullnode, right=2cm of first] (llnull) {\texttt{null}};
+      \draw[arrow] (first.east) -- (llnull.west);
+    \fi
+  \end{tikzpicture}
+  \end{center}%
+}
 
 % -------------------------------------------------------
 \begin{document}
 
-
 \bigskip
-\textbf{Hinweis:} Zeichne in den Diagrammen \textcolor{red}{rot gestrichelt}, was \emph{entfernt} wird,
-und \textcolor{green!60!black}{grün gestrichelt}, was \emph{neu hinzukommt} bzw.\ \emph{geändert} wird.
+\textbf{Hinweis:} Zeichne in den Diagrammen \textcolor{red}{rot gestrichelt}, was
+\emph{entfernt} wird, und \textcolor{green!60!black}{grün gestrichelt}, was
+\emph{neu hinzukommt} bzw.\ \emph{geändert} wird.
 
 \bigskip
 
 %=============================================================
-\begin{aufgabe}[subtitle = Aufgabe 13]
+\begin{aufgabe}[subtitle = Aufgabe 14]
 Implementiere die Methode \texttt{clear()}. Diese entfernt alle Elemente der Liste.
 
 \begin{minted}{java}
@@ -149,34 +173,86 @@ println(list.toArrayList());  // []
 \medskip
 \textbf{Vor dem Aufruf von \texttt{clear()}:}
 
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  % first-Pointer
-  \node[firstptr] (first) {\texttt{first}};
-  % Knoten
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of c]     (n) {\texttt{null}};
-  % Pfeile
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (c.west);
-  \draw[arrow] (c.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlist{a,b,c}
 
 \textbf{Zeichne hier, was \texttt{clear()} verändert, und den Zustand \emph{nach} dem Aufruf:}
 
 \vspace{4.5cm}
 
-\textbf{Erkläre kurz, was die Methode intern tun muss:}
-
-\vspace{2cm}
+%\textbf{Erkläre kurz, was die Methode intern tun muss:}
+%
+%\vspace{2cm}
 \end{aufgabe}
 
 %=============================================================
-\begin{aufgabe}[subtitle = Aufgabe 16]
+\begin{aufgabe}[subtitle = Aufgabe 15]
+Implementiere die Methode \texttt{replace(int index, T newElem)}.
+Sie ersetzt das Element an der Stelle \texttt{index} durch \texttt{newElem}.
+Wenn kein Element mit diesem Index existiert, wird eine
+\texttt{IndexOutOfBoundsException} geworfen.
+%\textbf{Hinweis:} Nutze \texttt{getNode} und \texttt{setContent}.
+
+\begin{minted}{java}
+var list = MutableList.of("a", "b", "c");
+list.replace(1, "x");
+println(list.toArrayList());  // [a, x, c]
+\end{minted}
+
+\textbf{Zustand vor dem Aufruf:}
+
+\drawlinkedlistix{a,b,c}
+
+\textbf{Zeichne den Zustand \emph{nach} \texttt{replace(1,"x")}
+(geänderter Knoten grün gestrichelt):}
+
+\vspace{5cm}
+
+%\textbf{Verändert \texttt{replace} die Zeigerstruktur der Liste? Begründe kurz.}
+%
+%\vspace{2cm}
+\end{aufgabe}
+
+%%=============================================================
+%\begin{aufgabe}[subtitle = Aufgabe 16]
+%Erweitere \texttt{replace} so, dass das \emph{ursprüngliche Element zurückgegeben} wird.
+%\textbf{Hinweis:} Nutze \texttt{content}.
+%
+%\begin{minted}{java}
+%var list = MutableList.of("a", "b", "c");
+%println(list.replace(1, "x"));  // b
+%println(list.toArrayList());     // [a, x, c]
+%\end{minted}
+%
+%\textbf{Zustand vor dem Aufruf (der zu speichernde Rückgabewert ist markiert):}
+%
+%\begin{center}
+%\begin{tikzpicture}[node distance=1.3cm]
+%  \node[firstptr] (first) {\texttt{first}};
+%  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
+%  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
+%  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
+%  \node[nullnode, right=of c]     (n) {\texttt{null}};
+%  \node[below=0.3cm of a, font=\small] {Index 0};
+%  \node[below=0.3cm of b, font=\small] {Index 1};
+%  \node[below=0.3cm of c, font=\small] {Index 2};
+%  \draw[arrow] (first.east) -- (a.west);
+%  \draw[arrow] (a.two east) -- (b.west);
+%  \draw[arrow] (b.two east) -- (c.west);
+%  \draw[arrow] (c.two east) -- (n.west);
+%  \node[draw, dashed, fill=yellow!20, above=0.9cm of b, font=\small\ttfamily]
+%      (saved) {result = "b"};
+%  \draw[->, dashed, gray!70] (saved.south) -- (b.north);
+%\end{tikzpicture}
+%\end{center}
+%
+%%\textbf{Warum muss der alte Inhalt \emph{vor} \texttt{setContent} in einer lokalen
+%%Variable gespeichert werden?}
+%%
+%%\vspace{2.5cm}
+%\end{aufgabe}
+
+%=============================================================
+\begin{aufgabe}[subtitle = Aufgabe 17]
 Implementiere die Methode \texttt{addFirst(T newElem)}.
 Sie fügt das übergebene Element \emph{vorne} in der Liste ein.
 
@@ -190,19 +266,7 @@ println(list.toArrayList());  // [x, a, b, c]
 
 \textbf{Zustand vor dem Aufruf:}
 
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  \node[firstptr] (first) {\texttt{first}};
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of c]     (n) {\texttt{null}};
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (c.west);
-  \draw[arrow] (c.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlist{a,b,c}
 
 \textbf{Zeichne den Zustand \emph{nach} \texttt{addFirst("x")} (neue Verbindungen grün):}
 
@@ -218,13 +282,7 @@ println(list.toArrayList());  // [a]
 
 \textbf{Zustand vor dem Aufruf (leere Liste):}
 
-\begin{center}
-\begin{tikzpicture}
-  \node[firstptr] (first) {\texttt{first}};
-  \node[nullnode, right=2cm of first] (n) {\texttt{null}};
-  \draw[arrow] (first.east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlist{}
 
 \textbf{Zeichne den Zustand \emph{nach} \texttt{addFirst("a")}:}
 
@@ -232,10 +290,10 @@ println(list.toArrayList());  // [a]
 \end{aufgabe}
 
 %=============================================================
-\begin{aufgabe}[subtitle =  Aufgabe 17]
+\begin{aufgabe}[subtitle = Aufgabe 18]
 Implementiere die Methode \texttt{add(T newElem)}.
 Sie fügt das übergebene Element \emph{am Ende} der Liste ein.
-\textbf{Hinweis:} Nutze \texttt{getLastNode} und \texttt{setNextNode}.
+%\textbf{Hinweis:} Nutze \texttt{getLastNode} und \texttt{setNextNode}.
 
 \medskip
 \textbf{Beispiel 1:}
@@ -247,19 +305,7 @@ println(list.toArrayList());  // [a, b, c, d]
 
 \textbf{Zustand vor dem Aufruf:}
 
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  \node[firstptr] (first) {\texttt{first}};
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of c]     (n) {\texttt{null}};
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (c.west);
-  \draw[arrow] (c.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlist{a,b,c}
 
 \textbf{Zeichne den Zustand \emph{nach} \texttt{add("d")}:}
 
@@ -275,13 +321,7 @@ println(list.toArrayList());  // [x]
 
 \textbf{Zustand vor dem Aufruf (leere Liste):}
 
-\begin{center}
-\begin{tikzpicture}
-  \node[firstptr] (first) {\texttt{first}};
-  \node[nullnode, right=2cm of first] (n) {\texttt{null}};
-  \draw[arrow] (first.east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlist{}
 
 \textbf{Zeichne den Zustand \emph{nach} \texttt{add("x")}:}
 
@@ -289,12 +329,100 @@ println(list.toArrayList());  // [x]
 \end{aufgabe}
 
 %=============================================================
-\begin{aufgabe}[subtitle = Aufgabe 18]
+\begin{aufgabe}[subtitle = Aufgabe 19]
+Implementiere die Methode \texttt{addAll(MutableList<T> other)}.
+Sie hängt die übergebene Liste ans Ende der Liste an.
+%\textbf{Hinweis:} Nutze \texttt{getLastNode} und \texttt{setNextNode}.
+
+\medskip
+\textbf{Beispiel 1:}
+\begin{minted}{java}
+var list1 = MutableList.of("a", "b", "c");
+var list2 = MutableList.of("d", "e", "f");
+list1.addAll(list2);
+println(list1.toArrayList());  // [a, b, c, d, e, f]
+\end{minted}
+
+\textbf{Zustand vor dem Aufruf:}
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.3cm]
+  \node[firstptr] (first1) {\texttt{first}};
+  \node[above=0.15cm of first1, font=\small\itshape] {\texttt{list1}};
+  \node[listnode, right=of first1] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
+  \node[listnode, right=of a]      (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
+  \node[listnode, right=of b]      (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
+  \node[nullnode, right=of c]      (n1) {\texttt{null}};
+  \draw[arrow] (first1.east) -- (a.west);
+  \draw[arrow] (a.two east) -- (b.west);
+  \draw[arrow] (b.two east) -- (c.west);
+  \draw[arrow] (c.two east) -- (n1.west);
+  %
+  \node[firstptr, below=2.2cm of first1] (first2) {\texttt{first}};
+  \node[above=0.15cm of first2, font=\small\itshape] {\texttt{list2}};
+  \node[listnode, right=of first2] (d) {\texttt{"d"} \nodepart{two} \phantom{xx}};
+  \node[listnode, right=of d]      (e) {\texttt{"e"} \nodepart{two} \phantom{xx}};
+  \node[listnode, right=of e]      (f) {\texttt{"f"} \nodepart{two} \phantom{xx}};
+  \node[nullnode, right=of f]      (n2) {\texttt{null}};
+  \draw[arrow] (first2.east) -- (d.west);
+  \draw[arrow] (d.two east) -- (e.west);
+  \draw[arrow] (e.two east) -- (f.west);
+  \draw[arrow] (f.two east) -- (n2.west);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Zeichne den Zustand \emph{nach} \texttt{list1.addAll(list2)} (neue Verbindung grün).}
+
+
+\vspace{6.5cm}
+
+\medskip
+\textbf{Beispiel 2:}
+\begin{minted}{java}
+MutableList<String> list1 = MutableList.of();
+var list2 = MutableList.of("d", "e", "f");
+list1.addAll(list2);
+println(list1.toArrayList());  // [d, e, f]
+\end{minted}
+
+\textbf{Zustand vor dem Aufruf (leere \texttt{list1}):}
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.3cm]
+  \node[firstptr] (first1) {\texttt{first}};
+  \node[above=0.15cm of first1, font=\small\itshape] {\texttt{list1}};
+  \node[nullnode, right=2cm of first1] (n1) {\texttt{null}};
+  \draw[arrow] (first1.east) -- (n1.west);
+  %
+  \node[firstptr, below=2.2cm of first1] (first2) {\texttt{first}};
+  \node[above=0.15cm of first2, font=\small\itshape] {\texttt{list2}};
+  \node[listnode, right=of first2] (d) {\texttt{"d"} \nodepart{two} \phantom{xx}};
+  \node[listnode, right=of d]      (e) {\texttt{"e"} \nodepart{two} \phantom{xx}};
+  \node[listnode, right=of e]      (f) {\texttt{"f"} \nodepart{two} \phantom{xx}};
+  \node[nullnode, right=of f]      (n2) {\texttt{null}};
+  \draw[arrow] (first2.east) -- (d.west);
+  \draw[arrow] (d.two east) -- (e.west);
+  \draw[arrow] (e.two east) -- (f.west);
+  \draw[arrow] (f.two east) -- (n2.west);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Zeichne den Zustand \emph{nach} \texttt{list1.addAll(list2)}:}
+
+\vspace{4.5cm}
+
+%\textbf{Warum muss der Fall \texttt{first == null} gesondert behandelt werden?}
+
+\vspace{2cm}
+\end{aufgabe}
+
+%=============================================================
+\begin{aufgabe}[subtitle = Aufgabe 20]
 Implementiere die Methode \texttt{add(int index, T newElem)}.
 Sie fügt das Element an der gewünschten Stelle ein.
 Wenn es auch nach dem Einfügen kein Element mit diesem Index gäbe, wird eine
 \texttt{IndexOutOfBoundsException} geworfen.
-\textbf{Hinweis:} Nutze \texttt{getNode}, \texttt{nextNode} und \texttt{setNextNode}.
+%\textbf{Hinweis:} Nutze \texttt{getNode}, \texttt{nextNode} und \texttt{setNextNode}.
 
 \medskip
 \textbf{Beispiel 1:}
@@ -306,23 +434,7 @@ println(list.toArrayList());  // [a, b, x, c]
 
 \textbf{Zustand vor dem Aufruf:}
 
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  \node[firstptr] (first) {\texttt{first}};
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of c]     (n) {\texttt{null}};
-  % Indizes
-  \node[below=0.3cm of a, font=\small] {Index 0};
-  \node[below=0.3cm of b, font=\small] {Index 1};
-  \node[below=0.3cm of c, font=\small] {Index 2};
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (c.west);
-  \draw[arrow] (c.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlistix{a,b,c}
 
 \textbf{Zeichne den Zustand \emph{nach} \texttt{add(2, "x")}:}
 
@@ -374,13 +486,7 @@ println(xs.toArrayList());  // [a, b]
 
 \textbf{Leere Liste, \texttt{add(0, "a")}:}
 
-\begin{center}
-\begin{tikzpicture}
-  \node[firstptr] (first) {\texttt{first}};
-  \node[nullnode, right=2cm of first] (n) {\texttt{null}};
-  \draw[arrow] (first.east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlist{}
 
 \textbf{Zeichne den Zustand nach \texttt{add(0, "a")} und anschließend nach \texttt{add(1, "b")}:}
 
@@ -388,10 +494,10 @@ println(xs.toArrayList());  // [a, b]
 \end{aufgabe}
 
 %=============================================================
-\begin{aufgabe}[subtitle = Aufgabe 19]
+\begin{aufgabe}[subtitle = Aufgabe 21]
 Implementiere die Methode \texttt{removeFirst()}.
 Sie entfernt das erste Element der Liste.
-\textbf{Hinweis:} Nutze \texttt{content} und \texttt{nextNode}.
+%\textbf{Hinweis:} Nutze \texttt{content} und \texttt{nextNode}.
 
 \medskip
 \textbf{Beispiel:}
@@ -403,65 +509,46 @@ println(list.toArrayList());  // [b, c]
 
 \textbf{Zustand vor dem Aufruf:}
 
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  \node[firstptr] (first) {\texttt{first}};
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of c]     (n) {\texttt{null}};
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (c.west);
-  \draw[arrow] (c.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlist{a,b,c}
 
-\textbf{Zeichne den Zustand \emph{nach} \texttt{removeFirst()} (entfernte Verbindungen/Knoten rot):}
+\textbf{Zeichne den Zustand \emph{nach} \texttt{removeFirst()}
+(entfernte Verbindungen/Knoten rot):}
 
 \vspace{5cm}
 \end{aufgabe}
 
 %=============================================================
-\begin{aufgabe}[subtitle = Aufgabe 20]
-Erweitere \texttt{removeFirst()} so, dass das \emph{entfernte Element zurückgegeben} wird.
-\textbf{Hinweis:} Nutze \texttt{content}.
-
-\medskip
-\textbf{Beispiel:}
-\begin{minted}{java}
-var list = MutableList.of("a", "b");
-println(list.removeFirst());  // "a"
-\end{minted}
-
-\textbf{Zustand vor dem Aufruf:}
-
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  \node[firstptr] (first) {\texttt{first}};
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of b]     (n) {\texttt{null}};
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
-
-\textbf{Zeichne den Zustand \emph{nach} \texttt{removeFirst()} und markiere, welcher Wert zurückgegeben wird:}
-
-\vspace{5cm}
-
-\textbf{Welche lokale Variable muss vor dem Löschen gespeichert werden, damit der Rückgabewert korrekt ist?}
-
-\vspace{2cm}
-\end{aufgabe}
+%\begin{aufgabe}[subtitle = Aufgabe 22]
+%Erweitere \texttt{removeFirst()} so, dass das \emph{entfernte Element zurückgegeben} wird.
+%\textbf{Hinweis:} Nutze \texttt{content}.
+%
+%\medskip
+%\textbf{Beispiel:}
+%\begin{minted}{java}
+%var list = MutableList.of("a", "b");
+%println(list.removeFirst());  // "a"
+%\end{minted}
+%
+%\textbf{Zustand vor dem Aufruf:}
+%
+%\drawlinkedlist{a,b}
+%
+%\textbf{Zeichne den Zustand \emph{nach} \texttt{removeFirst()} und markiere,
+%welcher Wert zurückgegeben wird:}
+%
+%\vspace{5cm}
+%
+%\textbf{Welche lokale Variable muss vor dem Löschen gespeichert werden, damit der
+%Rückgabewert korrekt ist?}
+%
+%\vspace{2cm}
+%\end{aufgabe}
 
 %=============================================================
-\begin{aufgabe}[subtitle = Aufgabe 21]
+\begin{aufgabe}[subtitle = Aufgabe 23]
 Implementiere die Methode \texttt{remove(int index)}.
-Sie entfernt das Element mit dem übergebenen Index und gibt es zurück.
-\textbf{Hinweis:} Nutze \texttt{getNode}, \texttt{nextNode} und \texttt{setNextNode}.
+Sie entfernt das Element mit dem übergebenen Index %und gibt es zurück.
+%\textbf{Hinweis:} Nutze \texttt{getNode}, \texttt{nextNode} und \texttt{setNextNode}.
 
 \medskip
 \textbf{Beispiel 1:}
@@ -473,22 +560,7 @@ println(list.toArrayList());  // [a, c]
 
 \textbf{Zustand vor dem Aufruf:}
 
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  \node[firstptr] (first) {\texttt{first}};
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of c]     (n) {\texttt{null}};
-  \node[below=0.3cm of a, font=\small] {Index 0};
-  \node[below=0.3cm of b, font=\small] {Index 1};
-  \node[below=0.3cm of c, font=\small] {Index 2};
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (c.west);
-  \draw[arrow] (c.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlistix{a,b,c}
 
 \textbf{Zeichne den Zustand \emph{nach} \texttt{remove(1)}:}
 
@@ -504,22 +576,7 @@ println(list.toArrayList());  // [a, b]
 
 \textbf{Zustand vor dem Aufruf:}
 
-\begin{center}
-\begin{tikzpicture}[node distance=1.3cm]
-  \node[firstptr] (first) {\texttt{first}};
-  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
-  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
-  \node[nullnode, right=of c]     (n) {\texttt{null}};
-  \node[below=0.3cm of a, font=\small] {Index 0};
-  \node[below=0.3cm of b, font=\small] {Index 1};
-  \node[below=0.3cm of c, font=\small] {Index 2};
-  \draw[arrow] (first.east) -- (a.west);
-  \draw[arrow] (a.two east) -- (b.west);
-  \draw[arrow] (b.two east) -- (c.west);
-  \draw[arrow] (c.two east) -- (n.west);
-\end{tikzpicture}
-\end{center}
+\drawlinkedlistix{a,b,c}
 
 \textbf{Zeichne den Zustand \emph{nach} \texttt{remove(2)}:}
 
@@ -529,7 +586,7 @@ println(list.toArrayList());  // [a, b]
 \textbf{Beispiel 3:}
 \begin{minted}{java}
 var list = MutableList.of("a");
-println(list.remove(0));    // "a"
+println(list.remove(0));     // "a"
 println(list.toArrayList()); // []
 \end{minted}
 
@@ -546,13 +603,149 @@ println(list.toArrayList()); // []
 \end{tikzpicture}
 \end{center}
 
-\textbf{Zeichne den Zustand \emph{nach} \texttt{remove(0)} und markiere den Rückgabewert:}
+\textbf{Zeichne den Zustand \emph{nach} \texttt{remove(0)}}
 
 \vspace{4.5cm}
 
-\medskip
-\textbf{Sonderfall \texttt{index == 0}:} Warum muss dieser Fall in der Implementierung gesondert behandelt werden?
+%\textbf{Sonderfall \texttt{index == 0}:} Warum muss dieser Fall in der Implementierung
+%gesondert behandelt werden?
 
 \vspace{2.5cm}
 \end{aufgabe}
+
+%=============================================================
+%\begin{aufgabe}[subtitle = Aufgabe 24]
+%Erweitere \texttt{remove(int index)} so, dass das \emph{entfernte Element zurückgegeben}
+%wird. \textbf{Hinweis:} Nutze \texttt{content}.
+%
+%\begin{minted}{java}
+%var list = MutableList.of("a", "b", "c");
+%println(list.remove(1));  // b
+%\end{minted}
+%
+%\textbf{Zustand vor dem Aufruf (der zu speichernde Rückgabewert ist markiert):}
+%
+%\begin{center}
+%\begin{tikzpicture}[node distance=1.3cm]
+%  \node[firstptr] (first) {\texttt{first}};
+%  \node[listnode, right=of first] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
+%  \node[listnode, right=of a]     (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
+%  \node[listnode, right=of b]     (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
+%  \node[nullnode, right=of c]     (n) {\texttt{null}};
+%  \node[below=0.3cm of a, font=\small] {Index 0};
+%  \node[below=0.3cm of b, font=\small] {Index 1};
+%  \node[below=0.3cm of c, font=\small] {Index 2};
+%  \draw[arrow] (first.east) -- (a.west);
+%  \draw[arrow] (a.two east) -- (b.west);
+%  \draw[arrow] (b.two east) -- (c.west);
+%  \draw[arrow] (c.two east) -- (n.west);
+%  \node[draw, dashed, fill=yellow!20, above=0.9cm of b, font=\small\ttfamily]
+%      (saved) {result = "b"};
+%  \draw[->, dashed, gray!70] (saved.south) -- (b.north);
+%\end{tikzpicture}
+%\end{center}
+%
+%%\textbf{Warum muss der Inhalt des zu löschenden Knotens \emph{vor} dem Umhängen des
+%%Zeigers gespeichert werden?}
+%
+%\vspace{2.5cm}
+%\end{aufgabe}
+
+%=============================================================
+%\begin{aufgabe}[subtitle = Aufgabe 25]
+%Implementiere die Methode \texttt{copyAll()} in der Klasse \texttt{MutableNode}.
+%Sie erzeugt eine vollständige Kopie der Knotenkette ab diesem Knoten und gibt
+%den ersten Knoten der \emph{neuen} Kette zurück.
+%
+%\begin{minted}{java}
+%var original = new MutableNode<String>("a",
+%    new MutableNode<>("b", new MutableNode<>("c", null)));
+%var copy = original.copyAll();
+%copy.setContent("x");
+%println(original.content());  // "a"  – unverändert
+%println(copy.content());      // "x"
+%\end{minted}
+%
+%\medskip
+%\textbf{Zustand vor dem Aufruf (\texttt{original.copyAll()}):}
+%
+%\begin{center}
+%\begin{tikzpicture}[node distance=1.3cm]
+%  \node[firstptr] (orig) {\texttt{original}};
+%  \node[listnode, right=of orig] (a) {\texttt{"a"} \nodepart{two} \phantom{xx}};
+%  \node[listnode, right=of a]    (b) {\texttt{"b"} \nodepart{two} \phantom{xx}};
+%  \node[listnode, right=of b]    (c) {\texttt{"c"} \nodepart{two} \phantom{xx}};
+%  \node[nullnode, right=of c]    (n) {\texttt{null}};
+%  \draw[arrow] (orig.east) -- (a.west);
+%  \draw[arrow] (a.two east) -- (b.west);
+%  \draw[arrow] (b.two east) -- (c.west);
+%  \draw[arrow] (c.two east) -- (n.west);
+%\end{tikzpicture}
+%\end{center}
+%
+%\textbf{Zeichne den Zustand \emph{nach} \texttt{copyAll()} (neue Knoten und Zeiger grün
+%gestrichelt):}
+%
+%\medskip
+%\textbf{Hinweis:} Die Originalkette bleibt unverändert.
+%Die neue Kette besteht aus \emph{eigenen} Knoten mit denselben Inhalten –
+%kein Knoten wird geteilt.
+%
+%\vspace{6.5cm}
+%
+%\textbf{Die Methode verwendet zwei lokale Zeiger (\texttt{current} und
+%\texttt{newCurrent}). Erkläre, welche Aufgabe jeder der beiden Zeiger während der
+%Schleife übernimmt.}
+%
+%\vspace{3cm}
+%\end{aufgabe}
+%
+%%=============================================================
+%\begin{aufgabe}[subtitle = Aufgabe 26]
+%Implementiere die Methode \texttt{copy()} in der Klasse \texttt{MutableList}.
+%Sie gibt eine vollständige, unabhängige Kopie der Liste zurück.
+%\textbf{Hinweis:} Nutze \texttt{copyAll} aus \texttt{MutableNode}.
+%
+%\begin{minted}{java}
+%var original = MutableList.of("a", "b", "c");
+%var copy = original.copy();
+%copy.replace(0, "x");
+%println(original.toArrayList());  // [a, b, c]
+%println(copy.toArrayList());      // [x, b, c]
+%\end{minted}
+%
+%\medskip
+%\textbf{Beispiel 1 – nichtleere Liste:}
+%
+%\textbf{Zustand vor dem Aufruf:}
+%
+%\drawlinkedlist{a,b,c}
+%
+%\textbf{Zeichne den Zustand \emph{nach} \texttt{copy()} (neue Knoten grün gestrichelt).}
+%
+%\medskip
+%\textbf{Hinweis:} Im Gegensatz zu \texttt{addAll} werden hier neue Knoten erzeugt –
+%beide Listen sind danach vollständig unabhängig voneinander.
+%
+%\vspace{6.5cm}
+%
+%\medskip
+%\textbf{Beispiel 2 – leere Liste:}
+%
+%\begin{minted}{java}
+%MutableList<String> empty = MutableList.of();
+%var copy = empty.copy();
+%println(copy.toArrayList());  // []
+%\end{minted}
+%
+%\textbf{Zustand vor dem Aufruf:}
+%
+%\drawlinkedlist{}
+%
+%\textbf{Zeichne den Zustand \emph{nach} \texttt{copy()} und erkläre, warum der Fall
+%\texttt{first == null} gesondert behandelt werden muss:}
+%
+%\vspace{4cm}
+%\end{aufgabe}
+
 \end{document}

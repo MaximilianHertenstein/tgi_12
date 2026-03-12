@@ -1,6 +1,7 @@
 package org.example;
 
 import io.javalin.config.JavalinConfig;
+import io.javalin.plugin.bundled.CorsPluginConfig;
 
 public class JavalinConfigurator {
 
@@ -16,5 +17,11 @@ public class JavalinConfigurator {
         routes.post("/todos/{id}/delete", serverController::deleteToDo);
         routes.post("/todos/clearCompletedToDos", serverController::clearCompletedToDos);
         javalinConfig.staticFiles.enableWebjars();
+                javalinConfig.bundledPlugins.enableCors(cors -> {
+            //cors.       allowHost("http://localhost:19006");
+            cors.addRule(CorsPluginConfig.CorsRule::anyHost);
+        });
+
+
     }
 }

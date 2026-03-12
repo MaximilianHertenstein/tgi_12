@@ -114,12 +114,6 @@ Wenn der SimpleStack leer ist, soll eine `EmptyStackException` geworfen werden!
 
 
 
-# Aufgabe
-
-Setze die Eigenschaft `first` der Klasse `SimpleStack` auf `private`.
-
-
-
 
 # Aufgabe
 
@@ -129,11 +123,11 @@ Sie fügt ein Element am Anfang des `SimpleStack` hinzu.
 ```{.java .cb-nb line_numbers=false}
 var stack = new SimpleStack<String>();
 stack.push("a");
-println(stack.top());
+println(stack.first);
 ```
 ```{.java .cb-nb line_numbers=false}
 stack.push("b");
-println(stack.top());
+println(stack.first);
 ```
 
 **Hinweis:** Nutze den Konstruktor von `Node`!
@@ -185,4 +179,10 @@ Wenn der SimpleStack leer ist, soll eine `EmptyStackException` geworfen werden!
 
 **Hinweis:** Nutze `nextNode()`!
 
+
+
+
+# Aufgabe
+
+Setze die Eigenschaft `first` der Klasse `SimpleStack` auf `private`.
 

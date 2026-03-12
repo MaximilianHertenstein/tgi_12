@@ -41,6 +41,20 @@ public class MutableNode<T> {
     public void setNextNode(MutableNode<T> nextNode) {
         this.nextNode = nextNode;
     }
+
+    public MutableNode<T> copyAll() {
+        MutableNode<T> newFirst = new MutableNode<>(content);
+        var newCurrent = newFirst;
+        var current = nextNode();
+        while (current != null) {
+            MutableNode<T> newNode = new MutableNode<>(current.content());
+            newCurrent.setNextNode(newNode);
+            newCurrent = newNode;
+            current = current.nextNode();
+        }
+        return  newFirst;
+    }
+
 }
 
 
@@ -189,6 +203,15 @@ public class MutableList<T>   {
         }
         nodeBefore.setNextNode(nodeToDelete.nextNode());
         return nodeToDelete.content();
+    }
+
+        public  MutableList<T> copy() {
+        if (first != null) {
+            return new MutableList<T>(first.copyAll());
+        }
+        return new MutableList<>();
+
+
     }
 
 
@@ -559,3 +582,56 @@ println(list.remove(1));
 ```
 
 **Hinweis:** Nutze `content`!
+
+
+# Aufgabe
+
+Implementiere die Methode `copyAll()` in der Klasse `MutableNode`. Sie erzeugt eine vollständige Kopie der Knotenkette ab diesem Knoten und gibt den ersten Knoten der neuen Kette zurück.
+
+\tiny
+```{.java .cb-nb line_numbers=false}
+var original = new MutableNode<String>("a", new MutableNode<>("b", new MutableNode<>("c", null)));
+var copy = original.copyAll();
+println(copy.content());
+println(copy.nextNode().content());
+println(copy.nextNode().nextNode().content());
+```
+```{.java .cb-nb line_numbers=false}
+// Veränderungen an der Kopie dürfen das Original nicht beeinflussen
+var original = new MutableNode<String>("a", new MutableNode<>("b", null));
+var copy = original.copyAll();
+copy.setContent("x");
+println(original.content());
+println(copy.content());
+```
+\normalsize
+
+**Hinweis:** 
+
+- Erzeuge zunächst einen neuen Knoten `newFirst`. Dieser ist der Anfang der neuen Kette.
+- Erstelle anschließend eine zweite Variable `newLast`, die auf den letzten Knoten der neuen Kette zeigt. Zu Beginn ist das ebenfalls der erste Knoten, später ändert sich das natürlich.
+- Erstelle dann eine Variable `current`, die auf den Nachfolger des Knotens zeigt, der die Methode aufruft. Diese Variable wird verwendet, um über die ursprüngliche Liste zu iterieren.
+- Erzeuge in jedem Schritt einen neuen Knoten und hänge ihn an das Ende der kopierten Kette an. Achte darauf, dass `newLast` am Ende jeder Schleifeniteration auf den neu hinzugefügten Knoten gesetzt wird.
+
+# Aufgabe
+
+Implementiere die Methode `copy()` in der Klasse `MutableList`. Sie gibt eine vollständige Kopie der Liste zurück, sodass Veränderungen an der Kopie das Original nicht beeinflussen.
+```{.java .cb-nb line_numbers=false}
+var original = MutableList.of("a", "b", "c");
+var copy = original.copy();
+println(copy.toArrayList());
+```
+```{.java .cb-nb line_numbers=false}
+// Veränderungen an der Kopie dürfen das Original nicht beeinflussen
+copy.replace(0, "x");
+println(original.toArrayList());
+println(copy.toArrayList());
+```
+```{.java .cb-nb line_numbers=false}
+// Auch leere Listen lassen sich kopieren
+MutableList<String> empty = MutableList.of();
+var copyOfEmpty = empty.copy();
+println(copyOfEmpty.toArrayList());
+```
+
+**Hinweis:** Nutze `copyAll` aus `MutableNode`!
