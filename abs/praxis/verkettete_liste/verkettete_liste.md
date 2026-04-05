@@ -10,7 +10,7 @@ import java.util.Iterator;
 import static java.lang.IO.println;
 
 
-record   Node<T> (T content, Node<T> nextNode) {
+record Node<T>(T content, Node<T> nextNode) {
     public Node(T content) {
         this(content, null);
     }
@@ -18,7 +18,7 @@ record   Node<T> (T content, Node<T> nextNode) {
 
 
 class LinkedListIterator<T> implements Iterator<T>  {
-    Node<T> current;
+    public Node<T> current;
 
     public LinkedListIterator(Node<T> current) {
         this.current = current;
@@ -41,7 +41,7 @@ class LinkedListIterator<T> implements Iterator<T>  {
 
 ```
 ```{.java .cb-run}
-record ImmutableLinkedList<T>(Node<T> first) implements Iterable {
+record ImmutableLinkedList<T>(Node<T> first) implements Iterable<T> {
 
 
 
@@ -71,7 +71,7 @@ record ImmutableLinkedList<T>(Node<T> first) implements Iterable {
 
 
 
-        public  void printContents() {
+    public  void printContents() {
         var current = first;
         while (current != null) {
             System.out.println(current.content());
@@ -205,8 +205,6 @@ record ImmutableLinkedList<T>(Node<T> first) implements Iterable {
         while (current != null && index <= toIndex) {
             if (index >= fromIndex) {
                 result.add(current.content());
-
-
             }
             current = current.nextNode();
             index++;
@@ -236,24 +234,25 @@ record ImmutableLinkedList<T>(Node<T> first) implements Iterable {
 
 
     public  ImmutableLinkedList<T> copy() {
-        return fromList(toArrayList());
+        return reversed().reversed();
     }
 
     public ImmutableLinkedList<T>  plus(T other) {
-        var res = new Node<>(other);
-        for (var elem: reversed().toArrayList()) {
-            res = new Node<>(elem, res);
-        }
-        return new ImmutableLinkedList<>(res);
+        var r = reversed();
+        var reversedRes = new Node<>(other,r.first);
+        return new ImmutableLinkedList<>(reversedRes).reversed();
+
     }
 
 
     public ImmutableLinkedList <T> plus(ImmutableLinkedList <T> other) {
-        var res = other.first;
-        for (var elem: reversed().toArrayList()) {
-            res = new Node<>(elem, res);
+        var r = reversed().first;
+        var curr = other.first;
+        while (curr != null) {
+            r = new Node<>(curr.content(), r);
+            curr = curr.nextNode();
         }
-        return new ImmutableLinkedList<>(res);
+        return new ImmutableLinkedList<>(r).reversed();
     }
 
     public LinkedListIterator<T> iterator() {
@@ -283,7 +282,7 @@ Definiere jede Klasse in einer eigenen Datei.
 
 # Aufgabe
 
-Erstelle ein Record `Node`. Diese Klasse `Node` hat zwei Eigenschaften:
+Erstelle ein `record` `Node`. Dieses `record` hat zwei Eigenschaften:
 
 - `content` vom Typ `String`
 - `nextNode` vom Typ `Node`
@@ -298,7 +297,7 @@ new Node("hallo", new Node("welt", null));
 
 # Aufgabe
 
-Ergänze im Record `Node`  einen sekundären Konstruktor, der nur `content` entgegennimmt und `nextNode` auf `null` setzt.
+Ergänze im `record` `Node` einen sekundären Konstruktor, der nur `content` entgegennimmt und `nextNode` auf `null` setzt.
 
 ```{.java .cb-nb line_numbers=false}
 new Node("hallo");
@@ -311,11 +310,11 @@ new Node("eins");
 
 # Aufgabe
 
-Definiere die Klasse `ImmutableLinkedList`  als `record`. Die einzige Eigenschaft ist:
+Definiere die Klasse `ImmutableLinkedList` als `record`. Die einzige Eigenschaft ist:
 
-- `first` vom Typ `Node` 
+- `first` vom Typ `Node`
 
-Diese Klasse repräsentiert eine unveränderliche einfach verkettete Liste von `Strings`
+Diese Klasse repräsentiert eine unveränderliche, einfach verkettete Liste von `Strings`.
 
 
 
@@ -404,7 +403,7 @@ ImmutableLinkedList.of("a", "b").getFirst();
 
 # Aufgabe
 
-Implementiere die Methode `printContents()` in `ImmutableLinkedList`, die alle Elemente an der Konsole ausgibt.
+Implementiere die Methode `printContents()` in `ImmutableLinkedList`, die alle Elemente auf der Konsole ausgibt.
 
 ```{.java .cb-nb line_numbers=false}
 ImmutableLinkedList.of("a", "b").printContents();
@@ -459,31 +458,21 @@ ImmutableLinkedList.of().size();
 Implementiere die Methode `contains(String o)` in `ImmutableLinkedList`, die überprüft, ob ein Element in der Liste vorkommt.
 
 ```{.java .cb-nb line_numbers=false}
+ImmutableLinkedList.of("a","b").contains("a");
+```
+```{.java .cb-nb line_numbers=false}
 ImmutableLinkedList.of("a","b").contains("b");
 ```
-
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("x", "y", "z").contains("a");
+ImmutableLinkedList.of("a", "b").contains("x");
 ```
 
 Hinweis: Vergleiche mit `equals`.
 
 
-# Aufgabe
-Implementiere die Methode `toArrayList`, die alle Inhalte der verketteten Liste in einer `ArrayList` in gleicher Reihenfolge zurückgibt.
 
 
-```{.java .cb-nb line_numbers=false}
-var list = ImmutableLinkedList.of();
-list.toArrayList(); 
-```
-
-```{.java .cb-nb line_numbers=false}
-var list = ImmutableLinkedList.of("a", "b", "c");
-list.toArrayList();
-```
-
-
+<!-- 
 # Aufgabe
 
 Implementiere die Methode `show()` in `ImmutableLinkedList`, die die Liste als lesbare Zeichenkette darstellt, z. B. `[a, b, c]`.
@@ -495,10 +484,7 @@ ImmutableLinkedList.of("a","b").show();
 ```{.java .cb-nb line_numbers=false}
 ImmutableLinkedList.of().show();
 ```
-
-
-
-
+ -->
 
 
 
@@ -527,6 +513,8 @@ ImmutableLinkedList.of("a").getNode(-1);
 
 
 
+
+
 # Aufgabe
 
 Implementiere die Methode `get(int index)` in `ImmutableLinkedList`, die das Element am Index zurückgibt. Nutze `getNode`.
@@ -539,9 +527,15 @@ ImmutableLinkedList.of("a","b").get(0);
 ImmutableLinkedList.of("a","b","c").get(2);
 ```
 
+
+
+
+
+
+
 # Aufgabe
 
-Implementiere die Methode `indexOf(String o)` in `ImmutableLinkedList`, die den Index des ersten Vorkommens zurückgibt oder `-1`, falls nicht vorhanden.
+Implementiere die Methode `indexOf(String o)` in `ImmutableLinkedList`, die den Index des ersten Vorkommens zurückgibt oder `-1`, falls nicht vorhanden. Nutze **nicht** die Methoden `get` und `getNode`!
 
 ```{.java .cb-nb line_numbers=false}
 ImmutableLinkedList.of("a", "b","c").indexOf("c");
@@ -554,6 +548,7 @@ ImmutableLinkedList.of("a","b").indexOf("c");
 # Aufgabe
 
 Implementiere die Methode `lastIndexOf(String o)` in `ImmutableLinkedList`, die den Index des letzten Vorkommens zurückgibt oder `-1`.
+Nutze **nicht** die Methoden `get` und `getNode` nicht!
 
 ```{.java .cb-nb line_numbers=false}
 ImmutableLinkedList.of("a", "b", "c").lastIndexOf("a");
@@ -565,10 +560,28 @@ ImmutableLinkedList.of("b", "b").lastIndexOf("b");
 
 
 
+# Aufgabe
+Implementiere die Methode `toArrayList`, die alle Inhalte der verketteten Liste in einer `ArrayList` in gleicher Reihenfolge zurückgibt. Nutze die Methoden `get` und `getNode` nicht!
+
+
+```{.java .cb-nb line_numbers=false}
+var list = ImmutableLinkedList.of();
+list.toArrayList(); 
+```
+
+```{.java .cb-nb line_numbers=false}
+var list = ImmutableLinkedList.of("a", "b", "c");
+list.toArrayList();
+```
+\huge
+
+**Hinweis:** Nutze die Methode  `toArrayList` **nicht** in den folgenden Methoden!
+
+\normalsize
 
 # Aufgabe
 
-Implementiere die Methode `subList(int fromIndex, int toIndex)` in `ImmutableLinkedList`, die eine `List<String>` mit den Elementen im Bereich `[fromIndex, toIndex]` (inklusive) zurückgibt. Bei ungültigen Indizes soll eine `IndexOutOfBoundsException` geworfen werden.
+Implementiere die Methode `subList(int fromIndex, int toIndex)` in `ImmutableLinkedList`, die eine `List<String>` mit den Elementen im Bereich `[fromIndex, toIndex]` (inklusive) zurückgibt. Bei ungültigen Indizes soll eine `IndexOutOfBoundsException` geworfen werden. Nutze maximal einmal `getNode`!
 
 ```{.java .cb-nb line_numbers=false}
 ImmutableLinkedList.of("a" , "b", "c").subList(1,2);
@@ -578,7 +591,137 @@ ImmutableLinkedList.of("a" , "b", "c").subList(1,2);
 ImmutableLinkedList.of("a", "b").subList(0,1);
 ```
 
-Hinweis: Baue eine `ArrayList<String>` und füge passende Elemente hinzu.
+**Hinweise:** Baue eine `ArrayList<String>` und füge passende Elemente hinzu. 
+
+
+**Hinweis:** Nutze die Methode  `subList` **nicht** in den folgenden Methoden!
+
+
+
+
+
+# Aufgabe
+
+Definiere mit dem Schlüsselwort `class` die Klasse `LinkedListIterator`.  
+Diese Klasse dient dazu, über eine verkettete Liste zu iterieren.
+
+Die Klasse besitzt genau eine Eigenschaft:
+
+- `current` vom Typ `Node`
+
+<!-- ```{.java .cb-nb line_numbers=false}
+var lli = new LinkedListIterator();
+```
+ -->
+
+
+
+# Aufgabe
+
+Implementiere den Konstruktor von `LinkedListIterator`.  
+Der Konstruktor erhält eine `Node`, mit der die Iteration beginnen soll.
+
+```{.java .cb-nb line_numbers=false}
+var it = new LinkedListIterator(new Node("a"));
+it.current;
+```
+```{.java .cb-nb line_numbers=false}
+var it = new LinkedListIterator(new Node("a", new Node("b")));
+it.current;
+```
+```{.java .cb-nb line_numbers=false}
+var it = new LinkedListIterator(null);
+it.current;
+```
+
+
+# Aufgabe
+
+Implementiere die Methode `hasNext()` in `LinkedListIterator`.
+
+Die Methode soll `true` zurückgeben, wenn noch ein weiteres Element vorhanden ist,  
+ansonsten `false`.
+
+```{.java .cb-nb line_numbers=false}
+var it = new LinkedListIterator(new Node("a"));
+it.hasNext();
+```
+
+```{.java .cb-nb line_numbers=false}
+var it = new LinkedListIterator(null);
+it.hasNext();
+```
+
+
+
+# Aufgabe
+
+Implementiere die Methode `next()` in `LinkedListIterator`.
+
+Die Methode soll:
+
+- den aktuellen Inhalt zurückgeben
+- den Iterator auf das nächste Element weiterschalten
+
+```{.java .cb-nb line_numbers=false}
+var it = new LinkedListIterator(new Node("a", new Node("b")));
+println(it.next());
+println(it.current);
+```
+
+```{.java .cb-nb line_numbers=false}
+var it = new LinkedListIterator(
+    new Node("a", new Node("b"))
+);
+println(it.next());
+println(it.current);
+println(it.next());
+println(it.current);
+```
+
+# Aufgabe
+
+Ergänze in `ImmutableLinkedList` die Methode `iterator()`.
+
+Die Methode soll einen neuen `LinkedListIterator` zurückgeben,  
+der mit dem ersten Element der Liste startet.
+
+
+```{.java .cb-nb line_numbers=false}
+var xs = ImmutableLinkedList.of("a", "b", "c");
+var it = xs.iterator();
+it.current
+```
+
+
+# Aufgabe
+
+Setze die Methoden `getNode` und `getLastNode` der Klasse `ImmutableLinkedList` auf `private`.
+Setze außerdem die Eigenschaft `current` der Klasse `LinkedListIterator` auf `private`.
+
+
+# Aufgabe
+
+Definiere die Klasse `Utils`.
+
+Diese Klasse enthält Hilfsmethoden zum Arbeiten mit verketteten Listen.
+
+# Aufgabe
+
+Implementiere die statische Methode `printLinkedList`.
+
+Die Methode erhält eine verkettete Liste und gibt alle Elemente  
+auf der Konsole aus. Die einzige Methode der Klasse `ImmutableLinkedList`, die dabei genutzt werden darf, ist `iterator`!
+
+```{.java .cb-nb line_numbers=false}
+var xs = ImmutableLinkedList.of("a", "b", "c");
+Utils.printLinkedList(xs);
+```
+
+
+
+
+
 
 
 
@@ -600,6 +743,13 @@ ImmutableLinkedList.fromList(ys);
 ```
 \normalsize
 
+
+
+\huge
+
+Verwende in den folgen Methoden nicht die Methode `get`!
+
+\normalsize
 
 # Aufgabe
 
@@ -660,132 +810,9 @@ xs.plus(ys)
 \normalsize
 
 
-
-# Aufgabe
-
-Definiere mit dem Schlüsselwort `class` die Klasse `LinkedListIterator`.  
-Diese Klasse dient dazu, über eine verkettete Liste zu iterieren.
-
-Die Klasse besitzt genau eine Eigenschaft:
-
-- `current` vom Typ `Node`
-
-<!-- ```{.java .cb-nb line_numbers=false}
-var lli = new LinkedListIterator();
-```
- -->
-
-
-
-# Aufgabe
-
-Implementiere den Konstruktor von `LinkedListIterator`.  
-Der Konstruktor erhält eine `Node`, mit der die Iteration beginnen soll.
-
-```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(new Node("a"));
-it.current;
-```
-```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(new Node("a", new Node("b")));
-it.current;
-```
-```{.java .cb-nb line_numbers=false}
-new LinkedListIterator(null);
-it.current;
-```
-
-
-# Aufgabe
-
-Implementiere die Methode `hasNext()` in `LinkedListIterator`.
-
-Die Methode soll `true` zurückgeben, wenn noch ein weiteres Element vorhanden ist,  
-ansonsten `false`.
-
-```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(new Node("a"));
-it.hasNext();
-```
-
-```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(null);
-it.hasNext();
-```
-
-
-
-# Aufgabe
-
-Implementiere die Methode `next()` in `LinkedListIterator`.
-
-Die Methode soll:
-
-- den aktuellen Inhalt zurückgeben
-- den Iterator auf das nächste Element weiterschalten
-
-```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(new Node("a", new Node("b")));
-println(it.next());
-println(it.current)
-```
-
-```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(
-    new Node("a", new Node("b"))
-);
-println(it.next());
-println(it.current);
-println(it.next());
-println(it.current);
-```
-
-# Aufgabe
-
-Ergänze in `ImmutableLinkedList` die Methode `iterator()`.
-
-Die Methode soll einen neuen `LinkedListIterator` zurückgeben,  
-der mit dem ersten Element der Liste startet.
-
-
-```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-var it = xs.iterator();
-it.current
-```
-
-
-# Aufgabe
-
-Setze die Methoden `getNode` und `getLastNode` der Klasse `ImmutableLinkedList` auf privat.
-Setze außerdem die Eigenschaft `current` der Klasse `LinkedListIterator` auf privat.
-
-
-# Aufgabe
-
-Definiere die Klasse `Utils`.
-
-Diese Klasse enthält Hilfsmethoden zum Arbeiten mit verketteten Listen.
-
-# Aufgabe
-
-Implementiere die statische Methode `printLinkedList`.
-
-Die Methode erhält eine verkettete Liste und gibt alle Elemente  
-auf der Konsole aus. Die einzige Methode der Klasse `ImmutableLinkedList`, die dabei genutzt werden darf, ist `iterator`!
-
-```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-Utils.printLinkedList(xs);
-```
-
-
-
-
-
 # Aufgabe 
 
-Passe die Klasse `ImmutableLinkedList` so an, dass nicht nur `Strings`, sondern Elemente mit jedem beliebigen Typ abgespeichert werden können.
+Passe die Klasse `ImmutableLinkedList` so an, dass nicht nur `Strings`, sondern Elemente mit jedem beliebigen Typ gespeichert werden können.
 In einer Liste sollen immer noch alle Elemente denselben Typ haben.
 
 ```{.java .cb-nb line_numbers=false}
@@ -797,3 +824,5 @@ var zs = ImmutableLinkedList.of(false, true);
 **Hinweis 1:** Es müssen auch Hilfsklassen angepasst werden.
 
 **Hinweis 2:** Verwende Klassen mit Typparametern nie ohne Typparameter. Das ist zwar möglich, aber nicht sinnvoll.
+
+

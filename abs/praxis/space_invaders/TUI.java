@@ -32,16 +32,7 @@ public class TUI {
     }
 
 
-
-    public void print(List<StringWithLocation> uiState) throws IOException, InterruptedException {
-        screen.clear();
-        for (var x : uiState) {
-            textGraphics.putString(x.location().x(), x.location().y(), x.string());
-        }
-
-        screen.refresh();
-        sleep(10);
-    }
+    
 
     public void close() throws IOException {
         screen.close();

@@ -65,9 +65,6 @@ public record ImmutableLinkedList<T>(Node<T> first) implements Iterable<T> {
     }
 
 
-    private Node<T> getSecondLastNode() {
-        return getNode(size() - 2);
-    }
 
     public int size() {
 
@@ -109,7 +106,10 @@ public record ImmutableLinkedList<T>(Node<T> first) implements Iterable<T> {
 
 
     public Node<T> getNode(int index) {
-        if (index < 0) {
+        if (index < 0 ) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (first == null ) {
             throw new IndexOutOfBoundsException();
         }
         var current = first;
@@ -198,32 +198,36 @@ public record ImmutableLinkedList<T>(Node<T> first) implements Iterable<T> {
         while (curr != null) {
             res = new Node<>(curr.content(), res);
             curr = curr.nextNode();
-
         }
         return new ImmutableLinkedList<>(res);
     }
 
 
     public  ImmutableLinkedList<T> copy() {
-        return fromList(toArrayList());
+        return reversed().reversed();
     }
 
     public ImmutableLinkedList<T>  plus(T other) {
-        var res = new Node<>(other);
-        for (var elem: reversed().toArrayList()) {
-            res = new Node<>(elem, res);
-        }
-        return new ImmutableLinkedList<>(res);
+        var r = reversed();
+        var reversedRes = new Node<>(other,r.first);
+        return new ImmutableLinkedList<>(reversedRes).reversed();
+
+
+
     }
 
 
     public ImmutableLinkedList <T> plus(ImmutableLinkedList <T> other) {
-        var res = other.first;
-        for (var elem: reversed().toArrayList()) {
-            res = new Node<>(elem, res);
+        var r = reversed().first;
+        var curr = other.first;
+        while (curr != null) {
+            r = new Node<>(curr.content(), r);
+            curr = curr.nextNode();
         }
-        return new ImmutableLinkedList<>(res);
+        return new ImmutableLinkedList<>(r).reversed();
+
     }
+
 
 
 
@@ -246,83 +250,7 @@ public record ImmutableLinkedList<T>(Node<T> first) implements Iterable<T> {
     }
 
 
-    public boolean containsAll(Collection<T> c) {
-        for (T o : c) {
-            if (!contains(o)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    public ListIterator<T> listIterator(int index) {
-        return null;
-    }
-
-
-    public ListIterator<T> listIterator() {
-        throw new UnsupportedOperationException();
-    }
-
-
-    public <T1> T1[] toArray(T1[] a) {
-        throw new UnsupportedOperationException();
-    }
-
-
-//    public boolean add(T t) {
-//        throw new UnsupportedOperationException();
-//    }
-
-
-    public boolean remove(T o) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    public boolean addAll(Collection<? extends T> c) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    public boolean addAll(int index, Collection<? extends T> c) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    public boolean removeAll(Collection<?> c) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedOperationException();
 
     }
 
 
-    public void clear() {
-        throw new UnsupportedOperationException();
-
-    }
-
-
-    public T set(int index, T element) {
-        throw new UnsupportedOperationException();
-
-    }
-
-
-    public void add(int index, T element) {
-        throw new UnsupportedOperationException();
-
-    }
-
-
-    public T remove(int index) {
-        throw new UnsupportedOperationException();
-
-    }
-
-}

@@ -1,17 +1,15 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.IO.println;
-
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-   var x = ImmutableLinkedList.of(1, 2, 3);
-   println(x.plus(ImmutableLinkedList.of(5,6,7)));
-
-
+        var t = new Node<String>("a",
+                new Node<String>("b",
+                        null,
+                        null),
+                new Node<String>("c", null, null
+                ));
     }
 }
+

@@ -3,7 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class Queue<T> {
+public class SimpleQueue<T> {
     MutableNode<T> first;
     MutableNode<T> last;
 
@@ -18,17 +18,17 @@ public class Queue<T> {
     }
 
 
-    public Queue() {
+    public SimpleQueue() {
         first = null;
         last = null;
     }
-//    private Queue(MutableNode<T>  first) {
+//    private SimpleQueue(MutableNode<T>  first) {
 //         this.first = first;
 //         this.last = first;
 //    }
 
-    public static <T> Queue<T> of() {
-        return new Queue<>();
+    public static <T> SimpleQueue<T> of() {
+        return new SimpleQueue<>();
     }
 
     private void setLast(MutableNode<T> n) {
@@ -39,9 +39,9 @@ public class Queue<T> {
         first = n;
     }
 
-    public static <T> Queue<T> of(T e1) {
+    public static <T> SimpleQueue<T> of(T e1) {
 
-        var q = new Queue<T>();
+        var q = new SimpleQueue<T>();
         var n = new MutableNode<>(e1);
         q.setFirst(n);
         q.setLast(n);
@@ -50,19 +50,19 @@ public class Queue<T> {
 
 
 
-    public static <T> Queue<T> of(T e1, T e2) {
+    public static <T> SimpleQueue<T> of(T e1, T e2) {
         var last = new MutableNode<T>(e2);
         var first = new MutableNode<T>(e1, last);
-        var q =  new Queue<T>();
+        var q =  new SimpleQueue<T>();
         q.setLast(last);
         q.setFirst(first);
         return q;
     }
 
-    public static <T> Queue<T> of(T e1, T e2, T e3) {
+    public static <T> SimpleQueue<T> of(T e1, T e2, T e3) {
         var last = new MutableNode<T>(e3);
         var first = new MutableNode<T>(e1, new MutableNode<>(e2, last));
-        var q =  new Queue<T>();
+        var q =  new SimpleQueue<T>();
         q.setLast(last);
         q.setFirst(first);
         return q;
@@ -73,7 +73,7 @@ public class Queue<T> {
     }
 
 
-    public void enqueue(T x) {
+    public void enQueue(T x) {
         var newNode = new MutableNode<T>(x);
         if (isEmpty()) {
             first = newNode;
@@ -84,7 +84,7 @@ public class Queue<T> {
         last = newNode;
     }
 
-    public T dequeue() {
+    public T deQueue() {
         if (isEmpty()) throw new NoSuchElementException();
         var result = first.content();
         first = first.nextNode();

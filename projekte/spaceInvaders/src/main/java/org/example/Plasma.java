@@ -2,23 +2,15 @@ package org.example;
 
 import java.util.List;
 
-public record SuperRocket(Rocket playerRocket) implements IBasicGameObject, Rocket {
+
+public record Plasma(MovableGameObject mgo) implements IBasicGameObject, Rocket {
 
 
-    SuperRocket(V2 pos){
+    Plasma(V2 pos, int height){
 
-        String rocket =
-                """
-                        /\\/\\/\\/\\
-                        /######\\
-                        /######\\
-                        |######|
-                        |######|
-                        |######|
-                        \\######/
-                        \\######/
-                        \\######/
-                        VVVVVVVV""";
+
+        String rocket =  Utils.repeat("(((||||||||||)))\n", height);
+
 
 //        var s =
 //                     """
@@ -51,17 +43,17 @@ public record SuperRocket(Rocket playerRocket) implements IBasicGameObject, Rock
 //         """;
 
 
-        var playerRocket = new PlayerRocket(new MovableGameObject(pos,rocket)); // "/|\\\n|||\n|||\n|||\n|||"));
-        this(playerRocket);
+        var mgo = new MovableGameObject(pos,rocket); // "/|\\\n|||\n|||\n|||\n|||"));
+        this(mgo);
     }
     @Override
     public V2 pos() {
-        return playerRocket.pos();
+        return mgo.pos();
     }
 
     @Override
-    public Rocket move() {
-        return new SuperRocket((playerRocket.move()));
+    public Plasma move() {
+        return new Plasma((mgo.move(new V2(0,-3))));
     }
 
     @Override
@@ -73,12 +65,12 @@ public record SuperRocket(Rocket playerRocket) implements IBasicGameObject, Rock
 
     @Override
     public List<StringWithLocation> show() {
-        return playerRocket.show();
+        return mgo.show();
     }
 
     @Override
     public List<V2> hitBox() {
-        return playerRocket.hitBox();
+        return mgo.hitBox();
     }
 
 

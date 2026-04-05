@@ -57,7 +57,7 @@ public class Model {
 
 
     public int nextId() {
-        if (toDos.size() == 0) {
+        if (toDos.isEmpty()) {
             return 1;
         }
         int max = toDos.get(0).id();

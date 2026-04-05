@@ -1,0 +1,238 @@
+\documentclass[a4paper]{scrartcl}
+%\usepackage{tikz}
+%\usepackage[simplified]{pgf
+%-umlcd}
+\usepackage[
+typ={ib},
+fach=Informatik,
+farbig,
+%module={ohne}
+]{schule}
+\hypersetup{hidelinks}
+\usetikzlibrary{decorations.pathreplacing}
+
+
+%\usepackage{ctable}
+%
+%´\usepackage[default]{fontsetup}
+
+%\usepackage[default]{fontsetup}
+\usepackage[default]{fontsetup}
+\usepackage[Scale= MatchLowercase]{monaspace-otf}
+%\usepackage{fourier-otf}
+%\setmonofont{FiraCode-Regular}[
+%Contextuals=Alternate % Activate the calt feature
+%]
+%\usepackage{newunicodechar}
+%\newunicodechar{^^^^2588}{█}
+%\newunicodechar{█}{█}
+%\setmonofont{Fira Code}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\setmonofont{Ubuntu Mono Regular}[Scale=0.9]
+%\usepackage{pmboxdraw}
+%\usepackage{cascadia-code}
+%\usepackage[scale = 0.1]{jetbrainsmono-otf}
+%%\usepackage{cascadiamono-otf}
+%%\setmonofont{CascadiaMono-SemiLight}[]
+%\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+%\newunicodechar{2588}{█}
+%\newunicodechar{█}{\pmboxdrawuni{2588}}
+
+\usepackage{scrlayer-scrpage}
+\ifoot{% TODO: \usepackage{graphicx} required
+	
+	\includegraphics[width=0.35\linewidth]{GHSE-Logo}
+	
+}
+
+\usepackage[ngerman]{babel} 
+
+\usepackage{shellesc}
+\usepackage{minted}
+\usepackage[Scale = MatchLowercase]{monaspace-otf}
+\usepackage{microtype}	
+
+\usepackage{fancyvrb}
+\date{}
+
+\title{Binärbäume}
+\begin{document}
+\section{Knoten}
+Ein Binärbaum besteht aus Knoten, die einen Inhalt sowie zwei, einen oder keinen Nachfolger haben.
+\begin{minted}{java}
+record Node<T>(T content, Node<T> left, Node<T> right) {}
+var three = new Node<>(3, null, null);
+var six = new Node<>(6, null, null);
+var myNode = new Node<>(5, three, six);
+\end{minted}
+\begin{center}
+\begin{tikzpicture}[
+  every node/.style={circle, draw, minimum size=7mm, font=\small},
+  null/.style={rectangle, draw=gray, dashed, minimum size=5mm, font=\scriptsize, text=gray},
+  level 1/.style={sibling distance=24mm},
+  level 2/.style={sibling distance=12mm},
+  level distance=12mm,
+  edge from parent/.style={draw, -latex}
+]
+  \node {5}
+    child { node {3}
+      child { node[null] {null} }
+      child { node[null] {null} }
+    }
+    child { node {6}
+      child { node[null] {null} }
+      child { node[null] {null} }
+    };
+\end{tikzpicture}
+\end{center}
+Beim Definieren einer Methode, die aus allen Werten im Binärbaum ein Ergebnis berechnet,
+muss man diese Methode rekursiv auf den Nachfolgern eines Knotens aufrufen.
+\begin{minted}{java}
+class Tree {
+    int sum(Node<Integer> node) {
+        if (node == null) {
+            return 0;
+        } 
+        else {
+            int sumLeft = sum(node.left());
+            int sumRight = sum(node.right());
+            return node.content() + sumLeft + sumRight;
+        }
+    }
+}
+\end{minted}
+\textbf{Beispiele}:
+\begin{minted}{java}
+Tree.sum(null) = 
+\end{minted}
+\pagebreak
+\section{Wichtige Begriffe}
+\begin{itemize}
+  \item Den Anfangsknoten nennt man \textbf{Wurzel} (Ebene~0).
+  \item Die direkt verbundenen Nachfolger eines Knotens nennt man \textbf{Kinder} oder \textbf{Kindknoten}.
+  \item Den direkten Vorgänger eines Knotens nennt man \textbf{Elternknoten}.
+  \item Ein Knoten ohne Kinder heißt \textbf{Blatt} oder \textbf{äußerer Knoten}.
+  \item Ein Knoten mit mindestens einem Kind heißt \textbf{innerer Knoten}.
+  \item Ein \textbf{Teilbaum} ist ein Baum, der bei einem Knoten beginnt, der nicht die Wurzel ist.
+  \item Die \textbf{Ebene} eines Knotens gibt an, wie weit er von der Wurzel entfernt ist. Die Wurzel hat Ebene~0.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8,
+  treenode/.style={circle, draw, minimum size=9mm},
+  lbl/.style={draw=none, font=\small}
+]
+  % Nodes
+  \node[treenode] (root)  at ( 0.0,  0.0) {};
+  \node[treenode] (left)  at (-2.4, -1.8) {};
+  \node[treenode] (right) at ( 2.4, -1.8) {};
+  \node[treenode] (ll)    at (-3.3, -3.6) {};
+  \node[treenode] (lr)    at (-1.5, -3.6) {};
+  \node[treenode] (rl)    at ( 1.5, -3.6) {};
+  \node[treenode] (rr)    at ( 3.3, -3.6) {};
+
+  % Edges
+  \draw (root)--(left);  \draw (root)--(right);
+  \draw (left)--(ll);    \draw (left)--(lr);
+  \draw (right)--(rl);   \draw (right)--(rr);
+
+  % Teilbaum dashed box
+  \draw[dashed] (0.6,-1.1) rectangle (4.2,-4.2);
+
+  % Ebene labels
+  \node[lbl, anchor=east] at (-5.5,  0.0) {Ebene~0};
+  \node[lbl, anchor=east] at (-5.5, -1.8) {Ebene~1};
+  \node[lbl, anchor=east] at (-5.5, -3.6) {Ebene~2};
+  \draw[dotted, gray!50] (-5.4,  0.0) -- (-0.5,  0.0);
+  \draw[dotted, gray!50] (-5.4, -1.8) -- (-3.0, -1.8);
+  \draw[dotted, gray!50] (-5.4, -3.6) -- (-3.9, -3.6);
+
+  % Wurzel
+  \node[lbl, anchor=west] (wurzel-lbl) at (0.5, 0.7) {Wurzel};
+  \draw[dotted] (root.north east) -- (wurzel-lbl.south west);
+
+  % Innerer Knoten (von oben links)
+  \node[lbl, anchor=south] (inner-lbl) at (-4.2, -1.0) {Innerer Knoten};
+  \draw[dotted] (inner-lbl.south) -- (left.north west);
+
+  % Teilbaum
+  \node[lbl, anchor=west] (teil-lbl) at (4.3, -0.85) {Teilbaum};
+  \draw[dotted] (4.2, -1.1) -- (teil-lbl.south west);
+
+  % Elternknoten
+  \node[lbl, anchor=west] (eltern-lbl) at (4.3, -1.8) {Elternknoten};
+  \draw[dotted] (right.east) -- (eltern-lbl.west);
+
+  % Kindknoten
+  \node[lbl, anchor=west] (kind-lbl) at (4.3, -3.0) {Kindknoten};
+  \draw[dotted] (rr.north east) -- (kind-lbl.west);
+
+  % Blatt
+  \node[lbl, anchor=north] (blatt-lbl) at (-0.5, -4.6) {Blatt oder äußerer Knoten};
+  \draw[dotted] (lr.south) -- (blatt-lbl.north);
+\end{tikzpicture}
+\end{center}
+
+
+\section{Bäume}
+
+Ein Baum ist entweder leer oder hat einen Anfangsknoten.
+
+
+
+\begin{minted}{java}
+class IntTree {
+
+    Node<Integer> root;
+    
+    Tree(){
+        root = null;
+    }
+
+    Tree(Node<Integer> root){
+        this.root = root;
+    }
+}
+\end{minted}
+
+Die Methoden der Klasse Baum, bei denen alle Knoten besucht werden müssen, werden implementiert indem die rekursiven Hilfsmethoden aufgerufen werden.
+
+\begin{minted}[escapeinside=||]{java}
+class IntTree{
+    
+    Node<Integer> root;
+    |\dots|
+	int sum(Node<Integer> node) {
+    |\dots|
+    }
+
+    sum(){
+        return sum(root);
+    }
+}
+\end{minted}
+
+
+\section{Bäume mit Typparameter}
+Um Bäume mit einem beliebigen Typ zu programmieren, nutzt man Typparameter.
+\begin{minted}[escapeinside=||]{java}
+class Tree<T> {
+
+    Node<T> root;
+    
+    Tree(){
+        root = null;
+    }
+
+    Tree(Node<T> root){
+        this.root = root;
+    }
+
+        |\dots|
+   
+
+}
+\end{minted}
+
+\end{document}

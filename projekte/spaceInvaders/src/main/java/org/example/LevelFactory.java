@@ -18,9 +18,21 @@ public class LevelFactory {
         var acc = new ArrayList<BasicGameObject>();
         var pos = startPos;
         for (int i = 0; i < count; i++) {
-            pos = pos.plus(new V2(cols + 2, 0));
+
             acc.addAll(generateBlock(pos, cols, rows));
+            pos = pos.plus(new V2(cols + 2, 0));
         }
         return acc;
     }
+
+
+    public static List<BasicGameObject> generateBlocks(int width, int height) {
+        int blockCols = 4;
+        int blockGap = 2;
+        int blockRows = 3;
+        int blockCount = width / (blockCols + blockGap);
+        return generateBlocks(new V2(1, 3 * height / 4), blockCols, blockRows, blockCount);
+    }
+
+
 }

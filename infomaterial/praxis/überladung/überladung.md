@@ -12,7 +12,7 @@ import static java.lang.IO.println;
 
 
 
-Es ist möglich in einer Klasse zwei Methoden mit dem selben Namen zu definieren. Die Voraussetzung dafür ist, dass sich die Typen oder die Anzahl der Parameter dieser Methoden unterscheiden.
+Es ist möglich, in einer Klasse zwei Methoden mit demselben Namen zu definieren. Die Voraussetzung dafür ist, dass sich die Typen oder die Anzahl der Parameter dieser Methoden unterscheiden.
 
 ```{.java .cb-nb line_numbers=false}
 record Student() {
@@ -40,4 +40,4 @@ nino.greet("Alex");
 
 Wenn in einer Klasse mehrere Methoden mit demselben Namen, aber unterschiedlichen Parametern definiert werden, spricht man von Methodenüberladung.
 
-Genau wie Methoden können auch Konstruktoren überladen werden
+Genau wie Methoden können auch Konstruktoren überladen werden.

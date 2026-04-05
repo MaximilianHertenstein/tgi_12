@@ -146,6 +146,82 @@ public class SimpleQueue<T> {
 
 ```
 
+<!-- \usetikzlibrary{positioning, calc}
+
+\begin{tikzpicture}[
+    scale=0.8,
+    node distance=0.4cm,
+    box/.style={
+        draw, minimum width=1.6cm, minimum height=0.55cm,
+        font=\ttfamily\footnotesize, inner sep=3pt
+    },
+    header/.style={
+        draw, minimum width=1.6cm, minimum height=0.45cm,
+        font=\sffamily\bfseries\footnotesize, fill=gray!20, inner sep=3pt
+    },
+    ptr/.style={
+        ->, >=stealth, thick
+    },
+    nullbox/.style={
+        draw, minimum width=0.8cm, minimum height=0.55cm,
+        font=\ttfamily\footnotesize, fill=gray!10
+    }
+]
+
+%--- SimpleQueue ---
+\node[header]                   (sq-header)  {SimpleQueue};
+\node[box, below=of sq-header]  (sq-first)   {};
+\node[box, below=of sq-first]   (sq-last)    {};
+
+%--- Node A ---
+\node[header, right=2.2cm of sq-header]  (a-header)  {MutableNode};
+\node[box, below=of a-header]            (a-content) {"Alice"};
+\node[box, below=of a-content]           (a-next)    {};
+
+%--- Node B ---
+\node[header, right=2.2cm of a-header]   (b-header)  {MutableNode};
+\node[box, below=of b-header]            (b-content) {"Bob"};
+\node[box, below=of b-content]           (b-next)    {};
+
+%--- Node C ---
+\node[header, right=2.2cm of b-header]   (c-header)  {MutableNode};
+\node[box, below=of c-header]            (c-content) {"Carol"};
+\node[box, below=of c-content]           (c-next)    {};
+
+%--- null ---
+\node[nullbox, right=1.4cm of c-next]    (null)      {null};
+
+%--- Pfeile mit Beschriftung ---
+\draw[ptr] (sq-first.east)
+    -- node[above, font=\ttfamily\tiny] {first}
+    ++(0.5,0) |- (a-header.west);
+
+\draw[ptr] (sq-last.east)
+    -- node[above, font=\ttfamily\tiny] {last}
+    ++(0.3,0) |- (c-header.west);
+
+\draw[ptr] (a-next.east)
+    -- node[above, font=\ttfamily\tiny] {nextNode}
+    ++(0.3,0) |- (b-header.west);
+
+\draw[ptr] (b-next.east)
+    -- node[above, font=\ttfamily\tiny] {nextNode}
+    ++(0.3,0) |- (c-header.west);
+
+\draw[ptr] (c-next.east)
+    -- node[above, font=\ttfamily\tiny] {nextNode}
+    (null.west);
+
+%--- content-Beschriftungen ---
+\node[font=\ttfamily\tiny, left=2pt of a-content] {content};
+\node[font=\ttfamily\tiny, left=2pt of b-content] {content};
+\node[font=\ttfamily\tiny, left=2pt of c-content] {content};
+
+\end{tikzpicture} -->
+
+
+
+
 Definiere jede Klasse in einer eigenen Datei.
 
 # Aufgabe
@@ -165,7 +241,8 @@ Implementiere einen öffentlichen Konstruktor, der eine leere `SimpleQueue` erze
 
 ```{.java .cb-nb line_numbers=false}
 var q = new SimpleQueue<String>();
-println(q.toArrayList());
+println(q.first);
+println(q.last);
 ```
 
 
@@ -179,16 +256,12 @@ Kopiere die Methode `toArrayList()` aus der Klasse `MutableList` und füge sie i
 var q = SimpleQueue.of("a", "b", "c");
 println(q.toArrayList());
 ``` -->
-
-
-# Aufgabe
-
-Implementiere die Methode `isEmpty()`. Sie gibt `true` zurück, wenn die `SimpleQueue` leer ist, sonst `false`.
-
 ```{.java .cb-nb line_numbers=false}
 var q = new SimpleQueue<String>();
-println(q.isEmpty());
+println(q.toArrayList());
 ```
+
+
 
 
 # Aufgabe
@@ -199,6 +272,10 @@ Implementiere die öffentliche Methode `setFirst(MutableNode<T> n)`. Sie setzt d
 
 Implementiere die öffentliche Methode `setLast(MutableNode<T> n)`. Sie setzt das Attribut `last` auf den übergebenen Knoten.
 
+
+![Warteschlange mit 3 Elementen](queue.png){ width=100% }
+
+
 # Aufgabe
 
 Implementiere die statische Fabrikmethode `of()`, die eine leere `SimpleQueue` zurückgibt.
@@ -207,8 +284,8 @@ Implementiere die statische Fabrikmethode `of()`, die eine leere `SimpleQueue` z
 var q = SimpleQueue.<String>of();
 println(q.toArrayList());
 println(q.last);
-
 ```
+
 
 # Aufgabe
 
@@ -250,6 +327,19 @@ println(q.last.content());
 
 # Aufgabe
 
+Implementiere die Methode `isEmpty()`. Sie gibt `true` zurück, wenn die `SimpleQueue` leer ist, sonst `false`.
+
+```{.java .cb-nb line_numbers=false}
+var q = new SimpleQueue<String>();
+println(q.isEmpty());
+```
+```{.java .cb-nb line_numbers=false}
+var q = SimpleQueue.of("a", "b");
+println(q.isEmpty());
+```
+
+# Aufgabe
+
 Implementiere die Methode `enqueue(T x)`. Sie fügt das übergebene Element **hinten** in die `SimpleQueue` ein.
 
 ```{.java .cb-nb line_numbers=false}
@@ -267,8 +357,10 @@ println(q.last.content());
 q.enqueue("c");
 println(q.toArrayList());
 println(q.last.content());
-
 ```
+\large
+Verwende **keine** `while`-Schleife!
+\normalsize
 
 <!-- **Hinweis:** Erzeuge einen neuen Knoten. Wenn die `SimpleQueue` leer ist, zeigen `first` und `last` beide auf den neuen Knoten. Sonst wird der neue Knoten mit `setNextNode` an `last` angehängt, und `last` wird aktualisiert. -->
 

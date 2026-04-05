@@ -1,8 +1,5 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class Tree<T>{
     Node<T> root;
 
@@ -21,77 +18,168 @@ class Tree<T>{
     }
 
     // ===== LEVEL 2: EASY =====
+
+    int sumHelper(Node<Integer> node){
+        if (node == null){
+            return 0;
+        }
+        return node.content() + sumHelper(node.left()) + sumHelper(node.right());
+    }
+
+    int productHelper(Node<Integer> node){
+        if (node == null){
+            return 1;
+        }
+        return node.content() * productHelper(node.left()) * productHelper(node.right());
+    }
+
+
+    private int sizeHelper(Node<T> node){
+        if (node == null){
+            return 0;
+        }
+        return 1 + sizeHelper(node.left()) + sizeHelper(node.right());
+    }
+
+    private int sizeHelper2(Node<T> node){
+       return switch (node) {
+           case null -> 0;
+           case Node(_, var  left, var right) -> 1 + sizeHelper2(left) + sizeHelper2(right);
+       };
+    }
+
+
     // === SIZE ===
     public int size(){
-        return Utils.sizeHelper(root);
+        return sizeHelper(root);
+    }
+
+    private int countLeavesHelper(Node<T> node){
+        if (node == null){
+            return 0;
+        }
+        if (node.isLeaf()){
+            return 1;
+        }
+        return countLeavesHelper(node.left()) + countLeavesHelper(node.right());
     }
 
     // === COUNT LEAVES ===
     public int countLeaves(){
-        return Utils.countLeavesHelper(root);
+        return countLeavesHelper(root);
+    }
+
+    private int countInnerNodesHelper(Node<T> node){
+        if (node == null){
+            return 0;
+        }
+        if (node.isLeaf()){
+            return 0;
+        }
+        return 1 + countInnerNodesHelper(node.left()) + countInnerNodesHelper(node.right());
     }
 
     // === COUNT INNER NODES ===
     public int countInnerNodes(){
-        return Utils.countInnerNodesHelper(root);
+        return countInnerNodesHelper(root);
     }
 
     // ===== LEVEL 3: MEDIUM =====
+    private int heightHelper(Node<T> node){
+        if (node == null){
+            return 0;
+        }
+        if (node.isLeaf()){
+            return 1;
+        }
+        return 1 + Math.max(heightHelper(node.left()), heightHelper(node.right()));
+    }
+
     // === HEIGHT ===
     public int height(){
-        return Utils.heightHelper(root);
+        return heightHelper(root);
+    }
+
+    private void printInOrderHelper(Node<T> node) {
+        if (node == null) return;
+        printInOrderHelper(node.left());
+        System.out.println(node.content());
+        printInOrderHelper(node.right());
     }
 
     // === PRINT IN ORDER ===
     public void printInOrder() {
-        Utils.printInOrderHelper(root);
+        printInOrderHelper(root);
+    }
+
+    private void printPreOrderHelper(Node<T> node) {
+        if (node == null) return;
+        System.out.println(node.content());
+        printPreOrderHelper(node.left());
+        printPreOrderHelper(node.right());
     }
 
     // === PRINT PRE ORDER ===
     public void printPreOrder() {
-        Utils.printPreOrderHelper(root);
+        printPreOrderHelper(root);
+    }
+
+    private void printPostOrderHelper(Node<T> node) {
+        if (node == null) return;
+        printPostOrderHelper(node.left());
+        printPostOrderHelper(node.right());
+        System.out.println(node.content());
     }
 
     // === PRINT POST ORDER ===
     public void printPostOrder() {
-        Utils.printPostOrderHelper(root);
+        printPostOrderHelper(root);
     }
 
     // ===== LEVEL 4: MEDIUM-HARD =====
-    // === CONTAINS ===
-    public boolean contains(T key){
-        if (root == null) {
+    private boolean containsHelper(Node<T> node, T key){
+        if (node == null) {
             return false;
         }
-        if (key == null) {
-            throw new IllegalArgumentException("Key cannot be null");
-        }
-        return Utils.containsHelper(root, key);
+        return node.content().equals(key) || containsHelper(node.left(), key) || containsHelper(node.right(), key);
     }
 
-    // === TO LIST IN ORDER ===
-    public List<T> toListInOrder() {
-        return Utils.toListInOrderHelper(root);
-    }
-
-    // === TO LIST PRE ORDER ===
-    public List<T> toListPreOrder() {
-        return Utils.toListPreOrderHelper(root);
-    }
-
-    // === TO LIST POST ORDER ===
-    public List<T> toListPostOrder() {
-        return Utils.toListPostOrderHelper(root);
+    // === CONTAINS ===
+    public boolean contains(T key){
+        return containsHelper(root, key);
     }
 
     // ===== LEVEL 5: HARD =====
+    private boolean isFullHelper(Node<T> node){
+        if (node == null){
+            return true;
+        }
+        if (node.isLeaf()){
+            return true;
+        }
+        if (node.left() == null || node.right() == null){
+            return false;
+        }
+        return isFullHelper(node.left()) && isFullHelper(node.right());
+    }
+
     // === IS FULL ===
     public boolean isFull(){
-        return Utils.isFullHelper(root);
+        return isFullHelper(root);
+    }
+
+    private Node<T> invertHelper(Node<T> node){
+        if (node == null){
+            return null;
+        }
+        if (node.isLeaf()){
+            return node;
+        }
+        return new Node<>(node.content(), invertHelper(node.right()), invertHelper(node.left()));
     }
 
     // === INVERT ===
     public Tree<T> invert(){
-        return new Tree<>(Utils.invertHelper(root));
+        return new Tree<>(invertHelper(root));
     }
 }

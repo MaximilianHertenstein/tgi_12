@@ -48,18 +48,6 @@ this.first  = null; }
         return size;
     }
 
-    public String show() {
-        if (first == null) {
-            return "[]";
-        }
-        var current = first;
-        var res = current.content().toString();
-        while (current.nextNode() != null) {
-            current = current.nextNode();
-            res = res + ", " + current.content();
-        }
-        return "[" + res + "]";
-    }
 
     public MutableNode<T> getLastNode() {
         if (first == null) {
@@ -72,12 +60,12 @@ this.first  = null; }
         return current;
     }
 
-    private MutableNode<T> getSecondLastNode() {
-        return getNode(size() - 2);
-    }
 
     public MutableNode<T> getNode(int index) {
         if (index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (first == null ) {
             throw new IndexOutOfBoundsException();
         }
         var current = first;
@@ -101,13 +89,6 @@ this.first  = null; }
         return result;
     }
 
-    public static <T> MutableList<T> fromList(List<T> xs) {
-        MutableNode<T> res = null;
-        for (int i = xs.size() - 1; i >= 0; i--) {
-            res = new MutableNode<>(xs.get(i), res);
-        }
-        return new MutableList<>(res);
-    }
 
 
     public void clear(){
@@ -167,18 +148,7 @@ this.first  = null; }
         return result;
     }
 
-    public T removeLast(){
-        if (first == null) {
-            throw new NoSuchElementException();
-        }
-        if (first.nextNode() == null) {
-            return removeFirst();
-        }
-        var nodeBefore = getSecondLastNode();
-        var result = nodeBefore.nextNode().content();
-        nodeBefore.setNextNode(null);
-        return result;
-    }
+
 
 
 

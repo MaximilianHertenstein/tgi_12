@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 # Grundlagen
 
-Wir haben schon gesehen, dass man Typparameter nutzen kann um Methoden mit Werten von verschiedenen Typen aufrufen zu können.
+Wir haben schon gesehen, dass man Typparameter nutzen kann, um Methoden mit Werten von verschiedenen Typen aufrufen zu können.
 Typparameter können auch beim Definieren von Klassen genutzt werden. Die Typparameter werden in spitzen Klammern hinter dem Namen der Klasse definiert.
 
 ```{.java .cb-nb line_numbers=false}
@@ -18,7 +18,7 @@ record  Box<T>(T content){}
 ```
 
 
-Beim Erzeugen eines Objekts der Klasse `Box` kann jetzt ein beliebiger Typen verwendet werden.
+Beim Erzeugen eines Objekts der Klasse `Box` kann jetzt ein beliebiger Typ verwendet werden.
 
 ```{.java .cb-nb line_numbers=false}
 var box1 = new Box<Integer>(7);
@@ -32,8 +32,8 @@ box1.content();
 box2.content();
 ```
 
-Der konkrete Typ muss nicht angegeben werden, wenn der Copiler diesen anhand der Argumente des Konstruktors bestimmen kann.
-Die spitzen Klammen sollte man aber immer dazu schreiben.
+Der konkrete Typ muss nicht angegeben werden, wenn der Compiler diesen anhand der Argumente des Konstruktors bestimmen kann.
+Die spitzen Klammern sollte man aber immer dazuschreiben.
 
 ```{.java .cb-nb line_numbers=false}
 var box1 = new Box<>(7);
@@ -41,22 +41,22 @@ var box1 = new Box<>(7);
 
 
 
-Wenn man eine Klasse mit einem Typparamter als Eigenschaft einer anderen Klasse verwendet, sollte man immer in spitzen Klammern  einen Typ angeben.
+Wenn man eine Klasse mit einem Typparameter als Eigenschaft einer anderen Klasse verwendet, sollte man immer in spitzen Klammern einen Typ angeben.
 
 ```{.java .cb-nb line_numbers=false}
 record IntAndString(Box<Integer> intBox, Box<String> stringBox){}
 ```
 
-Es können auch wieder Typparamter verwendet werden.
+Es können auch wieder Typparameter verwendet werden.
 
 ```{.java .cb-nb line_numbers=false}
 record Tuple<L, R>(Box<L> left, Box<R> right){}
 ```
 
 
-# Typparameter in Eigenschaften, Methoden  und Konstuktoren verwenden
+# Typparameter in Eigenschaften, Methoden und Konstruktoren verwenden
 
-Die Typparameter einer Klasse können in den Eigenschaften, Methoden  und Konstuktoren der Klasse verwendet werden.
+Die Typparameter einer Klasse können in den Eigenschaften, Methoden und Konstruktoren der Klasse verwendet werden.
 
 ```{.java .cb-nb line_numbers=false}
 class  Tuple<L, R>{

@@ -117,6 +117,9 @@ println(stringOutput);
 
 \normalsize
 
+**Hinweis:** Nutze die Methode `statusToCompleted` der Klasse `Utils`.
+
+
 # Aufgabe
 
 Definiere in einer neuen Datei `TemplateRenderer.java` eine Klasse `TemplateRenderer`. Diese Klasse hat ein privates Attribut `htmlTemplateEngine` vom Typ `TemplateEngine`.
@@ -167,7 +170,6 @@ println(templateRenderer.renderToString(learnUML, "toDo"));
 </li>
 ``` 
 
-**Hinweis:** Nutze die Methode `statusToCompleted` der Klasse `Utils`.
 
 
 # Aufgabe
@@ -381,6 +383,9 @@ println(templateRenderer.renderAppToString(uiState, false));
 ```
 
 
+**Hinweis:** Nutze die Methode `renderToString`.
+
+
 # Aufgabe
 
 Erstelle ein Template `editingForm.jte`, mit dem ein Formular gerendert wird, mit dem der Text eines To-dos geändert werden kann.
@@ -451,6 +456,9 @@ println(templateRenderer.renderToDoToString(learnJava, false));
     <button class="destroy"></button>
 </li>
 ```
+
+**Hinweis:** Nutze die Methode `renderToString`.
+
 
 
 # Aufgabe
