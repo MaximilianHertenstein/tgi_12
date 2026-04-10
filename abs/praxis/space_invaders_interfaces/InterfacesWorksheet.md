@@ -358,7 +358,7 @@ public record Alien(MovableGameObject mgo) implements IBasicGameObject, Shooting
     /**
      * Returns true if any part of this alien's hitbox reaches the last playable line.
      *
-     * We define the last playable line as y == height - vertical sie of the alien.
+    * We define the last playable line as y == height - vertical size of the alien.
      */
 
     boolean isInLastLine(int height) {
@@ -500,7 +500,7 @@ public record Plasma(MovableGameObject mgo) implements IBasicGameObject, Rocket 
     }
 
 
-    // the super rocket is always alive. it flyes to the edge of the board.
+    // The super rocket is always alive. It flies to the edge of the board.
     @Override
     public boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height) {
         return Utils.isOnBoard(hitBox(), width, height);
@@ -958,7 +958,7 @@ println(b1.checkCollision(List.of(b1)));
 
 
 ## Aufgabe
-Ergänze die korrekte Implementierung von `isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `BasicGameObject`. Die Methode `isAlive` prüft, ob das Objekt noch Teil des Spiels ist. Es soll `true` liefern, wenn
+Ergänze die korrekte Implementierung von `isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `BasicGameObject`. Die Methode `isAlive` prüft, ob das Objekt noch Teil des Spiels ist. Sie soll `true` liefern, wenn
 
 - mindestens eine Zelle der `hitBox()` auf dem Spielfeld ist, und
 - keine Kollision mit einem anderen Objekt aus `gameObjects` vorliegt
@@ -981,7 +981,7 @@ println(b1.isAlive(List.of(b1), 3, 4));
 
 ## Aufgabe
 Ergänze die Methode `boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `MovableGameObject`.
-Die Logik soll dieselbe sein wie in `BasicGameObject`, aber die Methode soll die Implementierung von `BasicGameObject` wiederverwenden.
+Die Logik soll der von `BasicGameObject` entsprechen; verwende dafür die Implementierung von `BasicGameObject`.
 
 
 ```{.java .cb-nb line_numbers=false}
@@ -1105,7 +1105,7 @@ Ergänze die korrekte Interface-Deklaration und `@Override`-Annotationen für da
 # Plasma
 
 ## Aufgabe
-Ergänze die Methode `boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `Plasma`. Das `Plasma`-Geschoss ist am Leben, wenn ein Teil seiner Hitbox noch auf dem Spielfeld ist.
+Ergänze die Methode `boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `Plasma`. Das `Plasma`-Geschoss lebt, wenn ein Teil seiner Hitbox noch auf dem Spielfeld liegt.
 
 ```{.java .cb-nb line_numbers=false}
 var b1 = new Plasma(new V2(5,7), 3);
@@ -1137,7 +1137,13 @@ Ergänze die korrekte Interface-Deklaration und `@Override`-Annotationen für da
 # Utils
 
 ## Aufgabe
-Ergänze die statische Methode `List<StringWithLocation> getStringsWithLocation(List<IBasicGameObject> basicGameObjects)` in der Klasse `Utils`. Die Methode soll die mit der Methode `show()` erzeugten Listen aller übergebenen `IBasicGameObject` zusammenfügen und als eine Liste zurückgeben.
+Ergänze die statische Methode 
+
+
+- `List<StringWithLocation> getStringsWithLocation(List<IBasicGameObject> basicGameObjects)` 
+
+
+in der Klasse `Utils`. Die Methode soll die mit `show()` erzeugten Listen aller übergebenen `IBasicGameObject` zu einer Liste zusammenführen und zurückgeben.
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
@@ -1150,21 +1156,7 @@ println(Utils.getStringsWithLocation(allGameObjects));
 
 
 
-## Aufgabe
-Ergänze die statische Methode `<T extends IBasicGameObject> List<T> removeDeadObjects(List<T> gameObjectsToFilter, List<IBasicGameObject> allGameObjects, int width, int height)` in der Klasse `Utils`. Die Methode soll alle Objekte aus `gameObjectsToFilter` herausfiltern, die  nicht mehr leben, und die verbleibenden Objekte zurückgeben.
 
-\tiny
-```{.java .cb-nb line_numbers=false}
-var a1 = new Alien(new V2(3,4), "AB");
-var a2 = new Alien(new V2(7,4), "CD");
-var pr = new PlayerRocket(new V2(8,4));
-List<Alien> aliens = List.of(a1, a2);
-List<IBasicGameObject> allGameObjects = List.of(a1, a2, pr);
-List<Alien> filteredAliens = Utils.removeDeadObjects(aliens, allGameObjects, 100, 60);
-println(filteredAliens);
-```
-\normalsize
-**Hinweis:** Nutze die Methode `isAlive`!
 
 # Model
 
@@ -1172,13 +1164,16 @@ println(filteredAliens);
 
 ## Aufgabe
 
-Implementiere die Hilfsmethode `List<IBasicGameObject> gameObjects()`, die alle aktuellen Spielobjekte in einer Liste zurückgibt (blocks, aliens, player).
+Implementiere die Hilfsmethode `List<IBasicGameObject> gameObjects()`, die alle aktuellen Spielobjekte in einer Liste zurückgibt (`blocks`, `aliens`, `player`).
 
+\tiny
 ```{.java .cb-nb line_numbers=false}
-var model = new Model(40,60);
-var objs = model.gameObjects();
-println(objs.size());
+var aliens = List.of(new Alien(new V2(2,5), "A"));
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+var model = new Model(60, 40, new V2(50,38), aliens, blocks);
+println(model.gameObjects());
 ```
+\normalsize
 
 
 
@@ -1186,11 +1181,15 @@ println(objs.size());
 
 Implementiere `List<StringWithLocation> getUIState()`. Die Methode gibt die Liste aller mit `show()` erzeugten `StringWithLocation` der Spielobjekte zurück.
 
+\tiny
 ```{.java .cb-nb line_numbers=false}
-var model = new Model(40,60);
-var ui = model.getUIState();
-println(ui.size());
+var aliens = List.of(new Alien(new V2(2,5), "A"));
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+var model = new Model(60, 40, new V2(50,38), aliens, blocks);
+println(model.getUIState());
 ```
+\normalsize
+
 
 **Hinweis:** Nutze `Utils.getStringsWithLocation` und die Methode `gameObjects` der Klasse `Model`.
 
@@ -1198,14 +1197,20 @@ println(ui.size());
 
 ## Aufgabe
 
-Implementiere die Methode `boolean playerIsAlive()`. Diese prüft, ob der Spieler noch lebt.
+Implementiere die Methode `playerIsAlive()`. Diese prüft, ob der Spieler noch lebt.
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-var model = new Model(60,40);
-println(model.playerIsAlive());
-var model2 = new Model(60, 40, new V2(2,4), List.of(new Alien(new V2(2,38), "a")), List.of());
-println(model2.playerIsAlive());
+var aliveModel = new Model(60, 40, new V2(50,38), List.of(), List.of());
+println(aliveModel.playerIsAlive());
+
+var collidedModel = new Model(
+    60, 40,
+    new V2(50,38),
+    List.of(new Alien(new V2(50,38), "#")),
+    List.of()
+);
+println(collidedModel.playerIsAlive());
 ```
 \normalsize
 
@@ -1214,14 +1219,14 @@ println(model2.playerIsAlive());
 
 ## Aufgabe
 
-Implementiere die Methode `gameLost()`. Die Methode gibt zurück, ob das Spiel verloren wurde. Das ist der Fall, wenn Aliens die letzte Reihe erreicht haben oder der Player nicht mehr lebt.
+Implementiere die Methode `gameLost()`. Sie gibt zurück, ob das Spiel verloren wurde. Das ist der Fall, wenn Aliens die letzte Reihe erreicht haben oder der Spieler nicht mehr lebt.
 
 ```{.java .cb-nb line_numbers=false}
-var m1 = new Model(60,40);
+var m1 = new Model(60, 40, new V2(50,38), List.of(new Alien(new V2(2,2), "A")), List.of());
 println(m1.gameLost());
 
-var aliens = List.of(new Alien(new V2(2,38), "a\nb"));
-var m2 = new Model(60,40, new V2(5,4), aliens, List.of());
+var aliens = List.of(new Alien(new V2(2,39), "A"));
+var m2 = new Model(60, 40, new V2(50,38), aliens, List.of());
 println(m2.gameLost());
 ```
 
@@ -1230,12 +1235,13 @@ println(m2.gameLost());
 
 ## Aufgabe
 
-Implementiere `boolean gameOngoing()` so, dass `true` zurückgegeben wird, solange das Spiel nicht gewonnen oder verloren ist.
+Implementiere `gameOngoing()`. Die Methode gibt zurück, ob das Spiel weiterläuft. Das ist der Fall, wenn das Spiel weder gewonnen noch verloren wurde.
 
 ```{.java .cb-nb line_numbers=false}
-var m = new Model(60,40);
+var m = new Model(60, 40, new V2(50,38), List.of(new Alien(new V2(2,2), "A")), List.of());
 println(m.gameOngoing());
-var mWon = new Model(60,40, new V2(5,4), List.of(), List.of());
+
+var mWon = new Model(60, 40, new V2(50,38), List.of(), List.of());
 println(mWon.gameOngoing());
 ```
 
@@ -1251,7 +1257,7 @@ Lege das Interface `Rocket` an und deklariere folgende Methoden:
 <!-- soll `IBasicGameObject` erweitern und die -->
 
 ## Aufgabe
-Ergänze bei den Klassen, die Raketen repräsentieren (`PlayerRocket`, `AlienRocket`, `Plasma`) die Interface-Deklaration und die `@Override`-Annotation.
+Ergänze bei den Klassen, die Raketen repräsentieren (`PlayerRocket`, `AlienRocket`, `Plasma`), die Interface-Deklaration und die `@Override`-Annotationen.
 
 ```{.java .cb-nb line_numbers=false}
 var pr = new PlayerRocket(new V2(10,5));
@@ -1283,7 +1289,7 @@ println(moved);
 **Hinweis:** Nutze die Methode `move`!
 
 ## Aufgabe
-Ergänze die statische Methode `boolean containsNoPlayerRocket(List<Rocket> rockets)` in der Klasse `Utils`. Die Methode soll `true` zurückgeben, wenn in der Liste keine `Rocket` existiert, bei der `isPlayerRocket()` den Wert `true` zurückgibt.
+Ergänze die statische Methode `containsNoPlayerRocket(List<Rocket> rockets)` in der Klasse `Utils`. Die Methode soll `true` zurückgeben, wenn in der Liste keine `Rocket` vorkommt, für die `isPlayerRocket()` den Wert `true` liefert.
 
 ```{.java .cb-nb line_numbers=false}
 var r1 = new PlayerRocket(new V2(10,10));
@@ -1336,7 +1342,10 @@ Ergänze in der Klasse `Model` die Methode `move` so, dass zusätzlich alle Rake
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-var model = new Model(60, 40);
+var aliens = List.of(new Alien(new V2(2,5), "A"));
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+List<Rocket> rockets = List.of(new PlayerRocket(new V2(3,3)));
+var model = new Model(60, 40, new V2(50, 38), aliens, blocks, rockets);
 model.move('d');
 println(model.player);
 println(model.alienSwarm);
@@ -1372,8 +1381,46 @@ var m2 = new Model(10,10, new V2(5,8), List.of(new Alien(new V2(1,1),"a")), List
 println(m2.getEndMessage());
 ``` -->
 
+# Utils
+
+## Aufgabe
+Ergänze die statische Methode `<T extends IBasicGameObject> List<T> removeDeadObjects(List<T> gameObjectsToFilter, List<IBasicGameObject> allGameObjects, int width, int height)` in der Klasse `Utils`. Die Methode soll alle Objekte aus `gameObjectsToFilter` herausfiltern, die nicht mehr leben, und die verbleibenden Objekte zurückgeben.
+
+\tiny
+```{.java .cb-nb line_numbers=false}
+var a1 = new Alien(new V2(3,4), "AB");
+var a2 = new Alien(new V2(7,4), "CD");
+var pr = new PlayerRocket(new V2(8,4));
+List<Alien> aliens = List.of(a1, a2);
+List<IBasicGameObject> allGameObjects = List.of(a1, a2, pr);
+List<Alien> filteredAliens = Utils.removeDeadObjects(aliens, allGameObjects, 100, 60);
+println(filteredAliens);
+```
+\normalsize
+
+**Hinweis:** Nutze die Methode `isAlive`! `<T extends IBasicGameObject>` bedeutet, dass `T` ein Platzhalter für eine Klasse ist, die `IBasicGameObject` implementiert.
 
 
+
+
+# AlienSwarm
+
+## Aufgabe
+Ergänze die Methode `AlienSwarm removeDeadAliens(List<IBasicGameObject> allGameObjects, int width, int height)` in der Klasse `AlienSwarm`. Die Methode soll alle toten Aliens aus der internen Liste entfernen und einen neuen `AlienSwarm` mit den verbleibenden Aliens zurückgeben.
+
+\tiny
+```{.java .cb-nb line_numbers=false}
+var a1 = new Alien(new V2(3,4), "AB");
+var a2 = new Alien(new V2(7,4), "CD");
+var pr = new PlayerRocket(new V2(8,4));
+var swarm = new AlienSwarm(new V2(1,0), List.of(a1, a2), new CountDown(5));
+List<IBasicGameObject> allGameObjects = List.of(a1, a2, pr);
+var filtered = swarm.removeDeadAliens(allGameObjects, 100, 60);
+println(filtered.aliens());
+```
+\normalsize
+
+**Hinweis:** Nutze `Utils.removeDeadObjects`.
 
 
 
@@ -1383,7 +1430,7 @@ println(m2.getEndMessage());
 
 ## Aufgabe
 
-Ergänze beim Interface `Rocket`, dass dieses das Interface `IBasicGameObject` erweitert.
+Ergänze beim Interface `Rocket`, dass dieses das Interface `IBasicGameObject` erweitert. Nutze `extends`!
 
 
 # Model
@@ -1475,22 +1522,26 @@ Die Methode sammelt alle Objekte, die in diesem Update-Schritt schießen dürfen
 \tiny
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 1: Nur Alien kann schießen
-var a = new Alien(new V2(5,4), "A");
-var shooters = RocketFactory.getShootingObjects(List.of(), a, new Player(new V2(10,18)), ' ');
+List<Rocket> rockets = List.of();
+var player = new Player(new V2(10,18));
+var alien = new Alien(new V2(5,4), "A");
+var shooters = RocketFactory.getShootingObjects(rockets, alien, player, ' ');
 println(shooters);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 2: Spieler schießt mit 'k'
-var p = new Player(new V2(10,18));
-var shooters2 = RocketFactory.getShootingObjects(List.of(), null, p, 'k');
+List<Rocket> rockets = List.of();
+var player = new Player(new V2(10,18));
+var shooters2 = RocketFactory.getShootingObjects(rockets, null, player, 'k');
 println(shooters2);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 3: Spieler schießt Plasma mit 'l'
-var p2 = new Player(new V2(10,18));
-var shooters3 = RocketFactory.getShootingObjects(List.of(), null, p2, 'l');
+List<Rocket> rockets = List.of();
+var player = new Player(new V2(10,18));
+var shooters3 = RocketFactory.getShootingObjects(rockets, null, player, 'l');
 println(shooters3);
 ```
 \normalsize
@@ -1522,29 +1573,33 @@ Implementiere die statische Methode
 
 - `List<Rocket> getNewRockets(List<Rocket> existingRockets, Alien shootingAlien, Player player, char key)`
 
-Die Methode soll die neuen Raketen erzeugen, die in diesem Update-Schritt zum Spiel hinzugefügt werden (konsistent mit den beiden obigen Helfern):
+Die Methode soll die neuen Raketen erzeugen, die in diesem Update-Schritt zum Spiel hinzugefügt werden (konsistent mit den beiden oben eingeführten Hilfsmethoden):
 - Nutze `getShootingObjects(...)`, um die schießenden Objekte zu bestimmen.
 - Verwende dann `getNewRockets(List<Shooting>)`, um aus den Schützen die konkret neu erzeugten Raketen zu erhalten.
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 1: Alien schießt
-var a = new Alien(new V2(5,4), "A");
-var newRockets = RocketFactory.getNewRockets(List.of(), a, new Player(new V2(10,18)), ' ');
+List<Rocket> existingRockets = List.of();
+var player = new Player(new V2(10,18));
+var alien = new Alien(new V2(5,4), "A");
+var newRockets = RocketFactory.getNewRockets(existingRockets, alien, player, ' ');
 println(newRockets);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 2: Player schießt mit 'k'
-var p = new Player(new V2(10,18));
-var newRockets2 = RocketFactory.getNewRockets(List.of(), null, p, 'k');
+List<Rocket> existingRockets = List.of();
+var player = new Player(new V2(10,18));
+var newRockets2 = RocketFactory.getNewRockets(existingRockets, null, player, 'k');
 println(newRockets2);
 ```
 
 ```{.java .cb-nb line_numbers=false}
-var a2 = new Alien(new V2(2,3), "A");
-var p2 = new Player(new V2(10,18));
-var both = RocketFactory.getNewRockets(List.of(), a2, p2, 'k');
+List<Rocket> existingRockets = List.of();
+var player = new Player(new V2(10,18));
+var alien = new Alien(new V2(2,3), "A");
+var both = RocketFactory.getNewRockets(existingRockets, alien, player, 'k');
 println(both);
 ```
 \normalsize
@@ -1554,29 +1609,29 @@ Implementiere die statische Methode
 
 - `List<Rocket> addNewRockets(List<Rocket> rockets, Alien shootingAlien, Player player, char key)`
 
-Die Methode soll die vorhandenen Raketen (`rockets`) mit den in diesem Update-Schritt neu erzeugten Raketen zusammenführen:
-
-- Gib eine Liste zurück, die zuerst die bisherigen Raketen und danach die neuen Raketen enthält.
+Die Methode soll eine neue Liste mit den bereits vorhandenen sowie den mit `getNewRockets` erzeugten Raketen zurückgeben.
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 1: bestehende Raketen + neue Alien-Rakete
 List<Rocket> existing = List.of(new PlayerRocket(new V2(10,10)));
-var a = new Alien(new V2(5,4), "A");
-List<Rocket> combined = RocketFactory.addNewRockets(existing, a, new Player(new V2(10,18)), ' ');
+var player = new Player(new V2(10,18));
+var alien = new Alien(new V2(5,4), "A");
+List<Rocket> combined = RocketFactory.addNewRockets(existing, alien, player, ' ');
 println(combined);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 2: Spieler schießt mit 'k' (falls erlaubt)
-var p = new Player(new V2(10,18));
-List<Rocket> combined2 = RocketFactory.addNewRockets(List.of(), null, p, 'k');
+List<Rocket> existing = List.of();
+var player = new Player(new V2(10,18));
+List<Rocket> combined2 = RocketFactory.addNewRockets(existing, null, player, 'k');
 println(combined2);
 ```
 \normalsize
 
 
-**Hinweis:** Nutze `getNewRockets`, um die neuen Raketen zu erzeugen.
+**Hinweis:** Nutze `getNewRockets`, um die neuen Raketen zu erzeugen. Nutze eine `ArrayList` und die Methode `addAll`!
 
 # Model
 
@@ -1592,24 +1647,33 @@ Die Methode soll in dieser Reihenfolge arbeiten:
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-var model = new Model(60,40);
+var aliens = List.of(new Alien(new V2(2,5), "A"));
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+List<Rocket> rockets = List.of();
+var model = new Model(60, 40, new V2(50, 38), aliens, blocks, rockets);
 model.update('a');
 println(model.player);
+println(model.alienSwarm);
 println(model.rockets);
 ```
 
 ```{.java .cb-nb line_numbers=false}
-var model2 = new Model(60,40);
+var aliens = List.of(new Alien(new V2(2,5), "A"));
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+List<Rocket> rockets = List.of();
+var model2 = new Model(60, 40, new V2(50, 38), aliens, blocks, rockets);
 // Spieler versucht zu schießen (falls noch keine Spieler-Rakete existiert)
 model2.update('k');
 println(model2.rockets);
+println(model2.alienSwarm);
 // Noch ein Update: je nach Situation wird ggf. eine weitere Rakete erzeugt
 model2.update('k');
 println(model2.rockets);
+println(model2.alienSwarm);
 ```
 \normalsize
 
-**Hinweis:** Nutze `removeDeadObjects`, `move` und `RocketFactory.addNewRockets()` für die Raketenliste.
+**Hinweis:** Nutze `removeDeadObjects`, `move` und `RocketFactory.addNewRockets` für die Raketenliste.
 
 
 # Controller — runGame
@@ -1620,7 +1684,7 @@ Implementiere die Methode `runGame()` in der Klasse `Controller`.
 
 Die Methode enthält die Hauptspielschleife:
 
-1. Spiele so lange, bis `model.gameOngoing` den Wert `false` zurückgibt oder die Taste `'q'` gedrückt wurde.
+1. Spiele so lange, bis `model.gameOngoing()` den Wert `false` zurückgibt oder die Taste `'q'` gedrückt wurde.
 2. In jedem Schleifendurchlauf:
     - zeichne den aktuellen UI-Zustand
     - lies die gedrückte Taste (`tui.getPressedKey()`) 
@@ -1628,7 +1692,7 @@ Die Methode enthält die Hauptspielschleife:
 3. Nach Beenden der Schleife soll die Abschlussnachricht angezeigt und das Terminal geschlossen werden.
 
 
-**Hinweis:** Nutze die Methoden `getUIState`, `update`, `gameOngoing` und `getEndMessage` der Klasse `Model` sowie `getPressedKey`, `printString` und `close` der Klasse `TUI`.
+**Hinweis:** Nutze die Methoden `getUIState`, `update`, `gameOngoing()` und `getEndMessage` der Klasse `Model` sowie `getPressedKey`, `printString` und `close` der Klasse `TUI`.
 
 ```java
 var controller = new Controller(100, 60);
