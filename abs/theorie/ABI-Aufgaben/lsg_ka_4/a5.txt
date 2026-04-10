@@ -1,0 +1,30 @@
+@startuml
+object "<u> : Node<ToDo> </u>" as node1 {
+
+  nextNode
+}
+
+object "<u> : Node<ToDo> </u>" as node2 {
+
+  nextNode = null
+}
+
+object "<u>s : SimpleStack<ToDo> </u>" as s {
+
+}
+
+object "<u>todo1 : ToDo </u>" as todo1 {
+  text = "Weltherrschaft übernehmen"
+  done = false
+}
+
+object "<u>todo2 : ToDo </u>" as todo2 {
+  text = "IFT-Hausaufgaben"
+  done = false
+}
+
+s --> node1 : first
+node1 --> todo1 : content
+node1 --> node2 : nextNode
+node2 --> todo2 : content
+@enduml

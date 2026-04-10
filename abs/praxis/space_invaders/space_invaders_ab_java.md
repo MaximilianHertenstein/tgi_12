@@ -585,6 +585,15 @@ public class Model {
         restart();
     }
 
+    public Model(int width, int height, V2 playerPos, List<Alien> alienSwarm, List<BasicGameObject> blocks) {
+        this.width = width;
+        this.height = height;
+        this.player =new Player(playerPos);
+        this.alienSwarm = new AlienSwarm(new V2(1,0), alienSwarm, new CountDown(5));
+        this.blocks = blocks;
+    }
+
+
     public boolean gameWon(){
         return alienSwarm.noAliensLeft();
     }
@@ -2150,6 +2159,22 @@ println(model.blocks);
 
 ## Aufgabe
 
+Implementiere einen zweiten Konstruktor `public Model(int width, int height, V2 playerPos, List<Alien> alienSwarm, List<BasicGameObject> blocks)`
+der Konstruktor soll die Felder entsprechend setzen und `player` mit `playerPos` initialisieren, `alienSwarm` mit den übergebenen Aliens und einem neuen `CountDown(5)` versehen, sowie `blocks` setzen.
+\tiny
+```{.java .cb-nb line_numbers=false}
+var aliens = List.of(new Alien(new V2(2,5), "A"));
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+var model = new Model(100, 60, new V2(50,58), aliens, blocks);
+println(model.player);
+println(model.alienSwarm);
+println(model.blocks);
+```
+\normalsize
+
+
+## Aufgabe
+
 Implementiere die Methode `gameWon`. Sie gibt `true` zurück, wenn keine Aliens mehr übrig sind.
 
 \tiny
@@ -2158,6 +2183,13 @@ Implementiere die Methode `gameWon`. Sie gibt `true` zurück, wenn keine Aliens 
 var model = new Model(100, 60);
 model.gameWon();
 ```
+```{.java .cb-nb line_numbers=false}
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+var model = new Model(100, 60, new V2(50,58), List.of(), blocks);
+model.gameWon();
+```
+
+
 \normalsize
 
 
@@ -2173,7 +2205,14 @@ Implementiere die Methode `getEndMessage`. Sie gibt `"You won!"` zurück, wenn d
 var model = new Model(100, 60);
 model.getEndMessage();
 ```
+```{.java .cb-nb line_numbers=false}
+var blocks = List.of(new BasicGameObject(new V2(1,1), "#"));
+var model = new Model(100, 60, new V2(50,58), List.of(), blocks);
+model.getEndMessage();
+```
 \normalsize
+
+
 
 
 **Hinweis:** Nutze `gameWon`!

@@ -279,6 +279,13 @@ public class Utils {
 
 Definiere jede Klasse in einer eigenen Datei.
 
+In den folgenden Beispielen verwenden wir immer wieder dieselben Listen:
+
+- `empty = []`
+- `single = ["a"]`
+- `xs = ["1", "2"]`
+- `ys = ["x", "y", "z"]`
+
 
 # Aufgabe
 
@@ -288,11 +295,11 @@ Erstelle ein `record` `Node`. Dieses `record` hat zwei Eigenschaften:
 - `nextNode` vom Typ `Node`
 
 ```{.java .cb-nb line_numbers=false}
-new Node("hallo", null);
+new Node("a", null);
 ```
 
 ```{.java .cb-nb line_numbers=false}
-new Node("hallo", new Node("welt", null));
+new Node("1", new Node("2", null));
 ```
 
 # Aufgabe
@@ -300,11 +307,11 @@ new Node("hallo", new Node("welt", null));
 Ergänze im `record` `Node` einen sekundären Konstruktor, der nur `content` entgegennimmt und `nextNode` auf `null` setzt.
 
 ```{.java .cb-nb line_numbers=false}
-new Node("hallo");
+new Node("a");
 ```
 
 ```{.java .cb-nb line_numbers=false}
-new Node("eins");
+new Node("a");
 ```
 
 
@@ -356,7 +363,7 @@ ImmutableLinkedList.of("1", "2");
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b");
+ImmutableLinkedList.of("1", "2");
 ```
 
 # Aufgabe
@@ -365,11 +372,11 @@ Ergänze in `ImmutableLinkedList` eine statische Methode `of(String e1, String e
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("1", "2", "3");
+ImmutableLinkedList.of("x", "y", "z");
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b", "c");
+ImmutableLinkedList.of("x", "y", "z");
 ```
 \normalsize
 
@@ -379,11 +386,13 @@ ImmutableLinkedList.of("a", "b", "c");
 Implementiere die Methode `isEmpty()` in `ImmutableLinkedList`, die `true` zurückgibt, wenn die Liste leer ist.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of().isEmpty();
+var empty = ImmutableLinkedList.of();
+empty.isEmpty();
 ```
 
 ```{.java .cb-nb line_numbers=false}
-new ImmutableLinkedList(new Node("a")).isEmpty();
+var single = ImmutableLinkedList.of("a");
+single.isEmpty();
 ```
 
 # Aufgabe
@@ -391,11 +400,13 @@ new ImmutableLinkedList(new Node("a")).isEmpty();
 Implementiere die Methode `getFirst()` in `ImmutableLinkedList`, die das erste Element zurückgibt. Bei leerer Liste soll eine `IndexOutOfBoundsException` geworfen werden.
 
 ```{.java .cb-nb line_numbers=false}
-new ImmutableLinkedList(new Node("1")).getFirst();
+var single = ImmutableLinkedList.of("a");
+single.getFirst();
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b").getFirst();
+var xs = ImmutableLinkedList.of("1", "2");
+xs.getFirst();
 ```
 
 
@@ -406,11 +417,13 @@ ImmutableLinkedList.of("a", "b").getFirst();
 Implementiere die Methode `printContents()` in `ImmutableLinkedList`, die alle Elemente auf der Konsole ausgibt.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b").printContents();
+var xs = ImmutableLinkedList.of("1", "2");
+xs.printContents();
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a").printContents();
+var single = ImmutableLinkedList.of("a");
+single.printContents();
 ```
 
 
@@ -419,11 +432,13 @@ ImmutableLinkedList.of("a").printContents();
 Implementiere die Hilfsmethode `getLastNode()` in `ImmutableLinkedList`, die die letzte `Node` der Liste zurückgibt. Bei leerer Liste soll eine `NoSuchElementException` geworfen werden.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a").getLastNode();
+var single = ImmutableLinkedList.of("a");
+single.getLastNode();
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b","c").getLastNode();
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.getLastNode();
 ```
 
 
@@ -432,11 +447,13 @@ ImmutableLinkedList.of("a","b","c").getLastNode();
 Implementiere die Methode `getLast()` in `ImmutableLinkedList`, die das letzte Element (`String`) der Liste zurückgibt.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b","c").getLast();
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.getLast();
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a").getLast();
+var single = ImmutableLinkedList.of("a");
+single.getLast();
 ```
 
 Hinweis: Verwende `getLastNode()`.
@@ -446,11 +463,13 @@ Hinweis: Verwende `getLastNode()`.
 Implementiere die Methode `size()` in `ImmutableLinkedList`, die die Anzahl der Elemente zurückgibt.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b","c").size();
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.size();
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of().size();
+var empty = ImmutableLinkedList.of();
+empty.size();
 ```
 
 # Aufgabe
@@ -458,13 +477,16 @@ ImmutableLinkedList.of().size();
 Implementiere die Methode `contains(String o)` in `ImmutableLinkedList`, die überprüft, ob ein Element in der Liste vorkommt.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b").contains("a");
+var xs = ImmutableLinkedList.of("1", "2");
+xs.contains("1");
 ```
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b").contains("b");
+var xs = ImmutableLinkedList.of("1", "2");
+xs.contains("2");
 ```
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b").contains("x");
+var xs = ImmutableLinkedList.of("1", "2");
+xs.contains("x");
 ```
 
 Hinweis: Vergleiche mit `equals`.
@@ -478,11 +500,13 @@ Hinweis: Vergleiche mit `equals`.
 Implementiere die Methode `show()` in `ImmutableLinkedList`, die die Liste als lesbare Zeichenkette darstellt, z. B. `[a, b, c]`.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b").show();
+var xs = ImmutableLinkedList.of("1", "2");
+xs.show();
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of().show();
+var empty = ImmutableLinkedList.of();
+empty.show();
 ```
  -->
 
@@ -493,21 +517,27 @@ ImmutableLinkedList.of().show();
 Implementiere die Methode `getNode(int index)` in `ImmutableLinkedList`, die die `Node` an der gegebenen Position zurückgibt (Index 0 = erstes Element). 
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b","c").getNode(1);
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.getNode(1);
 ```
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b","c").getNode(2);
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.getNode(2);
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a").getNode(0);
+var single = ImmutableLinkedList.of("a");
+single.getNode(0);
 ```
 
 Bei ungültigem Index soll eine `IndexOutOfBoundsException` geworfen werden, z. B. bei
 ```java
-ImmutableLinkedList.of().getNode(0);
-ImmutableLinkedList.of("a").getNode(1);
-ImmutableLinkedList.of("a").getNode(-1);
+var empty = ImmutableLinkedList.of();
+empty.getNode(0);
+
+var single = ImmutableLinkedList.of("a");
+single.getNode(1);
+single.getNode(-1);
 ```
 
 
@@ -520,11 +550,13 @@ ImmutableLinkedList.of("a").getNode(-1);
 Implementiere die Methode `get(int index)` in `ImmutableLinkedList`, die das Element am Index zurückgibt. Nutze `getNode`.
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b").get(0);
+var xs = ImmutableLinkedList.of("1", "2");
+xs.get(0);
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b","c").get(2);
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.get(2);
 ```
 
 
@@ -538,11 +570,13 @@ ImmutableLinkedList.of("a","b","c").get(2);
 Implementiere die Methode `indexOf(String o)` in `ImmutableLinkedList`, die den Index des ersten Vorkommens zurückgibt oder `-1`, falls nicht vorhanden. Nutze **nicht** die Methoden `get` und `getNode`!
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b","c").indexOf("c");
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.indexOf("z");
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a","b").indexOf("c");
+var xs = ImmutableLinkedList.of("1", "2");
+xs.indexOf("z");
 ```
 
 # Aufgabe
@@ -551,11 +585,13 @@ Implementiere die Methode `lastIndexOf(String o)` in `ImmutableLinkedList`, die 
 Nutze **nicht** die Methoden `get` und `getNode` nicht!
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b", "c").lastIndexOf("a");
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.lastIndexOf("x");
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("b", "b").lastIndexOf("b");
+var xs = ImmutableLinkedList.of("1", "2");
+xs.lastIndexOf("2");
 ```
 
 
@@ -565,13 +601,13 @@ Implementiere die Methode `toArrayList`, die alle Inhalte der verketteten Liste 
 
 
 ```{.java .cb-nb line_numbers=false}
-var list = ImmutableLinkedList.of();
-list.toArrayList(); 
+var empty = ImmutableLinkedList.of();
+empty.toArrayList(); 
 ```
 
 ```{.java .cb-nb line_numbers=false}
-var list = ImmutableLinkedList.of("a", "b", "c");
-list.toArrayList();
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.toArrayList();
 ```
 \huge
 
@@ -584,11 +620,13 @@ list.toArrayList();
 Implementiere die Methode `subList(int fromIndex, int toIndex)` in `ImmutableLinkedList`, die eine `List<String>` mit den Elementen im Bereich `[fromIndex, toIndex]` (inklusive) zurückgibt. Bei ungültigen Indizes soll eine `IndexOutOfBoundsException` geworfen werden. Nutze maximal einmal `getNode`!
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a" , "b", "c").subList(1,2);
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.subList(1, 2);
 ```
 
 ```{.java .cb-nb line_numbers=false}
-ImmutableLinkedList.of("a", "b").subList(0,1);
+var xs = ImmutableLinkedList.of("1", "2");
+xs.subList(0, 1);
 ```
 
 **Hinweise:** Baue eine `ArrayList<String>` und füge passende Elemente hinzu. 
@@ -626,7 +664,7 @@ var it = new LinkedListIterator(new Node("a"));
 it.current;
 ```
 ```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(new Node("a", new Node("b")));
+var it = new LinkedListIterator(new Node("1", new Node("2")));
 it.current;
 ```
 ```{.java .cb-nb line_numbers=false}
@@ -664,14 +702,14 @@ Die Methode soll:
 - den Iterator auf das nächste Element weiterschalten
 
 ```{.java .cb-nb line_numbers=false}
-var it = new LinkedListIterator(new Node("a", new Node("b")));
+var it = new LinkedListIterator(new Node("1", new Node("2")));
 println(it.next());
 println(it.current);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 var it = new LinkedListIterator(
-    new Node("a", new Node("b"))
+    new Node("x", new Node("y", new Node("z")))
 );
 println(it.next());
 println(it.current);
@@ -688,8 +726,8 @@ der mit dem ersten Element der Liste startet.
 
 
 ```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-var it = xs.iterator();
+var ys = ImmutableLinkedList.of("x", "y", "z");
+var it = ys.iterator();
 it.current
 ```
 
@@ -714,8 +752,8 @@ Die Methode erhält eine verkettete Liste und gibt alle Elemente
 auf der Konsole aus. Die einzige Methode der Klasse `ImmutableLinkedList`, die dabei genutzt werden darf, ist `iterator`!
 
 ```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-Utils.printLinkedList(xs);
+var ys = ImmutableLinkedList.of("x", "y", "z");
+Utils.printLinkedList(ys);
 ```
 
 
@@ -738,7 +776,7 @@ ImmutableLinkedList.fromList(empty);
 ```
 
 ```{.java .cb-nb line_numbers=false}
-var ys = List.of("a", "b", "c", "d", "e");
+var ys = List.of("x", "y", "z");
 ImmutableLinkedList.fromList(ys);
 ```
 \normalsize
@@ -757,8 +795,8 @@ Ergänze die Methode `reversed` in `ImmutableLinkedList`. Gib eine neue Liste mi
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-xs.reversed();
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.reversed();
 ```
 ```{.java .cb-nb line_numbers=false}
 var empty = ImmutableLinkedList.of();
@@ -775,8 +813,8 @@ Ergänze die Methode `copy` in `ImmutableLinkedList`. Diese erzeugt eine Kopie d
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-xs.copy();
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.copy();
 ```
 \normalsize
 
@@ -789,8 +827,8 @@ Ergänze die Methode `plus(String other)` in `ImmutableLinkedList`. Diese erzeug
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-xs.plus("d")
+var ys = ImmutableLinkedList.of("x", "y", "z");
+ys.plus("a");
 ```
 \normalsize
 
@@ -803,9 +841,9 @@ Ergänze die Methode `plus(ImmutableLinkedList<T> other)` in `ImmutableLinkedLis
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-var ys = ImmutableLinkedList.of("d", "e");
-xs.plus(ys)
+var xs = ImmutableLinkedList.of("1", "2");
+var ys = ImmutableLinkedList.of("x", "y", "z");
+xs.plus(ys);
 ```
 \normalsize
 
@@ -816,9 +854,9 @@ Passe die Klasse `ImmutableLinkedList` so an, dass nicht nur `Strings`, sondern 
 In einer Liste sollen immer noch alle Elemente denselben Typ haben.
 
 ```{.java .cb-nb line_numbers=false}
-var xs = ImmutableLinkedList.of("a", "b", "c");
-var ys = ImmutableLinkedList.of(1, 3);
-var zs = ImmutableLinkedList.of(false, true);
+var single = ImmutableLinkedList.of("a");
+var xs = ImmutableLinkedList.of(1, 2);
+var ys = ImmutableLinkedList.of(false, true, false);
 ```
 
 **Hinweis 1:** Es müssen auch Hilfsklassen angepasst werden.

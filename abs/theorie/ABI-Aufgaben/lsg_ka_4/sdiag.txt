@@ -1,0 +1,41 @@
+@startuml
+
+actor Student
+
+participant dieOberflaeche
+participant dieSteuerung
+participant "meineHeizung[i]" as Heizung
+participant "meinTFMelder[i]" as TFMelder
+participant "meineLampe[i]" as Lampe
+participant "meinBMelder[i]" as BMelder
+participant meinWLAN
+
+Student -> dieOberflaeche : unterwegs()
+dieOberflaeche -> dieSteuerung : unterwegs()
+
+loop i := 0 bis 1
+    dieSteuerung -> Heizung : getIstTemp()
+    Heizung --> dieSteuerung : 21
+    dieSteuerung -> Heizung : setSollTemp(19)
+    Heizung --> dieSteuerung
+end
+
+loop i := 0 bis 2
+    dieSteuerung -> Lampe : setHell()
+    Lampe --> dieSteuerung
+    dieSteuerung -> BMelder : setStatus(true)
+    BMelder --> dieSteuerung
+end
+
+loop i := 0 bis 4
+    dieSteuerung -> TFMelder : setStatus(true)
+    TFMelder --> dieSteuerung
+end
+
+dieSteuerung -> meinWLAN : setStatus(false)
+meinWLAN --> dieSteuerung
+
+dieSteuerung --> dieOberflaeche
+dieOberflaeche --> Student
+
+@enduml

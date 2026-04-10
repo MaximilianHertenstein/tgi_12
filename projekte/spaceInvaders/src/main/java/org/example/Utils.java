@@ -23,7 +23,7 @@ public class Utils {
         };
     }
 
-    private static boolean isOnBoard(V2 v, int width, int height) {
+    public static boolean isOnBoard(V2 v, int width, int height) {
         return v.x() >= 0 && v.x() < width && v.y() >= 0 && v.y() < height;
     }
 
@@ -115,32 +115,5 @@ public class Utils {
         return res;
     }
 
-    public static List<Shooting> getShootingObjects(List<Rocket> rockets, Alien shootingAlien, Player player, char pressedKey) {
-        var shootingObjects = new ArrayList<Shooting>();
-        if (shootingAlien != null) {
-            shootingObjects.add(shootingAlien);
-        }
-        var playerCanShoot = containsNoPlayerRocket(rockets);
-        if (pressedKey == 'k' && playerCanShoot) {
-            shootingObjects.add(player);
-        }
-        if (pressedKey == 'l' && playerCanShoot) {
-            shootingObjects.add(new InvisiblePlasmaCannon(player.pos()));
-        }
-        return shootingObjects;
-    }
 
-    public static List<Rocket> getNewRockets(List<Shooting> shootingObjects) {
-        var acc = new ArrayList<Rocket>();
-        for (var shootingObject : shootingObjects) {
-            acc.add(shootingObject.shoot());
-        }
-        return acc;
-    }
-
-    public static List<Rocket> getNewRockets(List<Rocket> rockets, Alien shootingAlien, Player player, char key) {
-        var shootingObjects = getShootingObjects(rockets, shootingAlien, player, key);
-        return getNewRockets(shootingObjects);
-
-    }
 }
