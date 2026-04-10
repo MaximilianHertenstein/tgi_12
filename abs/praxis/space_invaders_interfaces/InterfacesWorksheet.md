@@ -897,10 +897,10 @@ public class Model {
 
 Definiere jedes Interface in einer eigenen `.java`-Datei, die den Namen des Interfaces trägt, z. B. `IBasicGameObject.java` für `IBasicGameObject`.
 
+# IBasicGameObject
+## Aufgabe
 
-#  IBasicGameObject
-
-Aufgabe: Lege das Interface `IBasicGameObject` an und deklare die Methoden
+Lege das Interface `IBasicGameObject` an und deklariere folgende Methoden:
 
 - `List<StringWithLocation> show()`
 - `List<V2> hitBox()`
@@ -909,9 +909,9 @@ Aufgabe: Lege das Interface `IBasicGameObject` an und deklare die Methoden
 
 # BasicGameObject
 
-## BasicGameObject — isAlive
+## Aufgabe
 
-Aufgabe: Ergänze `boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `BasicGameObject`.
+Ergänze `boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `BasicGameObject`.
 Die Methode soll immer `true` zurückgeben.
 
 ## Aufgabe
@@ -930,7 +930,7 @@ var c3 = new BasicGameObject(new V2(4,2), "B");
 println(c1.checkCollision(c2));
 println(c1.checkCollision(c3));
 ```
-**Hinweis:** Nutze `Utils.intersect` 
+**Hinweis:** Nutze `Utils.intersect`.
 
 
 
@@ -957,7 +957,7 @@ println(b1.checkCollision(List.of(b1)));
 
 
 
-## Aufgabe 
+## Aufgabe
 Ergänze die korrekte Implementierung von `isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `BasicGameObject`. Die Methode `isAlive` prüft, ob das Objekt noch Teil des Spiels ist. Es soll `true` liefern, wenn
 
 - mindestens eine Zelle der `hitBox()` auf dem Spielfeld ist, und
@@ -977,11 +977,11 @@ println(b1.isAlive(List.of(b1), 3, 4));
 
 **Hinweis:** Nutze `hitBox`, `Utils.isOnBoard` und `checkCollision`.
 
-#  MovableGameObject
+# MovableGameObject
 
-## Aufgabe 
-Ergänze die Methode `boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `MovableGameObject`. 
-Die Logik soll die gleiche sein wie in `BasicGameObject`, aber die Methode soll die Implementierung von `BasicGameObject` wiederverwenden.
+## Aufgabe
+Ergänze die Methode `boolean isAlive(List<IBasicGameObject> gameObjects, int width, int height)` in `MovableGameObject`.
+Die Logik soll dieselbe sein wie in `BasicGameObject`, aber die Methode soll die Implementierung von `BasicGameObject` wiederverwenden.
 
 
 ```{.java .cb-nb line_numbers=false}
@@ -994,7 +994,7 @@ println(b1.isAlive(List.of(b1), 100, 60));
 println(b1.isAlive(List.of(b1), 4, 4));
 ```
 
-## Aufgabe 
+## Aufgabe
 
 Ergänze die korrekte Interface-Deklaration und `@Override`-Annotationen für das Interface `IBasicGameObject` in der Klasse `MovableGameObject`.
 
@@ -1117,7 +1117,7 @@ println(b1.isAlive(List.of(b1), 100, 60));
 println(b1.isAlive(List.of(b1), 2, 5));
 ```
 
-**Hinweis** Nutze `Utils.isOnBoard`
+**Hinweis:** Nutze `Utils.isOnBoard`
 
 
 
@@ -1134,7 +1134,7 @@ Ergänze die korrekte Interface-Deklaration und `@Override`-Annotationen für da
 
 
 
-# Utils 
+# Utils
 
 ## Aufgabe
 Ergänze die statische Methode `List<StringWithLocation> getStringsWithLocation(List<IBasicGameObject> basicGameObjects)` in der Klasse `Utils`. Die Methode soll die mit der Methode `show()` erzeugten Listen aller übergebenen `IBasicGameObject` zusammenfügen und als eine Liste zurückgeben.
@@ -1164,7 +1164,7 @@ List<Alien> filteredAliens = Utils.removeDeadObjects(aliens, allGameObjects, 100
 println(filteredAliens);
 ```
 \normalsize
-**Hinweis:** Nutze die Methode `isAlive!
+**Hinweis:** Nutze die Methode `isAlive`!
 
 # Model
 
@@ -1172,7 +1172,7 @@ println(filteredAliens);
 
 ## Aufgabe
 
-Implementiere die Hilfsmethode `List<IBasicGameObject> gameObjects()` die alle aktuellen Spielobjekte in einer Liste zurückgibt (blocks, aliens, player).
+Implementiere die Hilfsmethode `List<IBasicGameObject> gameObjects()`, die alle aktuellen Spielobjekte in einer Liste zurückgibt (blocks, aliens, player).
 
 ```{.java .cb-nb line_numbers=false}
 var model = new Model(40,60);
@@ -1182,9 +1182,9 @@ println(objs.size());
 
 
 
-## Aufgabe 
+## Aufgabe
 
-Implementiere `List<StringWithLocation> getUIState()`! . Diese Methode gibt die Liste aller mit `show()` erzeugten  `StringsWithLocation` der Spielobjekte zurück.
+Implementiere `List<StringWithLocation> getUIState()`. Die Methode gibt die Liste aller mit `show()` erzeugten `StringWithLocation` der Spielobjekte zurück.
 
 ```{.java .cb-nb line_numbers=false}
 var model = new Model(40,60);
@@ -1198,7 +1198,7 @@ println(ui.size());
 
 ## Aufgabe
 
-Implementiere `boolean playerIsAlive()` die prüft, ob der Spieler noch lebt.
+Implementiere die Methode `boolean playerIsAlive()`. Diese prüft, ob der Spieler noch lebt.
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
@@ -1214,7 +1214,7 @@ println(model2.playerIsAlive());
 
 ## Aufgabe
 
-Implementiere die Methode `gameLost()`. Diese gibt zurück, ob das Spiel verloren wurde. Dies ist der Fall, wenn Aliens die letzte Reihe erreicht haben oder der Player nicht mehr lebt.
+Implementiere die Methode `gameLost()`. Die Methode gibt zurück, ob das Spiel verloren wurde. Das ist der Fall, wenn Aliens die letzte Reihe erreicht haben oder der Player nicht mehr lebt.
 
 ```{.java .cb-nb line_numbers=false}
 var m1 = new Model(60,40);
@@ -1243,7 +1243,7 @@ println(mWon.gameOngoing());
 # Rocket
 
 ## Aufgabe
-Lege das Interface `Rocket`  an. Das Interface  soll die folgenden Methoden deklarieren:
+Lege das Interface `Rocket` an und deklariere folgende Methoden:
 
 - `Rocket move()`
 - `boolean isPlayerRocket()`
@@ -1280,10 +1280,10 @@ println(moved);
 \normalsize
 
 
-**Hinweis** Nutze die Methode `move`!
+**Hinweis:** Nutze die Methode `move`!
 
 ## Aufgabe
-Ergänze die statische Methode `boolean containsNoPlayerRocket(List<Rocket> rockets)` in der Klasse `Utils`. Die Methode soll `true` zurückgeben, wenn in der Liste keine `Rocket` existiert, bei der `isPlayerRocket()` den Wert `true` zurück gibt.
+Ergänze die statische Methode `boolean containsNoPlayerRocket(List<Rocket> rockets)` in der Klasse `Utils`. Die Methode soll `true` zurückgeben, wenn in der Liste keine `Rocket` existiert, bei der `isPlayerRocket()` den Wert `true` zurückgibt.
 
 ```{.java .cb-nb line_numbers=false}
 var r1 = new PlayerRocket(new V2(10,10));
@@ -1297,7 +1297,7 @@ println(Utils.containsNoPlayerRocket(rockets2));
 
 # Model
 
-# Aufgabe
+## Aufgabe
 
 Ergänze in der Klasse `Model` die Eigenschaft `rockets` als `List<Rocket>`. Die Methode `restart` von `Model` soll eine leere Liste von Raketen initialisieren.
 
@@ -1310,8 +1310,8 @@ println(model.rockets);
 
 ## Aufgabe
 
-Ergänze den zweiten Konstruktor um einen Parameter  `rockets`.
-Der Konstruktor soll das Feld entsprechend setzen. Die gesamte Signatur ist
+Ergänze den zweiten Konstruktor um den Parameter `rockets`.
+Der Konstruktor soll das Feld entsprechend setzen. Die vollständige Signatur lautet:
 
 `public Model(int width, int height, V2 playerPos, List<Alien> alienSwarm, List<BasicGameObject> blocks, List<Rocket> rockets)`
 
@@ -1331,7 +1331,7 @@ println(model.rockets);
 
 
 
-# Aufgabe
+## Aufgabe
 Ergänze in der Klasse `Model` die Methode `move` so, dass zusätzlich alle Raketen in `rockets` bewegt und die Liste durch die neue Liste ersetzt wird.
 
 \tiny
@@ -1390,7 +1390,7 @@ Ergänze beim Interface `Rocket`, dass dieses das Interface `IBasicGameObject` e
 
 ## Aufgabe
 
-Ergänze die Methode `gameObjects` so, dass auch alle Rakten zurückgegebn werden.
+Ergänze die Methode `gameObjects` so, dass auch alle Raketen zurückgegeben werden.
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
@@ -1425,7 +1425,7 @@ println(model.rockets);
 ```
 \normalsize
 
-Hinweis: Nutze `Utils.removeDeadObjects` für die Blöcke und Raketen, sowie die Methode `removeDeadAliens` von `AlienSwarm` für die Aliens.
+**Hinweis:** Nutze `Utils.removeDeadObjects` für die Blöcke und Raketen sowie die Methode `removeDeadAliens` von `AlienSwarm` für die Aliens.
 
 
 
@@ -1435,14 +1435,14 @@ Hinweis: Nutze `Utils.removeDeadObjects` für die Blöcke und Raketen, sowie die
 
 ## Aufgabe
 
-Definiere das Interface `Shooting` und deklariere die Methode
+Lege das Interface `Shooting` an und deklariere folgende Methode:
 
 - `Rocket shoot()`
 
 ## Aufgabe
 
 
-Ergänze in den Klassen `Alien` und `Player`  die Interface-Deklaration und die `@Override`-Annotationen für das Interface `Shooting`.
+Ergänze in den Klassen `Alien` und `Player` die Interface-Deklaration und die `@Override`-Annotationen für das Interface `Shooting`.
 
 ```{.java .cb-nb line_numbers=false}
 var alien = new Alien(new V2(5,4), "A");
@@ -1455,9 +1455,9 @@ List<Shooting> shooters = List.of(alien, player);
 
 # RocketFactory
 
-## Aufgabe 
+## Aufgabe
 
-Lege die Klasse `RocketFactory`  an!
+Lege die Klasse `RocketFactory` an.
 
 
 ## Aufgabe
@@ -1468,7 +1468,7 @@ Implementiere die statische Methode
 Die Methode sammelt alle Objekte, die in diesem Update-Schritt schießen dürfen:
 
 - Falls `shootingAlien` nicht `null` ist, wird dieses Alien zur Rückgabeliste hinzugefügt.
-- Der Spieler darf nur schießen, wenn aktuell keine Spieler-Rakete in `rockets` vorhanden ist (Nutze `Utils.containsNoPlayerRocket`).
+- Der Spieler darf nur schießen, wenn aktuell keine Spieler-Rakete in `rockets` vorhanden ist (verwende `Utils.containsNoPlayerRocket`).
 - Ist `pressedKey == 'k'` und der Spieler darf schießen, füge den `player` hinzu.
 - Ist `pressedKey == 'l'` und der Spieler darf schießen, füge stattdessen eine neue `InvisiblePlasmaCannon` an der Position des `player` hinzu.
 
@@ -1523,7 +1523,7 @@ Implementiere die statische Methode
 - `List<Rocket> getNewRockets(List<Rocket> existingRockets, Alien shootingAlien, Player player, char key)`
 
 Die Methode soll die neuen Raketen erzeugen, die in diesem Update-Schritt zum Spiel hinzugefügt werden (konsistent mit den beiden obigen Helfern):
-- Nutze `getShootingObjects(...)` um die schießenden Objekte zu bestimmen.
+- Nutze `getShootingObjects(...)`, um die schießenden Objekte zu bestimmen.
 - Verwende dann `getNewRockets(List<Shooting>)`, um aus den Schützen die konkret neu erzeugten Raketen zu erhalten.
 
 \tiny
@@ -1531,21 +1531,21 @@ Die Methode soll die neuen Raketen erzeugen, die in diesem Update-Schritt zum Sp
 // Beispiel 1: Alien schießt
 var a = new Alien(new V2(5,4), "A");
 var newRockets = RocketFactory.getNewRockets(List.of(), a, new Player(new V2(10,18)), ' ');
-println(newRockets.size());
+println(newRockets);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 2: Player schießt mit 'k'
 var p = new Player(new V2(10,18));
 var newRockets2 = RocketFactory.getNewRockets(List.of(), null, p, 'k');
-println(newRockets2.size());
+println(newRockets2);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 var a2 = new Alien(new V2(2,3), "A");
 var p2 = new Player(new V2(10,18));
 var both = RocketFactory.getNewRockets(List.of(), a2, p2, 'k');
-println(both.size());
+println(both);
 ```
 \normalsize
 
@@ -1558,27 +1558,27 @@ Die Methode soll die vorhandenen Raketen (`rockets`) mit den in diesem Update-Sc
 
 - Gib eine Liste zurück, die zuerst die bisherigen Raketen und danach die neuen Raketen enthält.
 
-	iny
+\tiny
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 1: bestehende Raketen + neue Alien-Rakete
-var existing = List.of(new PlayerRocket(new V2(10,10)));
+List<Rocket> existing = List.of(new PlayerRocket(new V2(10,10)));
 var a = new Alien(new V2(5,4), "A");
-var combined = RocketFactory.addNewRockets(existing, a, new Player(new V2(10,18)), ' ');
-println(combined.size());
+List<Rocket> combined = RocketFactory.addNewRockets(existing, a, new Player(new V2(10,18)), ' ');
+println(combined);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 2: Spieler schießt mit 'k' (falls erlaubt)
 var p = new Player(new V2(10,18));
-var combined2 = RocketFactory.addNewRockets(List.of(), null, p, 'k');
-println(combined2.size());
+List<Rocket> combined2 = RocketFactory.addNewRockets(List.of(), null, p, 'k');
+println(combined2);
 ```
 \normalsize
 
 
-**Hinweis:**  Nutze `getNewRockets`, um die neuen Raketen zu erzeugen.
+**Hinweis:** Nutze `getNewRockets`, um die neuen Raketen zu erzeugen.
 
-# Model 
+# Model
 
 ## Aufgabe
 
@@ -1586,7 +1586,7 @@ Implementiere die Methode `update(char key)` in der Klasse `Model`.
 
 Die Methode soll in dieser Reihenfolge arbeiten:
 
-- Tote Objekte entfernen 
+- Tote Objekte entfernen
 - Objekte bewegen
 - Neue Raketen erzeugen und zur Raketenliste hinzufügen
 
@@ -1595,21 +1595,21 @@ Die Methode soll in dieser Reihenfolge arbeiten:
 var model = new Model(60,40);
 model.update('a');
 println(model.player);
-println(model.rockets.size());
+println(model.rockets);
 ```
 
 ```{.java .cb-nb line_numbers=false}
 var model2 = new Model(60,40);
 // Spieler versucht zu schießen (falls noch keine Spieler-Rakete existiert)
 model2.update('k');
-println(model2.rockets.size());
+println(model2.rockets);
 // Noch ein Update: je nach Situation wird ggf. eine weitere Rakete erzeugt
 model2.update('k');
-println(model2.rockets.size());
+println(model2.rockets);
 ```
 \normalsize
 
-**Hinweis:* Nutze `removeDeadObjects`, `move`, und `RocketFactory.addNewRockets()` und `addAll` für die Raketenliste.
+**Hinweis:** Nutze `removeDeadObjects`, `move` und `RocketFactory.addNewRockets()` für die Raketenliste.
 
 
 # Controller — runGame
@@ -1620,14 +1620,15 @@ Implementiere die Methode `runGame()` in der Klasse `Controller`.
 
 Die Methode enthält die Hauptspielschleife:
 
-1. Spiele so lange bis `model.gameOngoing` den Wert `false` zurückgibt oder die Taste `'q'` gedrückt wurde.
-2. In jedem Schleifendurchlauf: - zeichne den aktuellen UI-Zustand
-                                - lese die gedrückte Taste (`tui.getPressedKey()`) 
-                                - aktualisiere den Spielzustand
+1. Spiele so lange, bis `model.gameOngoing` den Wert `false` zurückgibt oder die Taste `'q'` gedrückt wurde.
+2. In jedem Schleifendurchlauf:
+    - zeichne den aktuellen UI-Zustand
+    - lies die gedrückte Taste (`tui.getPressedKey()`) 
+    - aktualisiere den Spielzustand
 3. Nach Beenden der Schleife soll die Abschlussnachricht angezeigt und das Terminal geschlossen werden.
 
 
-**Hinweis:** Nutze die Methoden `getUIState`, `update`, `gameOngoing` und `getEndMessage` der Klasse `Model` und  `getPressedKey`, `printString` und `close` der Klasse `TUI`.
+**Hinweis:** Nutze die Methoden `getUIState`, `update`, `gameOngoing` und `getEndMessage` der Klasse `Model` sowie `getPressedKey`, `printString` und `close` der Klasse `TUI`.
 
 ```java
 var controller = new Controller(100, 60);
