@@ -1526,6 +1526,7 @@ Die Methode soll die neuen Raketen erzeugen, die in diesem Update-Schritt zum Sp
 - Nutze `getShootingObjects(...)` um die schießenden Objekte zu bestimmen.
 - Verwende dann `getNewRockets(List<Shooting>)`, um aus den Schützen die konkret neu erzeugten Raketen zu erhalten.
 
+\tiny
 ```{.java .cb-nb line_numbers=false}
 // Beispiel 1: Alien schießt
 var a = new Alien(new V2(5,4), "A");
@@ -1546,8 +1547,36 @@ var p2 = new Player(new V2(10,18));
 var both = RocketFactory.getNewRockets(List.of(), a2, p2, 'k');
 println(both.size());
 ```
+\normalsize
+
+## Aufgabe
+Implementiere die statische Methode
+
+- `List<Rocket> addNewRockets(List<Rocket> rockets, Alien shootingAlien, Player player, char key)`
+
+Die Methode soll die vorhandenen Raketen (`rockets`) mit den in diesem Update-Schritt neu erzeugten Raketen zusammenführen:
+
+- Gib eine Liste zurück, die zuerst die bisherigen Raketen und danach die neuen Raketen enthält.
+
+	iny
+```{.java .cb-nb line_numbers=false}
+// Beispiel 1: bestehende Raketen + neue Alien-Rakete
+var existing = List.of(new PlayerRocket(new V2(10,10)));
+var a = new Alien(new V2(5,4), "A");
+var combined = RocketFactory.addNewRockets(existing, a, new Player(new V2(10,18)), ' ');
+println(combined.size());
+```
+
+```{.java .cb-nb line_numbers=false}
+// Beispiel 2: Spieler schießt mit 'k' (falls erlaubt)
+var p = new Player(new V2(10,18));
+var combined2 = RocketFactory.addNewRockets(List.of(), null, p, 'k');
+println(combined2.size());
+```
+\normalsize
 
 
+**Hinweis:**  Nutze `getNewRockets`, um die neuen Raketen zu erzeugen.
 
 # Model 
 
@@ -1561,6 +1590,7 @@ Die Methode soll in dieser Reihenfolge arbeiten:
 - Objekte bewegen
 - Neue Raketen erzeugen und zur Raketenliste hinzufügen
 
+\tiny
 ```{.java .cb-nb line_numbers=false}
 var model = new Model(60,40);
 model.update('a');
@@ -1577,8 +1607,9 @@ println(model2.rockets.size());
 model2.update('k');
 println(model2.rockets.size());
 ```
+\normalsize
 
-**Hinweis:* Nutze `removeDeadObjects`, `move`, und `RocketFactory.getNewRockets()` und `addAll` für die Raketenliste.
+**Hinweis:* Nutze `removeDeadObjects`, `move`, und `RocketFactory.addNewRockets()` und `addAll` für die Raketenliste.
 
 
 # Controller — runGame
