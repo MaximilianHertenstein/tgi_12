@@ -9,45 +9,65 @@ void main() {
 
 }
 
-
-interface Greets {
-    void greet();
-}
-
-record Teacher(String firstName, String secondName)implements Greets{
-    @Override
-    public void greet() {
-        println("Hello, I am " + firstName + " " + secondName);
-    }
-}
-
-record Student(String firstName, String secondName, int age) implements Greets  {
-    @Override
-    public void greet() {
-        println("Yo, I am " + firstName);
-    }
-}
-
-
-class Utils {
-
-    void showTeacherGreetings(List<Teacher> teachers) {
-        for (Teacher teacher : teachers) {
-            teacher.greet();
+        interface Greetable {
+            void greet();
+            String lastName();
         }
-    }
 
-    void showStudentGreetings(List<Student> students) {
-        for (Student student : students) {
-            student.greet();
+        record Teacher(String firstName, String lastName) implements Greetable {
+            @Override
+            public void greet() {
+                println("Hello, I am " + firstName + " " + lastName);
+            }
         }
-    }
 
-    void showGreetings(List<? extends Greets> greets) {
-        for (Greets greet : greets) {
-            greet.greet();
+        record Student(String firstName, String lastName, int age) implements Greetable {
+            @Override
+            public void greet() {
+                println("Yo, I am " + firstName);
+            }
         }
-    }
+
+        class GreetingUtils {
 
 
-}
+            static void letTeacherGreetTwoTimes(Teacher teacher){
+                teacher.greet();
+                teacher.greet();
+            }
+
+            static void letStudentGreetTwoTimes(Student student){
+                student.greet();
+                student.greet();
+            }
+
+
+            void showTeacherGreetings(List<Teacher> teachers) {
+                for (Teacher teacher : teachers) {
+                    teacher.greet();
+                }
+            }
+
+            void showStudentGreetings(List<Student> students) {
+                for (Student student : students) {
+                    student.greet();
+                }
+            }
+
+            void showGreetings(List<Greetable> greetables) {
+                for (Greetable greetable : greetables) {
+                    greetable.greet();
+                }
+            }
+
+            static <T extends Greetable> List<T> filterMüller(List<T> greetables) {
+                List<T> result = new ArrayList<>();
+                for (T greetable : greetables) {
+                    if (greetable.lastName().equals("Müller")) {
+                        result.add(greetable);
+                    }
+                }
+                return result;
+            }
+
+        }
