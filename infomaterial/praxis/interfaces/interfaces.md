@@ -78,7 +78,7 @@ import java.util.List;
 # Motivation
 
 
-Mit dem folgenden Code werden eine `Teacher` und eine `Student`-Klasse definiert. Beide Klassen haben eine `greet`-Methode.
+Mit dem folgenden Code definieren wir die Klassen `Teacher` und `Student`. Beide Klassen haben eine `greet`-Methode.
 
 ```java
 record Teacher(String firstName, String lastName)  {
@@ -107,7 +107,7 @@ alex.greet();
 ```
 
 
-Wenn man jetzt eine Methode schreiben will, mit der sich ein Schüler zweimal vorstellt, ist das folgendermaßen möglich:
+Wenn sich ein Schüler zweimal vorstellen soll, kann man dafür folgende Methode schreiben:
 
 
 
@@ -132,7 +132,7 @@ GreetingUtils.letStudentGreetTwoTimes(herrMüller); // Typfehler
 ```
 
 
-Eine Methode, bei der sich ein Lehrer zweimal vorstellt, muss separat programmiert werden.
+Für Lehrer braucht man deshalb eine zweite Methode.
 
 
 ```java
@@ -151,7 +151,7 @@ GreetingUtils.letTeacherGreetTwoTimes(herrMüller);
 # Interfaces
 
 
-Um diese Art von Codewiederholung zu vermeiden, kann man ein *Interface* definieren.
+Um diese Codewiederholung zu vermeiden, kann man ein *Interface* definieren.
 
 ```java  
 interface Greetable {
@@ -159,7 +159,7 @@ interface Greetable {
 }
 ```
 
-Jede Klasse, die das Interface `Greetable` erfüllt, muss die Methode `greet` implementieren. Diese Methode hat keine Parameter und liefert keinen Rückgabewert.
+Jede Klasse, die das Interface `Greetable` erfüllt, muss die Methode `greet` implementieren. Die Methode hat keine Parameter und liefert keinen Rückgabewert.
 
 Wir können jetzt deklarieren, dass die Klasse `Teacher` das Interface erfüllt. Dies geschieht mit dem Schlüsselwort `implements`.
 
@@ -176,7 +176,7 @@ Vor jeder Implementierung einer Methode des Interfaces muss `@Override` stehen.
 }
 ```
 
-Genauso können wir deklarieren, dass die Klasse `Student` das Interface erfüllt.
+Genauso erfüllt auch `Student` das Interface.
 
 ```java
 record Student(String firstName, String lastName, int age) implements Greetable {
@@ -194,19 +194,19 @@ Greetable greetingAlex = alex;
 Greetable greetingMüller = herrMüller;
 ```
 
-Die Methoden des Interfaces können dann weiterhin verwendet werden.
+Über diese Referenzen können weiterhin die Methoden des Interfaces verwendet werden.
 ```{.java .cb-nb line_numbers=false}
 greetingAlex.greet();
 ```
 
-Alle anderen Methoden der konkreten Klasse sind dann nicht mehr direkt nutzbar.
+Andere Methoden der konkreten Klasse sind dann nicht mehr direkt nutzbar.
 ```java
 greetingAlex.firstName(); // Typfehler
 ```
 
 
 
-Indem wir das Interface `Greetable` als Parametertyp nutzen, können wir die beiden Methoden oben zu einer Methode zusammenfassen.
+Wenn wir `Greetable` als Parametertyp nutzen, können wir die beiden Methoden oben zu einer Methode zusammenfassen.
 
 ```java
 class GreetingUtils {
@@ -225,14 +225,14 @@ GreetingUtils.letGreetTwoTimes(greetingMüller);
 
 # Interfaces und Listen
 
-Die Objekte `alex` und `herrMüller` gehören zwar zu unterschiedlichen Klassen, sie erfüllen aber beide das Interface `Greetable`.
+Die Objekte `alex` und `herrMüller` gehören zu unterschiedlichen Klassen, erfüllen aber beide das Interface `Greetable`.
 Deshalb können sie in einer `List<Greetable>` gespeichert werden.
 
 ```{.java .cb-nb line_numbers=false}
 List<Greetable> greeters = List.of(alex, herrMüller);
 ```
 
-Es ist möglich, Methoden zu definieren, denen eine Liste von Objekten übergeben wird, die ein Interface erfüllen.
+So kann man Methoden definieren, die eine Liste von Objekten erhalten, die ein Interface erfüllen.
 
 
 ```java
@@ -253,7 +253,7 @@ GreetingUtils.showGreetings(greeters);
 # Typen, die ein Interface erfüllen, spezifizieren
 
 
-Wenn man solche gemischten Listen mit `Student`- und `Teacher`-Objekten nicht zulassen will, die Methode aber sowohl mit einer `List<Student>` als auch mit einer `List<Teacher>` funktionieren soll,
+Wenn gemischte Listen mit `Student`- und `Teacher`-Objekten nicht erlaubt sein sollen, die Methode aber sowohl mit einer `List<Student>` als auch mit einer `List<Teacher>` funktionieren soll,
 kann man einen Typparameter (`T`) verwenden und festlegen, dass dieser das Interface `Greetable` erfüllt.
 
 ```java
@@ -277,16 +277,16 @@ GreetingUtils.showGreetingsNotMixed(teachers);
 Wir können auch Interfaces definieren, die ein bestehendes Interface erweitern.
 
 ```{.java .cb-nb line_numbers=false}
-interface CanGreetAndSayGoodBye extends Greetable {
+interface CanGreetAndSayGoodbye extends Greetable {
     void sayGoodbye();
 }
 ```
 
-Damit eine Klasse das Interface `CanGreetAndSayGoodBye` erfüllt, muss sie das Interface `Greetable` erfüllen und zusätzlich die Methode `void sayGoodbye()` implementieren.
+Damit eine Klasse das Interface `CanGreetAndSayGoodbye` erfüllt, muss sie auch `Greetable` erfüllen und zusätzlich die Methode `void sayGoodbye()` implementieren.
 
 \small
 ```{.java .cb-nb line_numbers=false}
-record Student(String firstName, String lastName, int age) implements CanGreetAndSayGoodBye {
+record Student(String firstName, String lastName, int age) implements CanGreetAndSayGoodbye {
     @Override
     public void greet() {
         println("Yo, I am " + firstName);
@@ -294,7 +294,7 @@ record Student(String firstName, String lastName, int age) implements CanGreetAn
 
     @Override
     public void sayGoodbye() {
-        println("Yo, I am " + firstName);
+        println("San Frantschüssko");
     }
 }
 ```
