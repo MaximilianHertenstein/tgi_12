@@ -11,9 +11,9 @@ farbig
 \usepackage{float}
 \usetikzlibrary{arrows,calc,positioning}
 
-\usepackage[scale = 0.1]{jetbrainsmono-otf}
+% \usepackage[scale = 0.1]{jetbrainsmono-otf}
 
-\setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
+% \setmonofont[Scale = MatchLowercase]{jetbrainsmono-light}
 
 \usepackage{scrlayer-scrpage}
 \ifoot{% TODO: \usepackage{graphicx} required
@@ -31,6 +31,8 @@ farbig
 \usepackage{xcolor}
 \usepackage{color}
 \usepackage{fancyvrb}
+\newfontfamily\diagramfont{DejaVu Sans Mono}
+\fvset{formatcom=\diagramfont}
 \date{}
 \usetikzlibrary{positioning} 
 \title{HTTP-Protokoll}
@@ -55,14 +57,14 @@ node[midway, above]{Anfrage};
 \draw[-latex] (S.195) -- (C.-15) node[midway, below]{Antwort};
 \end{tikzpicture} 
 
-Z. B. kann eine Schülerin auf ihrem IPAD die App Untis starten.
+Z.\,B. kann eine Schülerin auf ihrem iPad die App Untis starten.
 Diese ist ein Client.
 Die Schülerin kann sich in der App ihren Stundenplan anschauen.
 Dabei wird eine Anfrage an den Server geschickt.
-Dieser beantwortet die Abfrage mit dem gewünschten Stundenplan.
+Dieser beantwortet die Anfrage mit dem gewünschten Stundenplan.
 
-Sie kann dem Server aber auch eine Aufgabe schicken, z.B.\ sich für diesen Tag krankzumelden.
-Der Server versucht die Aufgabe zu erledigen und schickt der Schülerin, ob das geklappt hat.
+Sie kann dem Server aber auch eine Aufgabe schicken, z.\,B. sich für diesen Tag krankzumelden.
+Der Server versucht, die Aufgabe zu erledigen, und schickt der Schülerin zurück, ob das geklappt hat.
 
 \section{Netzwerkprotokolle}\label{sec:netzwerkprotokolle}
 
@@ -71,7 +73,8 @@ In einem Protokoll ist festgelegt, welche Form die Nachrichten haben müssen und
 
 \section{Grundlagen des HTTP-Protokolls}\label{sec:grundlagen-des-http-protokolls}
 
-Das Protokoll HTTP (Hypertext-Transfer-Protokoll) wird eingesetzt um HTML(Hypertext-Markup-Language) von HTTP-Servern zu Browsern zu schicken.
+Das Protokoll HTTP (Hypertext Transfer Protocol) wird eingesetzt, um Inhalte zwischen Client und Server zu übertragen.
+Häufig geht es dabei um HTML (Hypertext Markup Language), aber auch andere Formate wie CSS, JavaScript, Bilder oder JSON werden per HTTP übertragen.
 
 
 \begin{tikzpicture}[block/.style={draw,minimum width=2cm,minimum height=1cm}, font=\sffamily] 
@@ -82,7 +85,8 @@ node[midway, above]{HTTP-Anfrage};
 \draw[-latex] (S.195) -- (C.-15) node[midway, below]{HTTP-Antwort};
 \end{tikzpicture} 
 
-Wenn wir in die Adresszeile unseres Browsers \url{github.com/login}  eingeben und Enter drücken, wird die folgende HTTP-Anfrage versendet.
+Wenn wir in die Adresszeile unseres Browsers \url{github.com/login} eingeben und Enter drücken, wird eine HTTP-Anfrage versendet.
+Die folgende Darstellung ist vereinfacht:
 
 \begin{Verbatim}[label={verb:verbatim2}]
 GET /login HTTP/2
@@ -92,11 +96,11 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 ...
 \end{Verbatim}
 
-In der ersten Zeile steht, welche
+In der ersten Zeile steht,
 \begin{itemize}
 \item  welche HTTP-Methode verwendet wurde (\texttt{GET})
 \item  der Pfad zu der abgefragten Seite (\texttt{/login})
-\item  welche Version des Protokolls verwendet wurde (HTTP 2)
+\item  welche Version des Protokolls verwendet wurde (HTTP/2)
 
 \end{itemize}
 
@@ -108,7 +112,7 @@ Anschließend folgen die HTTP-Header.
 Jeder Header hat einen Namen und einen Wert.
 Zum Beispiel hat der Header \texttt{Host} den Wert \texttt{github.com}.
 Das gibt an, dass der Name des angefragten Servers \texttt{github.com} lautet.
-Im zweiten Header ist angegeben, dass der Client, HTML-Code als Antwort bevorzugt, aber auch noch eine Reihe anderer Formate wie z.B.\ XML akzeptiert.
+Im zweiten Header ist angegeben, dass der Client HTML-Code als Antwort bevorzugt, aber auch noch eine Reihe anderer Formate wie z.\,B. XML akzeptiert.
 
 Der HTTP-Server \texttt{github.com} schickt daraufhin eine Antwort, die folgendermaßen beginnt.
 \begin{Verbatim}[label={verb:verbatim3}]
@@ -120,11 +124,11 @@ content-type: text/html; charset=utf-8
 \end{Verbatim}
 
 In der ersten Zeile steht neben der HTTP-Version der Statuscode $200$.
-Das bedeutet, dass die Anfrage ohne Probleme beantwortet werden kann.
-Der zweite Header \texttt{content-type} gibt an, welches Format die Antwort des Servers hat.
+Das bedeutet, dass die Anfrage ohne Probleme beantwortet werden konnte.
+Der Header \texttt{content-type} gibt an, welches Format die Antwort des Servers hat.
 In diesem Fall wurde also mit HTML-Code geantwortet.
 
-Nach den Headern folgt der eigentliche Inhalt der Nachricht 
+Nach den Headern folgt der eigentliche Inhalt der Nachricht.
 
 \begin{Verbatim}[label={verb:verbatim4}]
 <!DOCTYPE html>
@@ -136,14 +140,14 @@ Nach den Headern folgt der eigentliche Inhalt der Nachricht
 ...
 </html>
 \end{Verbatim}
-Der Browser rendert den HTML-Code korrekt, da durch das Lesen des Headers \texttt{content-type} weiß, dass die Antwort des Servers HTML-Code ist.
+Der Browser rendert den HTML-Code korrekt, da er durch das Lesen des Headers \texttt{content-type} weiß, dass die Antwort des Servers HTML-Code ist.
 
 
 
 \begin{Verbatim}[label={verb:verbatim5}]
 ┌────────────────────────┐      ┌─HTTP REQUEST────────────────┐
 │ BROWSER              X │      │                             │
-├────────────────────────┤      │ GET /login HTTP2            │
+├────────────────────────┤      │ GET /login HTTP/2           │
 │ ┌────────────────────┐ │      │ Host: github.com            │
 │ │  github.com/login  │ │      │ Accept: text/html ...       │
 │ └────────────────────┘ │      └─────────────────────────────┘
@@ -174,17 +178,17 @@ Der Browser rendert den HTML-Code korrekt, da durch das Lesen des Headers \textt
 \section{HTTP-Methoden}\label{sec:http-methoden}
 
 Die HTTP-Anfrage, die wir oben gesehen hatten, hatte die Methode \texttt{GET}.
-Es gibt eine Vielzahl von HTTP Methoden.
-Wir benötigen neben dieser Methode aber nur noch eine Weitere.
+Es gibt eine Vielzahl von HTTP-Methoden.
+Wir benötigen neben dieser Methode aber nur noch eine weitere.
 
 \begin{itemize}
 \item Die Methode \texttt{GET} wird genutzt, um Inhalte abzufragen.
-Bei \texttt{GET}-Abfragen sollte sich auf dem Zustand nichts ändern.
+Bei \texttt{GET}-Anfragen sollte sich am Zustand auf dem Server nichts ändern.
 
 \item Die Methode \texttt{POST} wird genutzt, um Daten vom Client zum Server zu übertragen.
 Dies kann zu einer Zustandsänderung führen.
-Z.B.\ würde das Anmelden bei einem Newsletter per \texttt{POST}-Abfrage übertragen werden.
-Bei Postabfragen können Informationen, wie z.B.\ eine eingegebene E-Mail-Adresse als Schlüssel-Wert-Paar(z.B. \texttt{email=joe@example.com}) im Request-Body übertragen werden.
+Z.\,B. würde das Anmelden bei einem Newsletter per \texttt{POST}-Anfrage übertragen werden.
+Bei \texttt{POST}-Anfragen können Informationen wie z.\,B. eine eingegebene E-Mail-Adresse als Schlüssel-Wert-Paar (z.\,B. \texttt{email=joe@example.com}) im Request-Body übertragen werden.
 
 \pagebreak
 \begin{Verbatim}[label={verb:verbatim}]
@@ -224,8 +228,8 @@ Bei Postabfragen können Informationen, wie z.B.\ eine eingegebene E-Mail-Adress
 
 \section{URLs}\label{sec:urls}
 
-Eine URL gibt eindeutig an, wo sich eine Resource befindet und wo auf diese zugegriffen werden kann.
-Z.B.\ ist \url{http://github.com/login}eine Ressource.
+Eine URL gibt eindeutig an, wo sich eine Ressource befindet und wie auf diese zugegriffen werden kann.
+Z.\,B. ist \url{http://github.com/login} eine URL zu einer Ressource.
 Diese hat die folgenden Bestandteile:
 
 \begin{table}[H]
@@ -237,31 +241,33 @@ Das verwendete Protokoll & \texttt{http}\\
 
 Der Name des Servers & \texttt{github.com}  \\
 
-Der Pfad zu der angefragten Ressource & \texttt{/login}   \\
+Der Pfad zur angefragten Ressource & \texttt{/login}   \\
 
 \end{tabular}\label{tab:table}
 \end{table}
 
-
-
+Ein Server lauscht auf einem bestimmten \textbf{Port} auf eingehende Anfragen.
+Bei HTTP ist der Standardport \texttt{80}, sodass er in der URL weggelassen werden kann.
+In der Entwicklung wird häufig Port \texttt{8080} genutzt, z.\,B. wenn man lokal einen eigenen HTTP-Server startet.
+Der Port wird in der URL mit einem Doppelpunkt nach dem Servernamen angegeben, z.\,B. \url{http://localhost:8080/login}.
 
 Eine URL kann auch relativ angegeben werden.
-Wenn z.B.\ auf der Seite \texttt{github.com} ein Link auf die URL \url{/login}verweist, führt der Browser beim Klick auf den Link eine HTTP-Anfrage an die Adresse \texttt{github.com/login} durch.
+Wenn z.\,B. auf der Seite \texttt{github.com} ein Link auf die URL \url{/login} verweist, führt der Browser beim Klick auf den Link eine HTTP-Anfrage an die Adresse \texttt{github.com/login} durch.
 
 \section{Query-Parameter}\label{sec:query-parameter}
 
-Wenn man GHSE googelt, wird eine HTTP Anfrage an die folgende URI durchgeführt:
+Wenn man GHSE googelt, wird eine HTTP-Anfrage an die folgende URL gesendet:
 
 \url{https://www.google.com/search?q=ghse&...}
 
 Hinter dem Pfad \texttt{/search} steht ein Fragezeichen.
 Dahinter wird mit \texttt{q=ghse} angegeben, wonach gesucht wurde.
-Dabei handelt es sich um einem Query Parameter.
-In diesem Beispiel hat dieser den Namen \texttt{q} und den Wert \texttt{GHSE}.
+Dabei handelt es sich um einen Query-Parameter.
+In diesem Beispiel hat er den Namen \texttt{q} und den Wert \texttt{ghse}.
 
 
-Danach können weitere solcher Query-Parameter folgen.
-Zwischen zwei Query-Parameter steht ein \texttt{\&}.
+Danach können weitere Query-Parameter folgen.
+Zwischen zwei Query-Parametern steht ein \texttt{\&}.
 
 
 \section{Statuscodes}\label{sec:statuscodes}
@@ -275,11 +281,11 @@ Neben diesem sind auch noch zwei weitere Statuscodes besonders wichtig für uns.
 
 Code & Bedeutung \\
 \hline
-200 & Die Abfrage wurde erfolgreich bearbeitet  \\
+200 & Die Anfrage wurde erfolgreich bearbeitet  \\
 
-404 & Die abgefragte Ressource konnte nicht gefunden werden  \\
+404 & Die angefragte Ressource konnte nicht gefunden werden  \\
 
-500 & Bei der Bearbeitung der Abfrage ist auf ein Fehler auf dem Server aufgetreten   \\
+500 & Bei der Bearbeitung der Anfrage ist ein Fehler auf dem Server aufgetreten   \\
 
 \end{tabular}\label{tab:table2}
 \end{table}

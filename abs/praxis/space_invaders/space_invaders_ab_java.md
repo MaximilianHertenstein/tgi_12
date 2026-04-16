@@ -2125,7 +2125,7 @@ Lege die Klasse `Model` an. Die Eigenschaften sind:
 Implementiere die Methode `restart`. Sie setzt alle veränderbaren Eigenschaften auf ihre Anfangswerte zurück:
 
 - `player` startet in der Mitte des Spielfelds, zwei Zeilen über dem unteren Rand
-- `alienSwarm` wird neu erzeugt
+- `alienSwarm` wird mit dem parameterlosen Konstuktor neu erzeugt
 - `blocks` wird mit `LevelFactory.generateBlocks` erzeugt
 
 \tiny
@@ -2160,7 +2160,7 @@ println(model.blocks);
 ## Aufgabe
 
 Implementiere einen zweiten Konstruktor `public Model(int width, int height, V2 playerPos, List<Alien> alienSwarm, List<BasicGameObject> blocks)`
-der Konstruktor soll die Felder entsprechend setzen und `player` mit `playerPos` initialisieren, `alienSwarm` mit den übergebenen Aliens und einem neuen `CountDown(5)` versehen, sowie `blocks` setzen.
+der Konstruktor soll die Felder entsprechend setzen und `player` mit `playerPos` initialisieren, `alienSwarm` mit den übergebenen Aliens und einem neuen `CountDown(5)` und der Richtung $(1,0)$ versehen, sowie `blocks` setzen.
 \tiny
 ```{.java .cb-nb line_numbers=false}
 var aliens = List.of(new Alien(new V2(2,5), "A"));

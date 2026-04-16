@@ -7,7 +7,7 @@ import org.example.JavalinConfigurator;
         void main() {
             Javalin app = Javalin.create(JavalinConfigurator::configure);
 
-                    app.start(7070);
+                    app.start();
         }
 
 

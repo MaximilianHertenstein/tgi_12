@@ -14,13 +14,6 @@ codebraid:
 
 # Grundlagen
 
-
-## Aufgabe
-
-Definiere in einer neuen Datei `ServerView.java` eine Klasse namens `ServerView`. Die Klasse hat ein Attribut vom Typ `TemplateRenderer`. Initialisiere das Attribut direkt in der Klasse.
-
-
-
 ## Aufgabe
 
 Füge, wenn du `gradle` benutzt, die folgende Abhängigkeit in `build.gradle` hinzu.
@@ -44,6 +37,14 @@ Füge, wenn du `Maven` benutzt, die folgende Abhängigkeit in `pom.xml` hinzu.
     <version>2.0.17</version>
 </dependency>
 ```
+
+## Aufgabe
+
+Definiere in einer neuen Datei `ServerView.java` eine Klasse namens `ServerView`. Die Klasse hat ein Attribut vom Typ `TemplateRenderer`. Initialisiere das Attribut direkt in der Klasse.
+
+
+
+
 
 
 

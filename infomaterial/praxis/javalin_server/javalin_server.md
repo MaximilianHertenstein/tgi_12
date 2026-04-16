@@ -9,7 +9,7 @@ codebraid:
 <dependency>
     <groupId>io.javalin</groupId>
     <artifactId>javalin</artifactId>
-    <version>7.0.1</version>
+    <version>7.1.0</version>
 </dependency>
     <dependency>
         <groupId>org.slf4j</groupId>
@@ -22,25 +22,30 @@ codebraid:
 
 # Javalin-Framework
 
-## App erstellen und starten
+## Grundlagen und Abhängigkeiten laden
 
-Das Framework `Javalin` ermöglicht es uns, HTTP-Anfragen zu beantworten.
-Um es zu nutzen, müssen wir die folgenden Abhängigkeiten in der Datei `build.gradle` ergänzen.
+Mit dem Framework `Javalin` können wir HTTP-Anfragen verarbeiten und beantworten.
+Dafür ergänzen wir in der Datei `build.gradle` die folgenden Abhängigkeiten.
 
 
+\begingroup
+\tiny
 ```java
-implementation("io.javalin:javalin:7.0.1")
+implementation("io.javalin:javalin:7.1.0")
 implementation("org.slf4j:slf4j-simple:2.0.17")
 ```
+\endgroup
 
-Wenn du Maven verwendest, benötigst du die folgenden Abhängigkeiten:
+Wenn du Maven verwendest, trägst du stattdessen diese Abhängigkeiten ein:
 
+\begingroup
+\tiny
 ```xml
 <dependencies>
     <dependency>
         <groupId>io.javalin</groupId>
         <artifactId>javalin</artifactId>
-        <version>7.0.1</version>
+        <version>7.1.0</version>
     </dependency>
     <dependency>
         <groupId>org.slf4j</groupId>
@@ -48,31 +53,41 @@ Wenn du Maven verwendest, benötigst du die folgenden Abhängigkeiten:
         <version>2.0.17</version>
     </dependency>
 </dependencies>
-
 ```
+\endgroup
 
 
+## App erstellen und starten
 
-<!-- Anschließend importieren wir die Klasse `Javalin` in der Datei, in der wir eine `Javalin`-Anwendung definieren wollen.
+Jetzt können wir in der `main`-Methode mit der statischen Methode `create` ein Objekt der Klasse `Javalin` erzeugen.
+Dieses Objekt repräsentiert unsere Server-Anwendung.
 
-```
-import io.javalin.Javalin;
-```
-
-Nun können wir mit dem folgenden Code eine Anwendung erzeugen und starten.
 
 ```java
 Javalin app = Javalin.create();
-app.start(7000);
+```
+Mit der Methode `start` starten wir die App.
+
+
+```java
+app.start();
 ```
 
-Sie wartet auf Anfragen an Port $7000$. -->
 
-## Behandlung von HTTP-Anfragen definieren
+Zunächst läuft die Anwendung auf dem lokalen Rechner. Dieser ist unter dem Hostnamen `localhost` erreichbar.
+Javalin verwendet standardmäßig Port $8080$.
+Wir erreichen unsere Anwendung also unter `http://localhost:8080/`.
+
+ ![](endpoint_not_found.png){ width=50% }
+
+Die Fehlermeldung zeigt: Der Server weiß noch nicht, wie er Anfragen an diese Adresse beantworten soll.
+Genau das ergänzen wir im nächsten Schritt.
+
+## Methoden zur Behandlung von HTTP-Anfragen definieren
 
 
-Im nächsten Schritt müssen wir definieren, wie wir Anfragen beantworten wollen.
-Dafür definieren wir in einer neuen Klasse eine Methode, die einen Parameter vom Typ `Context` hat.
+Im ersten Schritt definieren wir eine Methode, die Anfragen beantwortet.
+Dafür legen wir in einer neuen Klasse eine Methode mit einem Parameter vom Typ `Context` an.
 
 ```{.java .cb-nb line_numbers=false}
 import io.javalin.http.Context;
@@ -84,13 +99,20 @@ class Controller {
 }
 ```
 
-Der `Context` enthält alle Informationen und Methoden, die notwendig sind, um Anfragen zu beantworten.
-In diesem Beispiel wird nur die Methode `result` genutzt. Diese schickt den übergebenen String als Antwort auf eine Anfrage.
+Der `Context` enthält alle Informationen und Methoden, die wir zum Beantworten einer Anfrage brauchen.
+In diesem Beispiel verwenden wir nur die Methode `result`. Sie sendet den übergebenen String als Antwort.
+
+
+## Routen in Javalin konfigurieren
+
+
+Als Nächstes implementieren wir eine Methode, die unsere Javalin-Anwendung konfiguriert.
+Dabei fügen wir *Routen* zu unserer Anwendung hinzu.
+Eine *Route* ist die Zuordnung aus HTTP-Methode (z. B. GET oder POST), Pfad und Java-Methode, die die Anfrage bearbeitet.
 
 
 
-Als nächstes definieren wir in einer weiteren Klasse `JavalinConfigurator` eine Methode `configure` mit einem Parameter vom Typ `JavalinConfig`. 
-<!-- Diese Methode konfiguriert einen `Javalin`-Server. -->
+Dafür definieren wir in einer weiteren Klasse `JavalinConfigurator` die statische Methode `configure` mit einem Parameter vom Typ `JavalinConfig`.
 
 
  
@@ -108,32 +130,27 @@ public class JavalinConfigurator {
 }
 ```
 
-Diese Methode erzeugt einen Controller und ein Objekt `routes` der Klasse `RoutesConfig`. Diese Klasse hat unter anderem die Methode `get`.
-Dieser Methode werden ein Pfad und eine Methode übergeben, die GET-Anfragen an diesen Pfad beantworten soll.
-In diesem Beispiel wird jede HTTP-GET-Anfrage an die Adresse des Servers und den Pfad `/pathToHelloWorld`
-mit der Methode `respondHelloWorld` beantwortet. Die Syntax `controller::respondHelloWorld` sorgt dafür, dass die Methode `respondHelloWorld` an die Methode `get` übergeben wird. Sie wird nicht aufgerufen.
+Diese Methode erzeugt einen Controller und ein Objekt `routes` vom Typ `RoutesConfig`.
+`RoutesConfig` stellt unter anderem die Methode `get` bereit.
+An `get` übergeben wir einen Pfad und eine Methode, die GET-Anfragen für diesen Pfad beantworten soll.
+In diesem Beispiel wird jede HTTP-GET-Anfrage an `/pathToHelloWorld`
+mit `respondHelloWorld` des Objekts `controller` beantwortet.
+Die Schreibweise `controller::respondHelloWorld` verweist nur auf die Methode. Sie wird an dieser Stelle nicht ausgeführt.
 
 
 
-Jetzt können wir in der `main`-Methode mit der statischen Methode `create` ein Objekt der Klasse `Javalin` erzeugen, das mit der eben definierten Methode `JavalinConfigurator.configure` konfiguriert wird.
+Jetzt können wir in der `main`-Methode beim Erzeugen der `Javalin`-App die Methode `JavalinConfigurator::configure` übergeben.
 
 ```java
-import io.javalin.Javalin;
-import org.example.JavalinConfigurator;
-
-public class Main {
-    public static void main(String[] args) {
-        Javalin app = Javalin.create(JavalinConfigurator::configure);
-        app.start(7070);
-    }
-}
+Javalin app = Javalin.create(JavalinConfigurator::configure);
+app.start();
 ```
 
+Unser Server ist unter `http://localhost:8080` erreichbar, und die eben definierte Methode beantwortet Anfragen an den relativen Pfad `/pathToHelloWorld`.
+Die vollständige URL zum Testen lautet daher `http://localhost:8080/pathToHelloWorld`.
 
 
-Zunächst läuft die Anwendung auf dem lokalen Rechner. Dieser ist unter dem Hostnamen `localhost` erreichbar.
-Wir erreichen unsere Anwendung also unter: `http://localhost:7070/pathToHelloWorld`
- 
+
 
  ![](browser.png){ width=50% }
 
@@ -146,15 +163,15 @@ Natürlich können wir dem Client auch `HTML`-Code schicken.
 ctx.result("<h1>Hello World</h1>");
 ```
 
-Dieser wird zunächst als reiner Text angezeigt:
+Dieser wird zunächst als gewöhnlicher Text angezeigt:
 
 
 ```
 <h1>Hello World</h1>
 ```
 
-Um zu erreichen, dass dieser korrekt gerendert wird, müssen wir den Content-Type-Header unserer Antwort auf `text/html` setzen.
-Dies ist mit der `Context`-Methode `contentType` möglich.
+Damit der HTML-Code korrekt gerendert wird, müssen wir den Content-Type-Header der Antwort auf `text/html` setzen.
+Das geht mit der `Context`-Methode `contentType`.
 
 ```java
 // in Controller.java
@@ -165,15 +182,15 @@ ctx.result("<h1>Hello World</h1>");
 ![](html_browser.png){ width=50% }
 
 
-# Informationen über die Anfrage erhalten
+## Informationen über die Anfrage erhalten
 
-Die Methode `respondHelloWorld` beantwortet alle HTTP-Anfragen gleich. 
-Das muss natürlich nicht so sein.
-Die Klasse `Context` stellt einige Methoden bereit, um Details über die HTTP-Anfrage zu erhalten.
+Die Methode `respondHelloWorld` beantwortet aktuell alle HTTP-Anfragen auf dieselbe Weise.
+Das muss natürlich nicht so bleiben.
+Die Klasse `Context` bietet mehrere Methoden, mit denen wir Details zur HTTP-Anfrage auslesen können.
 
-## Query-Parameter
+### Query-Parameter
 
-Mit der Methode `queryParam` können wir den Wert eines bestimmten Query-Parameters abfragen.
+Mit der Methode `queryParam` können wir den Wert eines bestimmten Query-Parameters auslesen.
 
 
 ```java
@@ -188,15 +205,15 @@ routes.get("/getGreeting", controller::greetUser);
 
 Beim Aufruf von
 ```
-http://localhost:7070/getGreeting?userName=Nino
+http://localhost:8080/getGreeting?userName=Nino
 ```
 
 wird `Hello Nino` angezeigt.
 
 
-## Path-Parameter
+### Path-Parameter
 
-Mithilfe der Methode `pathParam` können Teile des Pfads ausgelesen werden.
+Mit der Methode `pathParam` können wir Teile des Pfads auslesen.
 
 ```{.java .cb-nb line_numbers=false}
 public void greetUserPathParam(Context ctx){
@@ -205,30 +222,31 @@ public void greetUserPathParam(Context ctx){
 }
 ```
 
-Im Pfad müssen wir jetzt einen Parameter `userName` verwenden. Solche `Path-Parameter` werden mit geschweiften Klammern gekennzeichnet.
+Im Pfad verwenden wir jetzt einen Parameter `userName`.
+Solche `Path-Parameter` werden mit geschweiften Klammern markiert.
  
 ```java
 // in JavalinConfigurator.configure
 routes.get("/{userName}/getGreeting", controller::greetUserPathParam);
 ```
 
-Beim Aufruf von `http://localhost:7070/Pana/getGreeting` wird `Hello Pana` angezeigt.
+Beim Aufruf von `http://localhost:8080/Pana/getGreeting` wird `Hello Pana` angezeigt.
 
 
-## Form-Parameter
+### Form-Parameter
 
-Das folgende Formular verschickt die Eingabe als POST-Request an die relative Adresse `/getGreeting`. 
+Das folgende Formular sendet die Eingabe als POST-Request an die relative Adresse `/getGreeting`:
 
 ```html
 <form action="/getGreeting" method="post" >
     <input type="text"   name="userName" value="" />
-    <button type="submit" > Submit  </button>
+    <button type="submit" >Absenden</button>
 </form>
 ```
-Der eingegebene Benutzername wird nicht in der `URL` übermittelt, sondern im `Request-Body` der Anfrage.
-Bei der Eingabe des Namens `Frieda` steht im `Request-Body` `userName=Frieda`.
+Der eingegebene Benutzername wird nicht in der `URL`, sondern im `Request-Body` der Anfrage übertragen.
+Wenn der Name `Frieda` eingegeben wird, enthält der `Request-Body` den Eintrag `userName=Frieda`.
 
-Daten, die über einen POST-Request eines Formulars übermittelt wurden, können mit der Methode `formParam` abgefragt werden.
+Daten, die über den POST-Request eines Formulars übermittelt werden, lesen wir mit der Methode `formParam` aus.
 
 
 ```java
@@ -242,13 +260,13 @@ public void greetUserFormParam(Context ctx){
 routes.post("/getGreeting", controller::greetUserFormParam);
 ```
 
-Da wir mit dieser Methode POST-Anfragen beantworten, müssen wir die Methode `post` nutzen.
+Da wir mit dieser Methode POST-Anfragen beantworten, nutzen wir in der Routen-Definition die Methode `post`.
 
 
-## Header-Informationen abfragen
+### Header-Informationen abfragen
 
 
-Die Header einer HTTP-Anfrage können mit der `Context`-Methode `header` abgefragt werden.
+Die Header-Felder einer HTTP-Anfrage können mit der `Context`-Methode `header` ausgelesen werden.
 
 
 ```java
@@ -257,10 +275,10 @@ String acceptHeader = ctx.header("Accept");
 
 
 
-# Webjars nutzen
+## Webjars nutzen
 
-Webjars sind Frontend-Bibliotheken, die man in JVM-Programmen nutzen kann.
-Um Webjars in Javalin-Anwendungen nutzen zu können, müssen wir in der Methode `JavalinConfigurator.configure` auf der Eigenschaft `staticFiles` des Parameters `config` die Methode `enableWebjars` aufrufen.
+Webjars sind Frontend-Bibliotheken, die wir in JVM-Programmen nutzen können.
+Damit Webjars in Javalin-Anwendungen verfügbar sind, rufen wir in der Methode `JavalinConfigurator.configure` auf der Eigenschaft `staticFiles` des Parameters `config` die Methode `enableWebjars` auf.
 
 ```java
 // in JavalinConfigurator.configure
