@@ -8,6 +8,6 @@ public class JavalinConfigurator {
     public static void configure(JavalinConfig config) {
         var controller = new Controller();
         RoutesConfig routes = config.routes;
-        routes.get("/pathToHelloWorld", controller::respondHelloWorld);
+        routes.get("/todos", controller::respondHelloWorld);
     }
 }

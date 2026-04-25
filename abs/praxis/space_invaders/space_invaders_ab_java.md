@@ -658,7 +658,7 @@ $$\begin{pmatrix} v_{1} \\ v_{2}\end{pmatrix} +  \begin{pmatrix} w_{1} \\ w_{2} 
 
 ## Aufgabe
 
-Lege die Klasse `Utils` in `Utils.java` an. Alle Methoden dieser Klasse sind statisch.
+Lege die Klasse `Utils` in `Utils.java` an. Alle Methoden dieser Klasse sind statisch. Die Methoden der Klasse sind allgemeine Hilfsmethoden, die an anderen Stellen im Code gebraucht werden.
 
 
 
@@ -727,7 +727,7 @@ Implementiere eine Methode `isOnBoard`{.java} für eine Hitbox. Der Methode werd
 übergeben. Sie gibt `true` zurück, wenn mindestens eine der Zellen in der Liste auf dem Spielfeld liegt.
 
 ```{.java .cb-nb line_numbers=false}
-Utils.isOnBoard(List.of(new V2(9,7), new V2(10, 7)), 10, 8);
+Utils.isOnBoard(List.of(new V2(9,7), new V2(10, 7),new V2(11, 7)), 10, 8);
 ```
 ```{.java .cb-nb line_numbers=false}
 Utils.isOnBoard(List.of(new V2(-1,7), new V2(0, 7)), 10, 8);
@@ -841,6 +841,16 @@ new StringWithLocation("bye", new V2(5, 7));
 
 # BasicGameObject
 
+Die Objekte der Klasse `BasicGameObject` sind Spielobjekte, die nur grundlegende Methoden und Eigenschaften haben, wie z.B.
+
+- eine Position
+- ein String, mit dem das Objekt angezeigt werden kann
+- eine Hitbox
+
+
+
+Alle anderen Objekte in dem Spiel bauen auf diese Klasse auf.
+
 ## Aufgabe
 
 Erstelle ein `record` `BasicGameObject`! 
@@ -914,6 +924,8 @@ bgo2.hitBox();
 
 # MovableGameObject
 
+Die Objekte dieser Klasse haben zusätzlich zu den Eigenschaften der Klasse `BasicGameObject` Methoden, um das Objekt zu bewegen und zu prüfen, ob es mit Rändern kollidiert.
+
 
 ## Aufgabe
 
@@ -939,7 +951,7 @@ new MovableGameObject(new V2(10, 5), "abc\ndef");
 
 \vskip 10 pt
 
-**Hinweis:** Die folgenden $3$ Methoden sind nur dazu da um die Methoden der Klasse `BasicGameObject` auch mit einem Objekt der Klasse `MovableGameObject` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `BasicGameObject` aufgerufen wird.
+**Hinweis:** Die folgenden $3$ Methoden sind nur dazu da, um die Methoden der Klasse `BasicGameObject` auch mit einem Objekt der Klasse `MovableGameObject` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `BasicGameObject` aufgerufen wird.
 
 
 ## Aufgabe
@@ -1028,6 +1040,9 @@ mgo1.touchesRightBorder(6);
 
 
 # PlayerRocket
+Die Objekte dieser Klasse stellen Raketen dar, die vom Spieler abgefeuert wurden.
+
+Die Objekte dieser Klasse haben zusätzlich zu den Eigenschaften der Klasse `MovableGameObject` eine Methode, um die Rakete nach oben zu bewegen.
 
 
 ## Aufgabe
@@ -1063,7 +1078,7 @@ pr.isPlayerRocket();
 
 
 \normalsize
-**Hinweis:** Die folgenden $4$ Methoden sind nur dazu da um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `PlayerRocket` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `MovableGameObject` aufgerufen wird.
+**Hinweis:** Die folgenden $4$ Methoden sind nur dazu da, um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `PlayerRocket` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `MovableGameObject` aufgerufen wird.
 
 
 ## Aufgabe
@@ -1114,6 +1129,10 @@ pr.move();
 
 # AlienRocket
 
+Ein Objekt dieser Klasse stellt eine Rakete dar, die von einem Alien abgefeuert wurde.
+Die Objekte dieser Klasse haben zusätzlich zu den Eigenschaften der Klasse `MovableGameObject` eine Methode, um die Rakete nach unten zu bewegen.
+
+
 ## Aufgabe 
 Erstelle ein `record`  `AlienRocket`. Die einzige Eigenschaft hat den Typ `MovableGameObject`!
 
@@ -1144,7 +1163,7 @@ ar.isPlayerRocket();
 
 
 
-**Hinweis:** Die folgenden $3$ Methoden sind nur dazu da um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `AlienRocket` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `MovableGameObject` aufgerufen wird.
+**Hinweis:** Die folgenden $3$ Methoden sind nur dazu da, um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `AlienRocket` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `MovableGameObject` aufgerufen wird.
 
 ## Aufgabe 
 Implementiere die Methode `pos`. Diese gibt die Position zurück.
@@ -1189,6 +1208,11 @@ ar.move();
 
 # Player
 
+Ein Objekt dieser Klasse stellt den Spieler dar.
+Die Objekte dieser Klasse haben zusätzlich zu den Eigenschaften der Klasse `MovableGameObject` eine Methode, um eine Rakete zu schießen.
+
+
+
 ## Aufgabe 
 Erstelle ein `record` `Player`. Die einzige Eigenschaft hat den Typ `MovableGameObject`!
 
@@ -1209,7 +1233,7 @@ new Player(new V2(10, 50));
 ```
 \normalsize
 
-**Hinweis:** Die folgenden 4 Methoden sind nur dazu da um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `Player` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `Player` aufgerufen wird.
+**Hinweis:** Die folgenden 4 Methoden sind nur dazu da, um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `Player` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `MovableGameObject` aufgerufen wird.
 
 
 ## Aufgabe
@@ -1260,7 +1284,7 @@ player.move(new V2(1,0));
 
 ## Aufgabe
 
-Implementiere die  Methode `reactToBorder`. Der Methode wird die Breite des Spielfelds übergeben. Sie gibt ein neues Objekt vom Typ `Player` zurück. Wenn das Objekt rechts von der rechten Grenze ist, wird es um eine Einheit nach links verschoben.
+Implementiere die Methode `reactToBorder`. Der Methode wird die Breite des Spielfelds übergeben. Sie gibt ein neues Objekt vom Typ `Player` zurück. Wenn das Objekt die rechte Grenze berührt, wird es um eine Einheit nach links verschoben.
 
 \tiny
 ```{.java .cb-nb line_numbers=false}
@@ -1268,7 +1292,7 @@ var player = new Player(new V2(10,5));
 player.reactToBorder(10);
 ```
 \normalsize
-Wenn das Objekt links von der linken Grenze ist, wird es um eine Einheit nach rechts verschoben.
+Wenn das Objekt die linke Grenze berührt, wird es um eine Einheit nach rechts verschoben.
 \tiny
 
 ```{.java .cb-nb line_numbers=false}
@@ -1323,7 +1347,10 @@ new Player(new V2(10,5)).shoot();
 
 
 # Alien
+Ein Objekt dieser Klasse stellt ein Alien dar. Aliens haben zusätzlich zu den Methoden der Klasse `MovableGameObject`
 
+- eine Methode, um eine Rakete nach unten abzufeuern,
+- und eine Methode, um zu prüfen, ob das Alien in der untersten Zeile des Spiels ist.
 ## Aufgabe
 
 Lege das `record` `Alien` an. Die einzige Eigenschaft hat den Typ `MovableGameObject`.
@@ -1351,7 +1378,7 @@ new Alien(new V2(20, 4), "abc\ndef");
 \normalsize
 
 
-**Hinweis:** Die folgenden Methoden sind nur dazu da um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `Alien` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `BasicGameObject` aufgerufen wird.
+**Hinweis:** Die folgenden Methoden sind nur dazu da, um die Methoden der Klasse `MovableGameObject` auch mit einem Objekt der Klasse `Alien` nutzen zu können. Die Implementierung besteht immer nur aus einer Zeile, in der die entsprechende Methode der Klasse `MovableGameObject` aufgerufen wird.
 
 ## Aufgabe
 
@@ -1444,6 +1471,8 @@ alien.shoot();
 
 # CountDown
 
+
+
 ## Aufgabe
 
 Lege das `record` `CountDown` an. Es hat die Eigenschaften `start`{.java} und `current`{.java}. Der Typ der beiden Eigenschaften ist `int`.
@@ -1497,6 +1526,8 @@ new CountDown(4, 1).finished();
 
 
 # AlienSwarm
+
+Ein Objekt dieser Klasse verwaltet eine Liste von Aliens. Es bewegt diese und feuert regelmäßig Raketen ab.
 
 ## Aufgabe
 
@@ -1876,6 +1907,8 @@ alienSwarm.getShootingAlien();
 
 # LevelFactory
 
+Diese Klasse stellt Methoden bereit, um die Blöcke auf dem Spielfeld zu erstellen.
+
 ## Aufgabe
 
 Lege die Klasse `LevelFactory`{.java} an.  
@@ -1983,6 +2016,8 @@ Utils.repeat("hi", 0);
 
 # Plasma
 
+Die Objekte der Klasse stellen Plasmaschüsse dar, die die komplette Höhe des Spielfelds ausfüllen. Im Gegensatz zu anderen Objekten fliegen sie nach einer Kollision einfach weiter.
+
 ## Aufgabe
 
 Lege das `record` `Plasma` an. Die einzige Eigenschaft hat den Typ `MovableGameObject`.
@@ -2057,6 +2092,9 @@ plasma.move().pos();
 
 # InvisiblePlasmaCannon
 
+
+Dies ist lediglich eine Hilfsklasse, mit der ein Plasma-Schuss abgefeuert werden kann.
+
 ## Aufgabe
 
 Lege das `record` `InvisiblePlasmaCannon` an. Die einzige Eigenschaft ist `pos` vom Typ `V2`.
@@ -2110,6 +2148,8 @@ LevelFactory.generateBlocks(100, 60);
 
 # Model
 
+Ein Objekt der Klasse `Model` verwaltet den gesamten Zustand des Spiels. Es stellt Methoden bereit, um auf Eingaben zu reagieren und das Spiel zu aktualisieren.
+
 ## Aufgabe
 
 Lege die Klasse `Model` an. Die Eigenschaften sind:
@@ -2159,8 +2199,8 @@ println(model.blocks);
 
 ## Aufgabe
 
-Implementiere einen zweiten Konstruktor `public Model(int width, int height, V2 playerPos, List<Alien> alienSwarm, List<BasicGameObject> blocks)`
-der Konstruktor soll die Felder entsprechend setzen und `player` mit `playerPos` initialisieren, `alienSwarm` mit den übergebenen Aliens und einem neuen `CountDown(5)` und der Richtung $(1,0)$ versehen, sowie `blocks` setzen.
+Implementiere einen zweiten Konstruktor `public Model(int width, int height, V2 playerPos, List<Alien> alienSwarm, List<BasicGameObject> blocks)`.
+Der Konstruktor soll die Felder entsprechend setzen und `player` mit `playerPos` initialisieren, `alienSwarm` mit den übergebenen Aliens, einem neuen `CountDown(5)` und der Richtung `new V2(1, 0)` initialisieren sowie `blocks` setzen.
 \tiny
 ```{.java .cb-nb line_numbers=false}
 var aliens = List.of(new Alien(new V2(2,5), "A"));

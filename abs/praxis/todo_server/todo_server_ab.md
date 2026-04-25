@@ -12,17 +12,18 @@ codebraid:
 
 ```
 
+
 # Grundlagen
 
 ## Aufgabe
 
-Füge, wenn du `gradle` benutzt, die folgende Abhängigkeit in `build.gradle` hinzu.
+Falls du `Gradle` verwendest, füge die folgende Abhängigkeit in `build.gradle` ein.
 
 ```kotlin
 implementation("io.javalin:javalin:7.0.1")
 ```
 
-Füge, wenn du `Maven` benutzt, die folgende Abhängigkeit in `pom.xml` hinzu.
+Falls du `Maven` verwendest, füge die folgenden Abhängigkeiten in `pom.xml` ein.
 
 
 ```xml
@@ -38,59 +39,162 @@ Füge, wenn du `Maven` benutzt, die folgende Abhängigkeit in `pom.xml` hinzu.
 </dependency>
 ```
 
+
 ## Aufgabe
 
-Definiere in einer neuen Datei `ServerView.java` eine Klasse namens `ServerView`. Die Klasse hat ein Attribut vom Typ `TemplateRenderer`. Initialisiere das Attribut direkt in der Klasse.
-
-
-
-
+Erzeuge in der `main`-Methode mit `Javalin.create` einen Javalin-Server. Starte ihn anschließend, indem du auf dem erzeugten Server-Objekt die Methode `start` aufrufst.
 
 
 
 ## Aufgabe
-Ergänze die Klasse `ServerView` um eine private Methode `setContentTypeAndSend`. Der Methode werden der `Context` einer Anfrage und ein String übergeben. Sie setzt den HTTP-Header `Content-Type` auf `text/html`. Anschließend schickt sie den übergebenen String als Antwort auf die Anfrage.
+
+Teste den Server, indem du die von IntelliJ angezeigte URL aufrufst.
+
+![](endpoint_not_found.png){ width=50% }
+
+
+Da noch keine Routen definiert sind, wird `Endpoint GET / not found` angezeigt.
+
+
+
+## Aufgabe
+
+Definiere in einer neuen Datei `ServerController.java` eine Klasse mit dem Namen `ServerController`.
+
+## Aufgabe
+
+Ergänze in der Datei `ServerController.java` den folgenden Import.
+```java
+import io.javalin.http.Context;
+```
+
+## Aufgabe
+
+Ergänze die Klasse `ServerController` um die Methode `showApp(Context ctx)`. Sie beantwortet Anfragen, indem sie den String `"Keine ToDos"` zurück sendet.
+
+**Hinweis:** Nutze die Methode `result` der Klasse `Context`.
+
+
+
+## Aufgabe
+
+Definiere in einer neuen Datei `JavalinConfigurator.java` eine Klasse mit dem Namen `JavalinConfigurator`.
+
+
+
+## Aufgabe
+
+Ergänze die Klasse `JavalinConfigurator` um die statische Methode `configureJavalin(JavalinConfig javalinConfig)`. Diese Methode erzeugt zunächst ein Objekt der Klasse `ServerController`.
+
+Rufe anschließend über die Eigenschaft `routes` des Parameters `javalinConfig` die Methode `get` so auf, dass Anfragen an den Pfad `/todos` von der Methode `showApp` der Klasse `ServerController` beantwortet werden.
+
+## Aufgabe
+
+Passe die `main`-Methode so an, dass der Javalin-Server mit `JavalinConfigurator::configureJavalin` konfiguriert wird.
+
+
+
+## Aufgabe
+
+Teste die neue Route.
+
+
+![](browser.png){ width=100% }
+
+
+
+## Aufgabe
+
+Definiere in einer neuen Datei `ServerView.java` eine Klasse mit dem Namen `ServerView`.
+
+## Aufgabe
+Ergänze die Klasse `ServerView` um die private Methode `setContentTypeAndSend(Context ctx, String response)`. Sie setzt den HTTP-Header `Content-Type` auf `text/html` und sendet anschließend den übergebenen String als Antwort.
+
+**Hinweis:** Nutze die Methoden `contentType` und `result` der Klasse `Context`.
+
+
+## Aufgabe
+
+Ergänze die Klasse `ServerController` um ein Attribut vom Typ `ServerView`. Initialisiere es direkt in der Klasse.
+
+
+
+## Aufgabe
+
+Ergänze die Klasse `ServerView` um die Methode `showApp(Context ctx, String response)`. Sie sendet den Parameter `response` mithilfe der Methode `setContentTypeAndSend` als Antwort auf die Anfrage.
+
+
 
 
 
 
 ## Aufgabe
-Ergänze die Klasse `ServerView` um eine Methode `showApp`. Der Methode werden der `Context` einer Anfrage und ein Objekt der Klasse `UIState` übergeben. 
-Sie rendert aus dem `UIState` einen String. Dieser String ist ein vollständiges HTML-Dokument und wird anschließend mit der Methode `setContentTypeAndSend` zurückgeschickt.
+
+Passe die Methode `showApp` der Klasse `ServerController` so an, dass sie die Methode `showApp` der Klasse `ServerView` verwendet, um den Content-Type auf `text/html` zu setzen und den String `"<h1>Keine To-dos</h1>"` zurückzusenden.
+
+## Aufgabe
+
+Teste die Route `/todos` noch einmal.
+
+![](html_browser.png){ width=100% }
 
 
-**Hinweis:** Nutze die Methode `setContentTypeAndSend` und die Methode `renderAppToString` der Klasse `TemplateRenderer`. 
+
+# Implementierung der To-do-App
+
+## Aufgabe
+
+Ergänze die Klasse `ServerController` um ein Attribut vom Typ `Model`. Initialisiere es direkt in der Klasse.
 
 
 ## Aufgabe
 
-Definiere in einer neuen Datei `ServerController.java` eine Klasse namens `ServerController`. 
-Die Klasse hat ein Attribut vom Typ `Model` und ein Attribut vom Typ `ServerView`. Initialisiere beide Attribute direkt in der Klasse.
+Ergänze die Klasse `ServerView` um ein Attribut vom Typ `TemplateRenderer`. Initialisiere es direkt in der Klasse.
+
+## Übersicht
+
+Das folgende Klassendiagramm zeigt die wichtigsten Bestandteile der App und ihre Zusammenarbeit mit `Javalin`.
+
+![](kd.png){ width=100% }
+
+- `UIState` enthält alle Daten, die zum Anzeigen der Oberfläche benötigt werden.
+- `Model` verwaltet den Zustand der App. Es stellt Methoden bereit, um To-dos hinzuzufügen, zu löschen und zu ändern. Der aktuelle Zustand wird mit `getUIState` abgefragt.
+- `TemplateRenderer` übersetzt den Zustand der App in HTML.
+- `ServerView` rendert HTML und sendet dieses als Antwort auf HTTP-Anfragen.
+- `ServerController` verarbeitet HTTP-Anfragen und nutzt dafür `ServerView` und `Model`.
+- `Javalin` stellt die Methoden `create` und `start` bereit.
+- `Main` enthält die Methode `main`, in der die `Javalin`-App erstellt und gestartet wird.
+- `Routes` hat die Methoden `get` und `post`, mit denen Routen zur App hinzugefügt werden.
+- `JavalinConfig` hat eine Eigenschaft `routes` vom Typ `Routes`.
+- `JavalinConfigurator` enthält die Methode `configureJavalin(JavalinConfig javalinConfig)`, in der Routen konfiguriert und mit Methoden von `ServerController` verknüpft werden.
+
+
+In den nächsten Aufgaben implementierst du weitere Methoden in `ServerView` und `ServerController` und bindest sie in `configureJavalin` ein, damit weitere Routen verarbeitet werden können.
+
 
 
 ## Aufgabe
-Ergänze die Klasse `ServerController` um eine Methode `showApp`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie sendet eine HTML-Darstellung des aktuellen Zustands als Antwort auf die Anfrage.
+Ergänze die Klasse `ServerView` um die Methode `showApp(Context ctx, UIState uiState)`. Sie rendert aus dem `UIState` ein vollständiges HTML-Dokument und sendet es anschließend mit der Methode `setContentTypeAndSend` zurück.
 
 
-**Hinweis:** Nutze die Methode `showApp` der Klasse `ServerView` und die Methode `getUIState` der Klasse `Model`.
-
-## Aufgabe
-
-Definiere in einer neuen Datei `JavalinConfigurator.java` eine Klasse namens `JavalinConfigurator`. 
-
-
-## Aufgabe 
-
-Ergänze die Klasse `JavalinConfigurator` um eine statische Methode `configureJavalin`. Der Methode wird ein Objekt vom Typ `JavalinConfig` übergeben. Die Methode erzeugt zunächst ein Objekt der Klasse `ServerController`.
-
-
-Anschließend wird auf der Eigenschaft `routes` des Parameters die Methode `get` so aufgerufen,
-dass Anfragen an den Pfad `/todos` mit der Methode `showApp` der Klasse `ServerController` beantwortet werden.
+**Hinweis:** Nutze die Methoden `setContentTypeAndSend` und `renderAppToString` der Klasse `TemplateRenderer`.
 
 ## Aufgabe
 
-Erzeuge in der `main`-Methode einen Javalin-Server, der mit `JavalinConfigurator::configureJavalin` konfiguriert ist. Starte ihn anschließend.
+Lösche die Methode `showApp(Context ctx, String response)`!
+
+
+## Aufgabe
+Ändere die Methode `showApp(Context ctx)` der Klasse `ServerController`. Die Methode soll die folgenden Schritte durchführen:
+
+- Sie fragt den aktuellen Zustand des Modells mit der Methode `getUIState` der Klasse `Model` ab.
+- Sie sendet eine HTML-Darstellung des aktuellen Zustands mit der Methode `showApp` der Klasse `ServerView`.
+
+
+
+## Aufgabe
+
+Teste die App.
 
 
 
@@ -107,15 +211,14 @@ app.get("/todos", serverController::showApp);
 
 
 
-Die Aufrufe der `Javalin`-Methoden `get` und `post` werden in den nächsten Aufgaben ergänzt. Bestehende Aufrufe werden nicht gelöscht.
+Die Aufrufe der `Javalin`-Methoden `get` und `post` in `configureJavalin` werden in den nächsten Aufgaben schrittweise ergänzt. Bereits vorhandene Aufrufe werden dabei nicht gelöscht, sondern nur erweitert.
 
 
 # Verwendung von CSS
 
 ## Aufgabe
 
-Wir wollen in unserem Projekt Frontend-Bibliotheken nutzen können.
-Ergänze dafür in `configureJavalin` einen Aufruf der Methode `enableWebjars` auf `javalinConfig.staticFiles`.
+Wir wollen in unserem Projekt Frontend-Bibliotheken nutzen können. Ergänze dafür in `configureJavalin(JavalinConfig javalinConfig)` einen Aufruf der Methode `enableWebjars` über die Eigenschaft `staticFiles` des Parameters.
 
 
 ## Aufgabe
@@ -137,7 +240,7 @@ Oder füge sie in `pom.xml` hinzu.
 </dependency>
 ```
 
-Ergänze im `head`-Tag in `mainPage.jte` die folgende Zeile, um den CSS-Code zu importieren.
+Ergänze im `head`-Tag in `mainPage.jte` die folgende Zeile, um das CSS einzubinden.
 
 
 ```html
@@ -149,22 +252,18 @@ Starte deine App und lade die Seite erneut.
  ![](showApp2.png){ width=100% }
 
 
-# Feature: Hinzufügen eines ToDos
+# Feature: Hinzufügen von To-dos
 
 
 ## Aufgabe
-Ergänze die Klasse `ServerController` um eine Methode `addToDo`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie soll auf Eingaben über das Formular in `mainPage.jte` reagieren. Sie fügt die eingegebene Aufgabe dem `Model` hinzu.
-
-Anschließend sendet sie eine HTML-Darstellung des neuen Zustands als Antwort auf die Anfrage.
+Ergänze die Klasse `ServerController` um die Methode `addToDo(Context ctx)`. Sie soll auf Eingaben über das Formular in `mainPage.jte` reagieren, die eingegebene Aufgabe zum `Model` hinzufügen und anschließend eine HTML-Darstellung des neuen Zustands als Antwort senden.
 
 
-**Hinweis:** Nutze die Methode `showApp` und die Methode `add` der Klasse `Model`.
+**Hinweis:** Nutze die Methoden `formParam` der Klasse `Context`, `add` der Klasse `Model` und `showApp` der Klasse `ServerController`.
 
 ## Aufgabe
 
-Verknüpfe die POST-Anfrage des Formulars zum Hinzufügen eines To-dos mit der Methode `ServerController::addToDo`.
-Ergänze dafür die Methode `JavalinConfigurator::configureJavalin`.
+Verknüpfe die POST-Anfrage des Formulars zum Hinzufügen von To-dos mit der Methode `addToDo` der Klasse `ServerController`. Registriere dafür in `JavalinConfigurator` eine passende Route für den Pfad `/todos/new`.
 
  ![](addToDo.png){ width=100% }
 
@@ -177,11 +276,14 @@ Ergänze dafür die Methode `JavalinConfigurator::configureJavalin`.
 
 ## Aufgabe
 
-Ergänze in `build.gradle` die Abhängigkeit für HTMX:
+Ergänze die Abhängigkeit für HTMX in `build.gradle` 
 
 ```kotlin
 runtimeOnly("org.webjars.npm:htmx.org:2.0.8")
 ```
+
+oder, falls du Maven verwendest, in `pom.xml`:
+
 ```xml
 <dependency>
     <groupId>org.webjars.npm</groupId>
@@ -198,160 +300,189 @@ Ergänze im `head`-Tag in `mainPage.jte` die folgende Zeile, um die Bibliothek i
 
 ## Aufgabe
 
-Nach dem ersten Laden der App muss bei weiteren Anfragen nicht mehr das komplette HTML-Dokument mit `head`- und `body`-Tag gesendet werden.
-In unserer App erfolgen alle weiteren Anfragen nach dem ersten Laden der Seite mit HTMX. Solche Anfragen haben den Header `HX-Request`. Ergänze die Methode `showApp` in `ServerView` so, dass geprüft wird, ob dieser Header `null` ist. 
-- Wenn er `null` ist, wird die komplette Website geschickt. 
-- Wenn er nicht `null` ist, wird nur der Teil im `section`-Tag geschickt.
+Momentan sendet die Methode `showApp(Context ctx, UIState uiState)` der Klasse `ServerView` immer die komplette Website. Beim Hinzufügen, Löschen, usw. ändert sich jedoch nur Teil der Website der in dem Tag 
 
-**Hinweis:** Die Methode `renderAppToString` der Klasse `TemplateRenderer` hat bereits einen Parameter, der angibt, ob nur ein Teil der Website gerendert werden soll.
+```html
+<section class="todoapp" id="todoapp">
 
 
-# Feature: Löschen von ToDos
+</section>
+```
+
+enthalten ist. Dieser Teil der Website wird mit dem Template `app.jte` gerendert. Beim ersten Anfragen der Website wird eine normale HTTP GET Anfrage gesendet. Alle weiteren Anfragen erfolgen mit HTMX. Solche Anfragen haben den Header `HX-Request`. Ergänze die Methode `showApp(Context ctx, UIState uiState)` in `ServerView` so, dass dieser Header geprüft wird.
+
+- Wenn er `null` ist, wird die komplette Webseite gesendet.
+- Wenn er nicht `null` ist, wird nur der Teil im `section`-Tag gesendet.
+
+**Hinweise:** 
+
+- Die Methode `renderAppToString` der Klasse `TemplateRenderer` hat bereits einen Parameter, der angibt, ob nur ein Teil der Webseite gerendert werden soll. 
+- Nutze die Methode `header(String key)` der Klasse `Context`. Diese gibt den Wert des Headers mit dem Schlüssel `key` zurück.
 
 
-## Aufgabe 
+# Feature: Löschen von To-dos
 
-Ergänze das Template `toDo.jte`. Bei einem Klick auf den rechten Button in einem To-do soll eine `POST`-Anfrage gesendet werden. Dadurch soll das To-do gelöscht werden.
-Z.B. sendet der rechte Button in dem To-do mit der ID $5$ eine POST-Anfrage an `/todos/5/delete`.
+
+## Aufgabe
+
+Ergänze das Template `toDo.jte`. Bei einem Klick auf den rechten Button eines To-dos soll eine `POST`-Anfrage gesendet werden. Dadurch wird das To-do gelöscht. Der Zielpfad der Anfrage hängt nur von der ID des jeweiligen To-dos ab.
+Beispiele:
+
+- der rechte Button in dem To-do mit der ID $5$ sendet eine POST-Anfrage an `/todos/5/delete`.
+- der rechte Button in dem To-do mit der ID $8$ sendet eine POST-Anfrage an `/todos/8/delete`.
 
 
 
 ## Aufgabe
-Ergänze die Klasse `ServerController` um eine Methode `deleteToDo`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie reagiert auf Anfragen, die durch das Drücken des rechten Buttons in einem To-do geschickt wurden. Dabei löscht sie das To-do mit der entsprechenden ID.
+Ergänze die Klasse `ServerController` um die Methode `deleteToDo(Context ctx)`. Sie reagiert auf Anfragen, die durch das Drücken des rechten Buttons eines To-dos ausgelöst werden, und löscht das To-do mit der entsprechenden ID.
 
-**Hinweis:** Nutze die Methode `showApp` und die Methode `delete` der Klasse `Model`.
-
-
-
-## Aufgabe 
-Nutze die Methode `ServerController::deleteToDo`, um auf POST-Abfragen zu reagieren.
-
-
-# Feature: Status eines ToDos ändern
-
-
-
-## Aufgabe 
-
-Ergänze das Template `toDo.jte`. Bei einem Klick auf den linken Button eines To-dos soll eine `POST`-Anfrage gesendet werden. Dadurch wird der Status des To-dos geändert.
-Z.B. sendet das To-do mit der ID $5$ eine POST-Anfrage an `/todos/5/toggle`.
-
-
-## Aufgabe
-Ergänze die Klasse `ServerController` um eine Methode `toggleStatus`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie reagiert auf Anfragen, die durch das Drücken des linken Buttons in einem To-do geschickt wurden, indem sie den Zustand des To-dos mit der entsprechenden ID ändert.
-
-**Hinweis:** Nutze die Methode `showApp` und die Methode `toggle` der Klasse `Model`.
-
-## Aufgabe 
-Nutze die Methode `ServerController::toggleStatus`, um auf POST-Abfragen zu reagieren.
-
-
-# Feature: Alle fertigen ToDos löschen
-
-
-
-## Aufgabe 
-
-Ergänze in `app.jte` die Möglichkeit, per Klick auf den Button am Ende des Footers `POST`-Anfragen an `/todos/clearCompletedToDos` zu senden. 
-
-## Aufgabe
-Ergänze die Klasse `ServerController` um eine Methode `clearCompletedToDos`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie reagiert auf Anfragen, die durch das Drücken des Buttons am Ende des Footers geschickt werden, indem sie alle erledigten To-dos löscht.
-
-**Hinweis:** Nutze die Methode `showApp` und die Methode `removeFinishedToDoItems` der Klasse `Model`.
-
-
-## Aufgabe 
-Nutze die Methode `ServerController::clearCompletedToDos`, um auf POST-Abfragen zu reagieren.
-
-
-# Feature: ToDos filtern
-
-
-## Aufgabe 
-
-Ergänze das Template `app.jte`. Bei einem Klick auf einen der Filter-Links in der Mitte des Footers soll eine `POST`-Anfrage gesendet werden. Damit wird ein neuer Filter ausgewählt.
-Z.B. sendet ein Klick auf den Link mit dem Text `All` eine POST-Abfrage an `/todos/setFilter/All`
-
-
-## Aufgabe
-Ergänze die Klasse `ServerController` um eine Methode `setFilter`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie reagiert auf Anfragen, die durch das Drücken der Filter-Links in der Mitte des Footers geschickt werden.
-
-**Hinweis:** Nutze die Methode `showApp` und die Methode `setFilter` der Klasse `Model`.
-
-## Aufgabe 
-Nutze die Methode `ServerController::setFilter`, um auf POST-Abfragen zu reagieren.
-
-
-# Feature: Text eines ToDos ändern
-
-
-## Aufgabe 
-
-Ergänze das Template `toDo.jte`. Bei einem Klick auf den Text eines To-dos wird eine `GET`-Abfrage gesendet. Diese fordert ein Formular an, mit dem der Text des To-dos geändert werden kann. 
-Z.B. sendet ein Klick auf den Text des To-dos mit der ID 5 eine GET-Anfrage an `/todos/5/edit`. Das komplette Listenelement soll durch die Serverantwort ersetzt werden.
-
-
+**Hinweis:** Nutze die Methoden `pathParam` der Klasse `Context`, `Integer.parseInt`, `delete` der Klasse `Model` und `showApp` der Klasse `ServerController`.
 
 
 
 ## Aufgabe
-Ergänze die Klasse `ServerView` um eine Methode `showToDo`. Der Methode werden der `Context` einer Anfrage, ein `ToDo` und ein Boolean `editing` übergeben.
-Die Methode rendert das `ToDo` und schickt das Ergebnis als Antwort auf die Anfrage. Wenn `editing` `true` ist, wird für das `ToDo` das Formular gerendert, mit dem der Text des To-dos geändert werden kann.
-Ansonsten werden der Status und der Text des To-dos angezeigt.
-
-**Hinweis:** Nutze die Methode `setContentTypeAndSend` und die Methode `renderToDoToString` der Klasse `TemplateRenderer`. 
+Nutze die Methode `deleteToDo` der Klasse `ServerController`, um auf POST-Anfragen zu reagieren. Registriere dafür in `JavalinConfigurator` eine passende Route für den Pfad `/todos/{id}/delete`.
 
 
+# Feature: Status eines To-dos ändern
 
 
 
 ## Aufgabe
 
-Ergänze die Klasse `ServerController` um eine Methode `showEditForm`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie sendet als Antwort auf die Anfrage ein Formular, das durch einen Klick auf den Text eines To-dos angefordert wurde. 
+Ergänze das Template `toDo.jte`. Bei einem Klick auf den linken Button eines To-dos soll eine `POST`-Anfrage gesendet werden. Dadurch wird der Status des To-dos geändert. Der Zielpfad der Anfrage hängt also von der ID des jeweiligen To-dos ab.
+Beispiele: 
 
-**Hinweis:** Nutze die Methode `showToDo` und die Methode `getToDoItem` der Klasse `Model`.
+- das To-do mit der ID $5$ sendet eine POST-Anfrage an `/todos/5/toggle`
+- das To-do mit der ID $8$ sendet eine POST-Anfrage an `/todos/8/toggle`
 
+
+## Aufgabe
+Ergänze die Klasse `ServerController` um die Methode `toggleStatus(Context ctx)`. Sie reagiert auf Anfragen, die durch das Drücken des linken Buttons eines To-dos ausgelöst werden, indem sie den Status des To-dos mit der entsprechenden ID ändert.
+
+**Hinweis:** Nutze die Methoden `pathParam` der Klasse `Context`, `Integer.parseInt`, `toggle` der Klasse `Model` und `showApp` der Klasse `ServerController`.
+
+## Aufgabe
+Nutze die Methode `toggleStatus` der Klasse `ServerController`, um auf POST-Anfragen zu reagieren. Registriere dafür in `JavalinConfigurator` eine passende Route für den Pfad `/todos/{id}/toggle`.
+
+
+
+# Feature: Alle fertigen To-dos löschen
+
+
+
+## Aufgabe
+
+Ergänze in `app.jte` die Möglichkeit, per Klick auf den Button am Ende des Footers eine `POST`-Anfrage an `/todos/clearCompletedToDos` zu senden.
+
+## Aufgabe
+Ergänze die Klasse `ServerController` um die Methode `clearCompletedToDos(Context ctx)`. Sie reagiert auf Anfragen, die durch das Drücken des Buttons am Ende des Footers ausgelöst werden, indem sie alle erledigten To-dos löscht.
+
+**Hinweis:** Nutze die Methode `removeFinishedToDoItems` der Klasse `Model` und `showApp` der Klasse `ServerController`.
+
+
+## Aufgabe
+Nutze die Methode `clearCompletedToDos` der Klasse `ServerController`, um auf POST-Anfragen zu reagieren. Registriere dafür in `JavalinConfigurator` eine passende Route für den Pfad `/todos/clearCompletedToDos`.
+
+
+
+# Feature: To-dos filtern
+
+
+## Aufgabe
+
+Ergänze das Template `app.jte`. Bei einem Klick auf einen der Filter-Links in der Mitte des Footers soll eine `POST`-Anfrage gesendet werden. Dadurch wird ein neuer Filter ausgewählt. Der Zielpfad der Anfrage hängt also vom Text des angeklickten Filters ab.
+Beispiele:
+
+- ein Klick auf den Link mit dem Text `All` sendet eine POST-Anfrage an `/todos/setFilter/All`.
+- ein Klick auf den Link mit dem Text `Completed` sendet eine POST-Anfrage an `/todos/setFilter/Completed`.
+
+
+
+## Aufgabe
+Ergänze die Klasse `ServerController` um die Methode `setFilter(Context ctx)`. Sie reagiert auf Anfragen, die durch das Anklicken der Filter-Links in der Mitte des Footers ausgelöst werden.
+
+**Hinweis:** Nutze die Methoden `pathParam` der Klasse `Context`, `setFilter` der Klasse `Model` und `showApp` der Klasse `ServerController`.
+
+## Aufgabe
+Nutze die Methode `setFilter` der Klasse `ServerController`, um auf POST-Anfragen zu reagieren. Registriere dafür in `JavalinConfigurator` eine passende Route für den Pfad `/todos/setFilter/{filter}`.
+
+
+# Feature: Text eines To-dos ändern
+
+
+## Aufgabe
+
+Ergänze das Template `toDo.jte`. Bei einem Klick auf den Text eines To-dos wird eine `GET`-Anfrage gesendet. Dadurch wird ein Formular angefordert, mit dem der Text des To-dos geändert werden kann. Der Zielpfad der Anfrage hängt also von der ID des jeweiligen To-dos ab.
+Beispiele:   
+
+- ein Klick auf den Text des To-dos mit der ID 5 sendet eine GET-Anfrage an `/todos/5/edit`
+- ein Klick auf den Text des To-dos mit der ID 9 sendet eine GET-Anfrage an `/todos/9/edit`
+
+
+Das komplette Listenelement des angeklickten To-dos soll durch die Serverantwort ersetzt werden.
+
+
+
+
+
+## Aufgabe
+Ergänze die Klasse `ServerView` um eine Methode `showToDo(Context ctx, ToDo toDo, boolean editing)`.
+Die Methode rendert das `ToDo` und sendet das Ergebnis als Antwort auf die Anfrage. Wenn `editing` den Wert `true` hat, wird für das `ToDo` das Formular gerendert, mit dem der Text des To-dos geändert werden kann. Andernfalls werden der Status und der Text des To-dos angezeigt.
+
+**Hinweis:** Nutze die Methoden `setContentTypeAndSend` der Klasse `ServerView` und `renderToDoToString` der Klasse `TemplateRenderer`.
+
+
+
+
+
+## Aufgabe
+
+Ergänze die Klasse `ServerController` um die Methode `showEditForm(Context ctx)`. Sie sendet als Antwort auf die Anfrage ein Formular, das durch einen Klick auf den Text eines To-dos angefordert wurde.
+
+**Hinweis:** Nutze die Methoden `pathParam` der Klasse `Context`, `Integer.parseInt`, `getToDoItem` der Klasse `Model` und `showToDo` der Klasse `ServerView`.
  <!-- ![](editToDo.png){ width=100% } -->
 
-## Aufgabe 
+## Aufgabe
 
 
-Nutze die Methode `ServerController::showEditForm`, um auf GET-Abfragen zu reagieren.
+Nutze die Methode `showEditForm` der Klasse `ServerController`, um auf GET-Anfragen zu reagieren. Registriere dafür in `JavalinConfigurator` eine passende Route für den Pfad `/todos/{id}/edit`.
 
 
 ## Aufgabe
 
-Passe `editingForm.jte` so an, dass der Inhalt des To-dos mit einer POST-Abfrage gesendet wird, wenn das Element den Fokus verliert.
-Der Pfad hängt dabei von der ID des To-dos ab. Z.B. sendet ein Formular, das zu dem To-do mit der ID $5$ gehört, eine POST-Anfrage an `/todos/5/edit`.
-Das komplette Listenelement soll durch die Antwort ersetzt werden.
+Passe `editingForm.jte` so an, dass der Inhalt des To-dos mit einer POST-Anfrage gesendet wird, sobald das Eingabefeld den Fokus verliert.
+Der Pfad hängt dabei von der ID des To-dos ab. Beispiele:
+
+
+- das Formular, das zu dem To-do mit der ID $5$ gehört, sendet eine POST-Anfrage an `/todos/5/edit`
+- das Formular, das zu dem To-do mit der ID $2$ gehört, sendet eine POST-Anfrage an `/todos/2/edit`
+
+Das komplette Listenelement des bearbeiteten To-dos soll durch die Antwort ersetzt werden.
 
 
 ## Aufgabe
 
-Ergänze die Klasse `ServerController` um eine Methode `updateTextOfToDo`. Der Methode wird der `Context` einer Anfrage übergeben. 
-Sie reagiert auf Anfragen, die vom Input-Element in `editingForm` geschickt wurden. Dabei wird der Text des To-dos durch den eingegebenen Text ersetzt.
-
-**Hinweis:** Nutze die Methode `showToDo` und die Methode `updateText` der Klasse `Model`.
-
-## Aufgabe 
+Ergänze die Klasse `ServerController` um die Methode `updateTextOfToDo(Context ctx)`. Sie reagiert auf Anfragen, die vom Input-Element in `editingForm` ausgelöst werden. Dabei wird der Text des To-dos durch den eingegebenen Text ersetzt.
 
 
-Nutze die Methode `ServerController::updateTextOfToDo`, um auf POST-Abfragen zu reagieren.
+**Hinweis:** Nutze die Methoden `pathParam` und `formParam` der Klasse `Context`, `Integer.parseInt`, `updateText` der Klasse `Model`, `getToDoItem` der Klasse `Model` und `showToDo` der Klasse `ServerView`.
+
+## Aufgabe
+
+
+Nutze die Methode `updateTextOfToDo` der Klasse `ServerController`, um auf POST-Anfragen zu reagieren. Registriere dafür in `JavalinConfigurator` eine passende Route für den Pfad `/todos/{id}/edit`.
+
 
 # Fertigstellen der App
 
 ## Aufgabe
 
-Nutze HTMX, um beim Hinzufügen eines To-dos nicht immer die ganze Seite neu zu laden. Ändere dafür das Formular, mit dem To-dos hinzugefügt werden. 
+Nutze HTMX, damit beim Hinzufügen eines To-dos nicht immer die gesamte Seite neu geladen wird. Ändere dafür das Formular, mit dem To-dos hinzugefügt werden, so dass die Anfrage per HTMX gesendet und die `section` mit der To-do-App durch die Serverantwort aktualisiert wird.
 
 ## Aufgabe
 
-Teste deine App!
+Teste deine App.
 
 ## Aufgabe
 

@@ -7,6 +7,6 @@ public class Controller {
 
         ctx.contentType("text/html");
 
-        ctx.result("<h1>Hello World</h1>");
+        ctx.result("Keine ToDos");
     }
 }
