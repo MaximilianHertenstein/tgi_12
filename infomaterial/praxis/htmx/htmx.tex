@@ -6,8 +6,7 @@ farbig
 ]{schule}
 
 
-\usepackage{fontspec}
-\usepackage{fourier-otf}
+\usepackage[default]{fontsetup}
 \usepackage{float}
 \usetikzlibrary{arrows,calc,positioning}
 
@@ -37,21 +36,22 @@ farbig
 \maketitle
 \section{Einleitung}\label{sec: einleitung}
 
-In HTML-Dokumenten kann man mit den Elementen Links und Formularen HTTP-Abfragen senden.
-Der gesamte Inhalt des Browsers wird durch den HTML-Code, den der Server daraufhin sendet, ersetzt.
 
-Die Bibliothek HTMX erweitert diese Möglichkeiten.
-Wenn HTMX verwendet wird,
-kann
+In HTML-Dokumenten kann man mit den Elementen Links und Formularen HTTP-Anfragen senden.
+Der gesamte Inhalt des Browsers wird durch den HTML-Code ersetzt, den der Server daraufhin sendet.
+
+
+Die Bibliothek HTMX erweitert diese Möglichkeiten:
 \begin{enumerate}
-\item jedes HTML-Element eine HTTP-Abfrage schicken
-\item jede Methode für eine HTTP-Abfrage gewählt werden
-\item angegeben werden, dass nur ein Teil des aktuellen HTML-Dokuments durch den HTML-Code den, der Server schickt ersetzt werden soll.
+    \item Jedes HTML-Element kann eine HTTP-Anfrage senden.
+    \item Jede Methode für eine HTTP-Anfrage kann gewählt werden.
+    \item Es kann angegeben werden, dass nur ein Teil des aktuellen HTML-Dokuments durch den HTML-Code ersetzt wird, den der Server schickt.
 \end{enumerate}
 
 \section{hx-get und hx-post}\label{sec:hx-get-und-hx-post}
 
-Der folgende Button sendet, wenn er angeklickt wird, eine HTTP-GET-Abfrage an den Pfad \url{/respondTClick}auf dem Server, auf dem die aktuell betrachtete Website läuft.
+
+Der folgende Button sendet, wenn er angeklickt wird, eine HTTP-GET-Anfrage an den Pfad \url{/respondToClick} auf dem Server, auf dem die aktuell betrachtete Website läuft.
 
 \begin{minted}{HTML}
 <button hx-get="/respondToClick"> Click me! </button>
@@ -64,17 +64,18 @@ Angenommen der Server schickt daraufhin den folgenden HTML-Code zurück:
 \end{minted}
 
 Dann wird das Innere des Buttons durch die Antwort des Servers ersetzt.
-Der HTML-Code des Buttons sieht dann folgendermaßen aus.
+Der HTML-Code des Buttons sieht dann folgendermaßen aus:
 \begin{minted}{HTML}
 <button hx-get="/respondToClick"> <p> Thanks for clicking me! </p> </button>
 \end{minted}
 
-Wenn stattdessen eine HTTP-POST-Abfrage geschickt werden soll, muss \texttt{hx-post} statt \texttt{hx-get} genutzt werden
+Wenn stattdessen eine HTTP-POST-Anfrage geschickt werden soll, muss \texttt{hx-post} statt \texttt{hx-get} genutzt werden.
 
 \section{hx-target}\label{sec:hx-target}
 
-Durch das Attribut \texttt{hx-target} kann festgelegt werden, dass der gesendete HTML-Code an einer anderen Stelle im Dokument eingesetzt werden soll.
-Dafür wird die ID eines anderen HTML-Elements angeben.
+
+Durch das Attribut \texttt{hx-target} kann festgelegt werden, dass der empfangene HTML-Code an einer anderen Stelle im Dokument eingesetzt werden soll.
+Dafür wird die ID eines anderen HTML-Elements angegeben.
 
 \begin{minted}{HTML}
 <button hx-get="/respondToClick" hx-target="#result"> Click me! </button>
@@ -88,6 +89,7 @@ Wenn der Server wie oben mit dem folgenden HTML-Code antwortet,
 \end{minted}
 
 
+
 sieht der Abschnitt des Dokuments anschließend folgendermaßen aus:
 
 \begin{minted}{HTML}
@@ -97,6 +99,7 @@ sieht der Abschnitt des Dokuments anschließend folgendermaßen aus:
 \end{minted}
 
 \section{hx-swap}\label{sec:hx-swap}
+
 
 Mit dem Attribut \texttt{hx-swap} kann eingestellt werden, dass nicht nur der Inhalt eines Elements, sondern das ganze Element ersetzt wird.
 
@@ -109,11 +112,12 @@ Wenn der Server wie oben antwortet, sieht der Abschnitt des HTML-Dokuments ansch
 <p> Thanks for clicking me! </p>
 \end{minted}
 
+
 \section{HTMX-Abfragen aus Formularen}\label{sec:htmx-abfragen-aus-formularen}
 
 Beim Klick auf einen Button wurde in den letzten Beispielen kein Wert übertragen, da in einen Button nichts eingegeben werden kann.
 
-Wenn ein Button mit einem \texttt{input}-Element in einem Formular ist, wird der Inhalt des \texttt{input}-Elements bei einer HTMX-Anfrage mit übertragen.
+Wenn ein Button zusammen mit einem \texttt{input}-Element in einem Formular ist, wird der Inhalt des \texttt{input}-Elements bei einer HTMX-Anfrage mit übertragen.
 
 \begin{minted}{html}
 <form>
@@ -126,7 +130,7 @@ Wenn ein Button mit einem \texttt{input}-Element in einem Formular ist, wird der
 </form>
 \end{minted}
 
-Das passiert, obwohl weder das Formular noch das \texttt{input}-Element die Anfrage auslösen.
+Das passiert, obwohl weder das Formular noch das \texttt{input}-Element die Anfrage auslöst.
 %\section{Laden der Bibliothek}
 %Um die Bibliothek zu verwenden, muss in der Datei \texttt{build.gradle} die folgende Abhängigkeit ergänzt werden.
 %\begin{minted}{kotlin}
@@ -140,26 +144,30 @@ Das passiert, obwohl weder das Formular noch das \texttt{input}-Element die Anfr
 %\end{minted}
 %\section{hx-trigger}
 %Mit \texttt{hx-trigger} kann angegeben werden, wie eine HTTP-Anfrage ausgelöst werden kann. 
+
 \section{HTMX-Abfragen direkt von input-Elementen aus senden}\label{sec:htmx-abfragen-direkt-von-input-elementen-aus-senden}
 
 Wenn HTMX verwendet wird, kann die Eingabe in einem \texttt{input}-Element
-auch gesendet werden, wenn dies gar nicht in einem Formular enthalten ist.
+auch gesendet werden, wenn dieses gar nicht in einem Formular enthalten ist.
 
 
 \begin{minted}{HTML}
 <input hx-post="/signUp" value= ""> Click me! </button>
 \end{minted}
 
+
 Die HTMX-Abfrage eines Buttons wird ausgelöst, wenn dieser angeklickt wird.
- Ein \texttt{input}-Element sendet eine Abfrage, wenn es den Fokus verliert, nachdem es geändert wurden.
+Ein \texttt{input}-Element sendet eine Anfrage, wenn es den Fokus verliert, nachdem es geändert wurde.
+
 
 \section{hx-trigger}
 Mit \texttt{hx-trigger} kann angegeben werden, wie eine HTTP-Anfrage ausgelöst werden kann. 
 
+
 \begin{minted}{HTML}
-<input hx-trigger="blur" hx-post="/signUp" value= ""> Click me! </button>
+<input hx-trigger="blur" hx-post="/signUp" value=""> Click me! </input>
 \end{minted}
 
 \texttt{blur} steht für den Verlust des Fokus.
-Das \texttt{input}-Element sendet also immer dann eine Abfrage, wenn es den Fokus verliert.
+Das \texttt{input}-Element sendet also immer dann eine Anfrage, wenn es den Fokus verliert.
 \end{document}
